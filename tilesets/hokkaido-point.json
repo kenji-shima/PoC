@@ -1,0 +1,35 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "id": "1278799",
+            "properties": {
+                "id": "1278799",
+                "type": "STORE"
+            },
+            "geometry": {
+                "coordinates": [
+                    142.93474833083025,
+                    43.44704267237733
+                ],
+                "type": "Point"
+            },
+            "type": "Feature"
+        },
+        {
+            "id": "1278788",
+            "properties": {
+                "id": "1278788",
+                "type": "STORE"
+            },
+            "geometry": {
+                "coordinates": [
+                    127.9775,
+                    26.5916
+                ],
+                "type": "Point"
+            },
+            "type": "Feature"
+        }
+    ]
+}

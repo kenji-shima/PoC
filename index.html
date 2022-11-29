@@ -1,6 +1,37 @@
 <html>
-    <head></head>
-    <body>
-        <a href="/choropleth/index.html">Choropleth Map</a>
-    </body>
+
+<head>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link href="styles.css" rel="stylesheet" />
+    <script
+        src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet'
+        href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css'
+        type='text/css' />
+</head>
+
+<body>
+    <div id='map'></div>
+    <div class="map-selector">
+        <div>
+            <h3>Select Map Type</h3>
+            <select id="mapSelector" onchange="loadMap()">
+                <option value=""></option>
+                <option value="choropleth">Choropleth</option>
+                <option value="points">Points</option>
+                <option value="aerialway">Aerialway</option>
+                <option value="tilequery">TileQuery</option>
+            </select>
+        </div>
+    </div>
+    <div class='map-overlay' id='features'>
+        <h2 id="mapType"></h2>
+        <div id='pd'></div>
+    </div>
+    <div class='map-overlay' id='legend'></div>
+    <script src="./js/main.js"></script>
+</body>
+
 </html>

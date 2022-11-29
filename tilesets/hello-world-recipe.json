@@ -1,0 +1,10 @@
+{
+    "version":1,
+    "layers":{
+        "hello_world":{
+            "source" : "mapbox://tileset-source/kenji-shima/populated-places-source",
+            "minzoom":0,
+            "maxzoom":5
+        }
+    }
+}
