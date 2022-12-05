@@ -4,7 +4,7 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xhZ2NmZ3BiMGFqbzNub
 function loadMap() {
 
     init();
-    
+
     var selectedMap = document.getElementById("mapSelector").value;
     if (selectedMap == "") {
         return;
@@ -25,6 +25,19 @@ function init() {
         map = null;
         geocoder = null;
     }
+}
+
+function initZoom(title){
+    document.getElementById('mapType').innerHTML = `${title}`;
+    document.getElementById('pd').innerHTML = `<p id='zl'>Zoom Level:<p id='z'>${map.getZoom().toFixed(2)}</p></p>`;
+
+    document.getElementById('features').style = 'visibility:visible;';
+
+    map.on('zoom', (event) => {
+        const zoom = map.getZoom().toFixed(2);
+        const z = document.getElementById('z');
+        z.innerHTML = `${zoom}`;
+    });
 }
 
 let map;
