@@ -1,0 +1,26 @@
+<html>
+
+<head>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <link href="./css/storeLocatorStyle.css" rel="stylesheet" />
+    <script src="./js/constants.js"></script>
+</head>
+
+<body>
+    <div class='sidebar'>
+        <div class='heading'>
+            <h1>Our locations</h1>
+        </div>
+        <div id='listings' class='listings'></div>
+    </div>
+    <div id="map" class="map"></div>
+    <div class='map-overlay' id='features'>
+        <h2 id="mapType"></h2>
+        <div id='pd'></div>
+    </div>
+    <script src="./js/main.js"></script>
+    <script src="./js/storeLocator.js"></script>
+</body>
+
+</html>

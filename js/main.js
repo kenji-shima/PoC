@@ -1,6 +1,3 @@
-
-mapboxgl.accessToken = 'pk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xhZ2NmZ3BiMGFqbzNubThpbWMxOXU3MCJ9.JlXUW8MwwX1LhhMnbWyUQw';
-
 function loadMap() {
 
     init();
@@ -8,6 +5,8 @@ function loadMap() {
     var selectedMap = document.getElementById("mapSelector").value;
     if (selectedMap == "") {
         return;
+    }else if(selectedMap === 'storeLocator'){
+        window.location.href = '/storeLocator.html';
     }
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
