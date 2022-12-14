@@ -1,0 +1,33 @@
+<html>
+
+<head>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+    <link href="./css/japanSearch.css" rel="stylesheet" />
+    <script src="./js/constants.js"></script>
+</head>
+
+<body>
+    <div class='sidebar'>
+        <div class='heading'>
+            
+            <input type='textbox' id="searchBox" />
+            <input type='button' value='Search' onclick="search()" />
+            <span><input id="radius" type="number" style="width: 50px" value="10" />&nbsp;km
+            <input type="checkbox" id="google" /><img width="20" height="20" src="./images/google.png" /></span>
+            <span style="visibility: hidden;">results:<span id="count">0</span>
+            </span>
+        </div>
+        <div id='listings' class='listings'></div>
+    </div>
+    <div id="map" class="map"></div>
+    <!--div class='map-overlay' id='features'>
+        <h2 id="mapType"></h2>
+        <div id='pd'></div>
+    </div //-->
+    <script src="./js/main.js"></script>
+    <script src="./js/japanSearch.js"></script>
+</body>
+
+</html>

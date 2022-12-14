@@ -17,25 +17,6 @@ map.on('load', () => {
     initZoom('Sweetgreen Locator');
 });
 
-/*map.on('click',(event) => {
-    const features = map.queryRenderedFeatures(event.point, {
-        layers: ['locations']
-    });
-    if(!features.length) return;
-    const clickedPoint = features[0];
-    flyToStore(clickedPoint);
-    createPopup(clickedPoint);
-    const activeItem = document.getElementsByClassName('active');
-    if(activeItem[0]){
-        activeItem[0].classList.remove('active');
-    }
-    const listing = document.getElementById(
-        `listing-${clickedPoint.properties.id}`
-    );
-    listing.classList.add('active');
-
-});*/
-
 function buildLocationList(stores) {
     for (const store of stores.features) {
         const listings = document.getElementById('listings');
@@ -103,15 +84,15 @@ function addMarkers() {
             .setLngLat(marker.geometry.coordinates)
             .addTo(map);
 
-        el.addEventListener('click', (e) => {
-            flyToStore(clickedPoint);
-            createPopup(clickedPoint);
+        el.addEventListener('click', (event) => {
+            flyToStore(marker);
+            createPopup(marker);
             const activeItem = document.getElementsByClassName('active');
             if (activeItem[0]) {
                 activeItem[0].classList.remove('active');
             }
             const listing = document.getElementById(
-                `listing-${clickedPoint.properties.id}`
+                `listing-${marker.properties.id}`
             );
             listing.classList.add('active');
         });

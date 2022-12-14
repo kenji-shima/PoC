@@ -5,8 +5,12 @@ function loadMap() {
     var selectedMap = document.getElementById("mapSelector").value;
     if (selectedMap == "") {
         return;
-    }else if(selectedMap === 'storeLocator'){
+    } else if (selectedMap === 'storeLocator') {
         window.location.href = '/storeLocator.html';
+    }else if (selectedMap === 'japanSearch'){
+        window.location.href = '/japanSearch.html';
+    }else if(selectedMap === 'test'){
+        window.location.href = '/test.html';
     }
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
@@ -18,6 +22,10 @@ function loadMap() {
 function init() {
     document.getElementById('features').style = 'visibility:hidden;';
     document.getElementById('legend').style = 'visibility:hidden;';
+    document.getElementById('instructions').style = 'visibility: hidden;';
+
+    const mapcontainer = document.getElementById('map');
+    mapcontainer.innerHTML = '';
 
     if (map && geocoder) {
         map.removeControl(geocoder);
@@ -26,7 +34,7 @@ function init() {
     }
 }
 
-function initZoom(title){
+function initZoom(title) {
     document.getElementById('mapType').innerHTML = `${title}`;
     document.getElementById('pd').innerHTML = `<p id='zl'>Zoom Level:<p id='z'>${map.getZoom().toFixed(2)}</p></p>`;
 
@@ -41,3 +49,4 @@ function initZoom(title){
 
 let map;
 let geocoder;
+

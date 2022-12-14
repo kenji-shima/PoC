@@ -77,3 +77,15 @@ p {
     height: 10px;
     margin-right: 5px;
 }
+
+#instructions {
+    position: absolute;
+    margin: 20px;
+    width: 25%;
+    top: 140px;
+    bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    overflow-y: scroll;
+    font-family: sans-serif;
+  }

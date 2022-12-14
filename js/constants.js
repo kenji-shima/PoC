@@ -329,3 +329,41 @@ const stores = {
 stores.features.forEach((store, i) => {
     store.properties.id = i;
 });
+
+const session_token = uuidv4();
+
+let lng = 139.6806874;
+let lat = 35.697656;
+
+const search_uri = 'https://api.mapbox.com/search/v1/';
+
+const common_params = `language=ja&country=jp&access_token=${mapboxgl.accessToken}`;
+
+const geocoding_uri = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+
+
+function uuidv4() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    );
+}
+
+function createPostObj() {
+    const postObj = {
+        method: 'POST',
+        mode: 'no-cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    return postObj;
+}
+
+const directionBounds = [
+    [-123.069003, 45.395273],
+    [-122.303707, 45.612333]
+];
