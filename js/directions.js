@@ -9,7 +9,7 @@ map.setMaxBounds(directionBounds);
 
 async function getRoute(end) {
     const start = [-122.662323, 45.523751];
-    const query = await fetch(`https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`, { method: 'GET' });
+    const query = await fetch(`${directions_uri}cycling/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`, { method: 'GET' });
     const json = await query.json();
 
     const data = json.routes[0];

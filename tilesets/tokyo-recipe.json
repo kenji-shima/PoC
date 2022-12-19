@@ -1,0 +1,10 @@
+{
+    "version":1,
+    "layers":{
+        "tokyo":{
+            "source" : "mapbox://tileset-source/kenji-shima/tokyo",
+            "minzoom":5,
+            "maxzoom":16
+        }
+    }
+}

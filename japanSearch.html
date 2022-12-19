@@ -13,9 +13,10 @@
         <div class='heading'>
             
             <input type='textbox' id="searchBox" />
-            <input type='button' value='Search' onclick="search()" />
-            <span><input id="radius" type="number" style="width: 50px" value="10" />&nbsp;km
-            <input type="checkbox" id="google" /><img width="20" height="20" src="./images/google.png" /></span>
+            <input type='button' value='Search' onclick="search()" /><br>
+            <span>範囲：<input id="radius" type="number" style="width: 50px" value="10" />&nbsp;km<br>
+            <input type="checkbox" id="google" /> GoogleMapsと比較
+            <img width="20" height="20" src="./images/google.png" style="visibility: hidden;" /></span>
             <span style="visibility: hidden;">results:<span id="count">0</span>
             </span>
         </div>

@@ -31,7 +31,7 @@
   gets 2/3 of the page. You can adjust this to your personal liking. */
   .sidebar {
       position: absolute;
-      width: 33.3333%;
+      width: 20%;
       height: 100%;
       top: 0;
       left: 0;
@@ -41,8 +41,8 @@
 
   .map {
       position: absolute;
-      left: 33.3333%;
-      width: 66.6666%;
+      left: 20%;
+      width: 80%;
       top: 0;
       bottom: 0;
   }
@@ -50,8 +50,8 @@
   .heading {
       background: #fff;
       border-bottom: 1px solid #eee;
-      height: 60px;
-      line-height: 60px;
+      height: 100px;
+      line-height: 30px;
       padding: 0 10px;
   }
 
@@ -180,5 +180,5 @@
   }
 
   .mapboxgl-popup {
-      padding-bottom: 50px;
+      padding-bottom: 10px;
   }

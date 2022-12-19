@@ -341,6 +341,8 @@ const common_params = `language=ja&country=jp&access_token=${mapboxgl.accessToke
 
 const geocoding_uri = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
 
+const directions_uri = 'https://api.mapbox.com/directions/v5/mapbox/';
+
 
 function uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>

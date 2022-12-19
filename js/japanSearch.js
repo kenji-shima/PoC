@@ -15,7 +15,7 @@ map.on('contextmenu', (e) => {
     lng = e.lngLat['lng'];
     lat = e.lngLat['lat'];
     removeAllMarkers();
-    setMarker([lng,lat], 'blue');
+    setMarker([lng, lat], 'blue');
 });
 
 function search() {
@@ -53,16 +53,31 @@ function setSuggestionList(searchText) {
             details.innerHTML = `${item.description}<br>`;
 
             getGeocoding(item.description).then(geolist => {
-                console.log(geolist)
+                //console.log(geolist)
                 const cors = geolist.features[0].geometry.coordinates
                 const marker = setMarker(cors)
                 const distance = getDistance(cors) + 'km';
+
+                let all_steps = '';
+                let stepsInstructions = '';
+                getRoute(cors).then(route => {
+                    
+                    const steps = route.routes[0].legs[0].steps;
+
+                    for (const step of steps) {
+                        stepsInstructions += `<li>${step.maneuver.instruction}</li>`;
+                    }
+
+                    all_steps = `<p><strong>道順： ${Math.floor(route.routes[0].duration / 60)} 分</strong></p><ol>${stepsInstructions}</ol>`;
+                });
+
                 const popup = new mapboxgl.Popup({ closeOnClick: true })
                     .setLngLat(cors)
-                    .setHTML(`<h3>${item.feature_name}</h3><h4>${item.description}</h4><div class='distance'>${distance}</div>`)
+                    .setHTML(`<h3>${item.feature_name}</h3><h4>${item.description}</h4><div class='distance'>${distance}</div><div>${stepsInstructions}</div>`)
+                    //.setHTML(`<div>${all_steps}</div>`)
                 marker.setPopup(popup)
 
-                const distance_div= details.appendChild(document.createElement('div'));
+                const distance_div = details.appendChild(document.createElement('div'));
                 distance_div.className = 'distance';
                 distance_div.innerHTML = distance;
 
@@ -84,7 +99,7 @@ function setSuggestionList(searchText) {
         //console.log(json);
         map.fitBounds(getBbox());
         const google = document.getElementById('google').checked;
-        if(google){
+        if (google) {
             openGoogle(searchText);
         }
     });
@@ -127,12 +142,18 @@ function removePopups() {
 }
 
 function setMarker(coordinates, color) {
-    if(!color) color = '#ff0000';
-    const marker = new mapboxgl.Marker({ color:  color});
+    if (!color) color = '#ff0000';
+    const marker = new mapboxgl.Marker({ color: color });
     marker.setLngLat(coordinates).addTo(map);
     mapMarkers.push(marker);
     return marker;
 }
+
+async function getRoute(end) {
+    const query = await fetch(`${directions_uri}walking/${lng},${lat};${end[0]},${end[1]}?language=ja&&access_token=${mapboxgl.accessToken}&steps=true&geometries=geojson`, { method: 'GET' });
+    return await query.json();
+}
+
 async function getGeocoding(address) {
     address = convertAddress(address);
     const query = await fetch(`${geocoding_uri}${address}.json?${common_params}`, { method: 'GET' });
@@ -148,7 +169,7 @@ async function getSuggested(searchText) {
 
 function getBbox() {
     const radius = document.getElementById('radius').value;
-    if(!radius){
+    if (!radius) {
         radius = 10;
     }
     const point = turf.point([lng, lat]);
