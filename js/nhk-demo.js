@@ -1,18 +1,25 @@
 map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/kenji-shima/clbouxigl000y15qnwbiktdkh',
+    style: 'mapbox://styles/kenji-shima/clbx9hi7m000714odsehmkdob',
     center: [lng, lat],
     zoom: 10
 });
 
 map.on('load', () => {
-    setDisasterPoints();
+    setCameraSource();
+    //setDisasterPoints();
     setWarningWards();
+    //randomPointsInTokyo()
 });
 
 
 async function getCameraPoints() {
-    const query = await fetch('./data/disaster-tokyo.geojson', { method: 'GET' });
+    const query = await fetch('./data/camera-tokyo.geojson', { method: 'GET' });
+    return await query.json();
+}
+
+async function getVideoPoints() {
+    const query = await fetch('./data/video-tokyo.geojson', { method: 'GET' });
     return await query.json();
 }
 
@@ -26,8 +33,8 @@ async function getCities() {
     return await query.json();
 }
 
-const warning_cities = ['中野区', '品川区', '江東区','台東区','渋谷区','世田谷区','港区','足立区','文京区','新宿区'];
-const warning_type = ['大雨注意報','大雨警報','大雨・洪水警報'];
+const warning_cities = ['中野区', '品川区', '江東区', '台東区', '渋谷区', '世田谷区', '港区', '足立区', '文京区', '新宿区'];
+const warning_type = ['大雨注意報', '大雨警報', '大雨・洪水警報'];
 const warning_color = ['yellow', 'orange', 'red'];
 
 function setWarningWards() {
@@ -54,13 +61,13 @@ function setWarningWards() {
                     const featureData = json[layer].data[worldview][feature];
                     if (featureData.iso_3166_1 === 'JP') {
                         city_list[featureData['name']] = featureData;
-                        
+
                     }
                 }
             }
         }
 
-        for(const city of warning_cities){
+        for (const city of warning_cities) {
             const warning_index = getRandomInt(3);
             createListItem(city_list[city], warning_index);
             map.setFeatureState(
@@ -98,7 +105,7 @@ function setWarningWards() {
                 'fill-opacity': 0.6
             }
         },
-        'waterway-label'
+            'waterway-label'
         );
 
         /*map.addSource('warning-wards', {
@@ -126,36 +133,254 @@ function flyToWard(item) {
         zoom: 12,
         duration: 1000
     });
+    //setDisasterPointsIf(item.name)
 }
 
 function createListItem(item, warning_index) {
-    const listings = document.getElementById('listings');
-    const listing = listings.appendChild(document.createElement('div'));
+    const listings = document.getElementById('asideList');
+    const listing = listings.appendChild(document.createElement('li'));
     listing.id = `listing-${item.feature_id}`;
-    listing.className = 'item';
+    listing.className = 'asideAnchor';
 
     const link = listing.appendChild(document.createElement('a'));
     link.href = '#';
     link.className = 'title';
     link.id = `link-${item.feature_id}`;
-    link.innerHTML = `<span style='color:${warning_color[warning_index]}'>${item.name}</span>`;
+    link.innerHTML = `<span>${item.name}</span>`;
 
     link.addEventListener('click', function () {
         flyToWard(item);
+        //clearAllMarkers();
     });
 
     const details = listing.appendChild(document.createElement('div'));
-    details.className = 'warning-type';
-    details.innerHTML = `<span style='color:${warning_color[warning_index]}'>${warning_type[warning_index]}</span>`;
+    //details.className = 'warning-type';
+    details.innerHTML = `<span>${warning_type[warning_index]}</span>`;
 }
+
+let wardJson;
+let wardArray = [];
+
+const cluster_color = '#0076D1';
+
+function filterByShowWards(pointsJson) {
+    fetchDataJson('tokyo-by-ward.geojson').then(json => {
+        /*map.addSource('tokyo_wards', {
+            type: 'geojson',
+            data: json
+        });*/
+
+        let polyArray = [];
+
+        for (const feature of json.features) {
+            if (warning_cities.includes(feature.properties.ward_ja)) {
+                const arr = getPolygonArray(feature);
+                for(const a of arr){
+                    polyArray.push(a);
+                }
+            }
+        }
+
+        let fc = { 'type': 'FeatureCollection', 'features': [] };
+        for (const feature of pointsJson.features) {
+            const cors = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
+            var point = turf.point(cors);
+            
+            for(const p of polyArray){
+                
+                const poly = L.polygon(p);
+                var polygon = poly.toGeoJSON();
+                var inside = turf.inside(point, polygon);
+
+                //console.log(inside)
+
+                if(inside){
+                    fc.features.push(feature);
+                }
+
+            }
+        }
+
+    });
+}
+
+function setSource(json, name, color, func){
+    map.addSource(`${name}_points`, {
+        type: 'geojson',
+        data: json,
+        cluster: true,
+        clusterMaxZoom: 14,
+        clusterRadius: 50
+    });
+
+    map.addLayer({
+        id: `unclustered-${name}-points`,
+        type: 'circle',
+        source: `${name}_points`,
+        filter: ['!', ['has', 'point_count']],
+        paint: {
+            'circle-color': color,
+            'circle-radius': 7,
+            'circle-stroke-width': 1,
+            'circle-stroke-color': '#fff'
+        }
+    });
+
+    map.addLayer({
+        id: `${name}-clusters`,
+        type: 'circle',
+        source: `${name}_points`,
+        filter: ['has', 'point_count'],
+        paint: {
+            'circle-color': [
+                'step',
+                ['get', 'point_count'],
+                color,
+                100,
+                color,
+                750,
+                color
+            ],
+            'circle-radius': [
+                'step',
+                ['get', 'point_count'],
+                20,
+                100,
+                30,
+                750,
+                40
+            ]
+        }
+    });
+
+    map.addLayer({
+        id: `${name}-cluster-count`,
+        type: 'symbol',
+        source: `${name}_points`,
+        filter: ['has', 'point_count'],
+        layout: {
+            'text-field': ['get', 'point_count_abbreviated'],
+            'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+            'text-size': 12
+        },
+        paint: {
+            'text-color': '#fff'
+        }
+    });
+
+    map.on('click', `unclustered-${name}-points`, (event) => {
+        window['createPopup'](event.features[0], func, color);
+        //createPopup(event.features[0]);
+    });
+
+    map.on('click', `${name}-clusters`, (event) => {
+        const features = map.queryRenderedFeatures(event.point, {
+            layers: [`${name}-clusters`]
+        });
+        const clusterId = features[0].properties.cluster_id;
+        map.getSource(`${name}_points`).getClusterExpansionZoom(
+            clusterId,
+            (err, zoom) => {
+                if (err) return;
+                map.easeTo({
+                    center: features[0].geometry.coordinates,
+                    zoom: zoom
+                });
+            }
+        );
+    });
+}
+
+function setCameraSource() {
+    getVideoPoints().then(json => {
+        setSource(json, 'video', 'blue', 'getVideoOverlay');
+    });
+
+    getCameraPoints().then(json => {
+        //filterByShowWards(json)
+
+        setSource(json, 'camera', 'green', 'getImageOverlay');
+
+    });
+
+    /*fetchDataJson('tokyo-by-ward.geojson').then(json => {
+        /*map.addSource('tokyo_wards', {
+            type: 'geojson',
+            data: json
+        });*/
+
+    /*wardJson = json;
+
+    for (const feature of json.features) {
+        wardArray[feature.properties.ward_ja] = feature;
+    }
+});*/
+}
+
+/*let markerArray = [];
+
+async function getWardJson() {
+    return wardJson;
+}*/
+
+/*function setDisasterPointsIf(ward_ja) {
+
+    console.log(wardArray[ward_ja])
+
+    const now = new Date().getTime()
+    //fetchDataJson('tokyo-by-ward.geojson').then(json => {
+    getWardJson().then(json => {
+        //promiseList.push(json)
+        let targetWard;
+        for (const ward of json.features) {
+            if (ward.properties.ward_ja === ward_ja) {
+                targetWard = ward;
+                break;
+            }
+        }
+
+        if (targetWard) {
+            wardPolyList = getPolygonArray(targetWard);
+
+            for (const marker of map.getSource('disaster_points')._data.features) {
+
+                let i = 0;
+                let index = 0;
+                const polygon = L.polygon(wardPolyList[index]);
+
+                const cors = [marker.geometry.coordinates[1], marker.geometry.coordinates[0]];
+
+                var point = turf.point(cors);
+                var poly = polygon.toGeoJSON();
+                var inside = turf.inside(point, poly);
+
+                if (inside) {
+                    const el = document.createElement('div');
+                    el.className = 'alert-marker';
+
+                    el.addEventListener('click', (event) => {
+                        createPopup(marker);
+                    });
+
+                    const markerItem = new mapboxgl.Marker(el, { offset: [0, 23] })
+                        .setLngLat(marker.geometry.coordinates)
+                        .addTo(map);
+
+                    markerArray.push(markerItem);
+
+                }
+            }
+        }
+    });
+}*/
 
 function setDisasterPoints() {
 
     getCameraPoints().then(json => {
-        map.addSource('disaster_points', {
+        /*map.addSource('disaster_points', {
             type: 'geojson',
             data: json
-        });
+        });*/
 
         for (const marker of json.features) {
             const el = document.createElement('div');
@@ -164,7 +389,7 @@ function setDisasterPoints() {
             el.addEventListener('click', (event) => {
                 createPopup(marker);
             });
-
+            //console.log(marker.geometry.coordinates)
             new mapboxgl.Marker(el, { offset: [0, 23] })
                 .setLngLat(marker.geometry.coordinates)
                 .addTo(map);
@@ -187,15 +412,61 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-function createPopup(currentFeature) {
+/*function clearAllMarkers() {
+    for (const marker of markerArray) {
+        //map.remove(marker);
+        marker.remove();
+    }
+    markerArray = [];
+}*/
+
+function closeOverlay(elem) {
+    elem.parentNode.parentNode.parentNode.removeChild(elem.parentNode.parentNode);
+    overlayCount--;
+}
+
+let overlayCount = 0;
+
+function createPopup(currentFeature, func, color) {
+    fetchReverseGeo(currentFeature.geometry.coordinates).then(json => {
+        let place = '';
+        for (const f of json.features) {
+            if (f.place_type = 'address') {
+                place = f.place_name;
+                place = place.substring(place.indexOf(',') + 1);
+                place = place.trim();
+                break;
+            }
+        }
+
+        const current = getCurrent();
+        const overlay = document.getElementById('overlay-list');
+        //overlay.style = 'visibility: visible; bottom:300';
+        overlay.innerHTML = '';
+        const newChild = overlay.appendChild(document.createElement('div'));
+        //newChild.innerHTML = `<h3>${place}</h3><div>${current} 撮影</div><div><img onclick='toggleFullscreen(this)' src='./data/${image}.jpg' width='100%' height='100%' /></div>`;
+
+        newChild.className = 'map-overlay';
+
+        /*if(overlayCount > 0){
+            newChild.style.bottom = ((100 * overlayCount) + 10);
+        }*/
+
+        newChild.innerHTML = `<div><a class='boxclose' onclick="closeOverlay(this)"></a></div><h3 style='background: ${color}'>${place}</h3><div>${current} 撮影</div>${window[func]()}`;
+
+        overlayCount++;
+
+    });
+
+}
+
+function getImageOverlay(){
     const image = getImage();
-    const current = getCurrent();
-    const popUps = document.getElementsByClassName('mapboxgl-popup');
-    if (popUps[0]) popUps[0].remove();
-    const popup = new mapboxgl.Popup({ closeOnClick: false })
-        .setLngLat(currentFeature.geometry.coordinates)
-        .setHTML(`<h4>${currentFeature.properties.place}近辺</h4><div>${current} 撮影</div><div><img onclick='toggleFullscreen(this)' src='./data/${image}.jpg' width='200' height='150' /></div>`)
-        .addTo(map);
+    return `<div><img onclick='toggleFullscreen(this)' src='./data/${image}.jpg' width='100%' height='100%' /></div>`;
+}
+
+function getVideoOverlay(){
+    return `<div><video width='100%' height='0%' controls loop autoplay> <source src='./data/video.mp4' type='video/mp4' />サポートされないブラウザです。</video></div>`;
 }
 
 function toggleFullscreen(elem) {

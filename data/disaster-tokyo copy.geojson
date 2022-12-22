@@ -1,0 +1,131 @@
+{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "place": "東京都中野区"
+      },
+      "geometry": {
+        "coordinates": [
+          139.715706,
+          35.70884
+        ],
+        "type": "Point"
+      },
+      "id": "2ff9c2d56d3c8e7f12fb803b40e492e1"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place": "東京都千代田区"
+      },
+      "geometry": {
+        "coordinates": [
+          139.69118,
+          35.670366
+        ],
+        "type": "Point"
+      },
+      "id": "37aab11c0d9b928e222ffee06da88bb9"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place": "東京都北区"
+      },
+      "geometry": {
+        "coordinates": [
+          139.685805,
+          35.698473
+        ],
+        "type": "Point"
+      },
+      "id": "6705b9da1615c261a3cc38af876ba901"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place": "東京都墨田区"
+      },
+      "geometry": {
+        "coordinates": [
+          139.743087,
+          35.702839
+        ],
+        "type": "Point"
+      },
+      "id": "6a76c5373fd9d2b6feede54ad52ed184"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place": "東京都大田区"
+      },
+      "geometry": {
+        "coordinates": [
+          139.721249,
+          35.697109
+        ],
+        "type": "Point"
+      },
+      "id": "7b706bdb9f4fbb87d11f38a06cf1caac"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place": "東京都葛飾区"
+      },
+      "geometry": {
+        "coordinates": [
+          139.705795,
+          35.685103
+        ],
+        "type": "Point"
+      },
+      "id": "8335ba5286d25acef96103e83b92f25c"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place": "東京都杉並区"
+      },
+      "geometry": {
+        "coordinates": [
+          139.741239,
+          35.685103
+        ],
+        "type": "Point"
+      },
+      "id": "bb16a6bf6b54cac07bc44c5a7e3d0e0a"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place": "東京都渋谷区"
+      },
+      "geometry": {
+        "coordinates": [
+          139.723433,
+          35.724389
+        ],
+        "type": "Point"
+      },
+      "id": "c94e440708a0dbdfa4ba011e32bec7ee"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "place": "東京都港区"
+      },
+      "geometry": {
+        "coordinates": [
+          139.700419,
+          35.722889
+        ],
+        "type": "Point"
+      },
+      "id": "df1646d67b54bd78dccecfff53957c32"
+    }
+  ],
+  "type": "FeatureCollection"
+}

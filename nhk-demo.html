@@ -7,17 +7,51 @@
     <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
     <link href="./css/nhk-demo.css" rel="stylesheet" />
     <script src="./js/constants.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
 </head>
 
 <body>
-    <div class='sidebar'>
+    <main>
+        <aside>
+          <ul class="asideList" id="asideList">
+            <!--li><a href="" class="asideAnchor">Link</a></li>
+            <li><a href="" class="asideAnchor">Link</a></li>
+            <li><a href="" class="asideAnchor">Link</a></li>
+            <li><a href="" class="asideAnchor">Link</a></li//-->
+          </ul>
+        </aside>
+        <section>
+          <input type="checkbox" id="myInput">
+          <label for="myInput">
+            <span class="bar top"></span>
+            <span class="bar middle"></span>
+            <span class="bar bottom"></span>
+          </label>
+      
+          <div class="content">
+            <div id="map" class="map"></div>
+            <div class="overlay-list" id="overlay-list">
+            <!--div class='map-overlay'>
+                <div><a class='boxclose' onclick="closeOverlay()"><a></div>
+            </div//-->
+            </div>
+          </div>
+
+          
+        </section>
+      </main>
+
+    
+    <!--div class='sidebar'>
         <div id='listings' class='listings'></div>
-    </div>
-    <div id="map" class="map"></div>
-    <!--div class='map-overlay' id='features'>
-        <h2 id="mapType"></h2>
-        <div id='pd'></div>
-    </div //-->
+    </div//-->
+    
+    
     <script src="./js/main.js"></script>
     <script src="./js/nhk-demo.js"></script>
 </body>

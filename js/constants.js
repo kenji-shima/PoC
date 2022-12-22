@@ -343,7 +343,6 @@ const geocoding_uri = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
 
 const directions_uri = 'https://api.mapbox.com/directions/v5/mapbox/';
 
-
 function uuidv4() {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
@@ -369,3 +368,134 @@ const directionBounds = [
     [-123.069003, 45.395273],
     [-122.303707, 45.612333]
 ];
+
+randomPointInPoly = function (polygon) {
+    var bounds = polygon.getBounds();
+    var x_min = bounds.getEast();
+    var x_max = bounds.getWest();
+    var y_min = bounds.getSouth();
+    var y_max = bounds.getNorth();
+
+    var lat = y_min + (Math.random() * (y_max - y_min));
+    var lng = x_min + (Math.random() * (x_max - x_min));
+
+    var point = turf.point([lng, lat]);
+    var poly = polygon.toGeoJSON();
+    var inside = turf.inside(point, poly);
+
+    if (inside) {
+        return point
+    } else {
+        return randomPointInPoly(polygon)
+    }
+}
+
+async function fetchDataJson(file) {
+    const query = await fetch(`./data/${file}`, { method: 'GET' });
+    return await query.json();
+}
+
+async function fetchReverseGeo(coordinates) {
+    const query = await fetch(`${geocoding_uri}${coordinates[0]},${coordinates[1]}.json?${common_params}`, { method: 'GET' });
+    return await query.json();
+}
+
+function getPolygonArray(ward){
+    let wardPolyList = [];
+    if (ward.geometry.type === 'Polygon') {
+        wardPolyList.push(ward.geometry.coordinates[0]);
+    } else if (ward.geometry.type === 'MultiPolygon') {
+        for (const poly of ward.geometry.coordinates) {
+            wardPolyList.push(poly[0]);
+        }
+    }
+    return wardPolyList;
+}
+
+function randomPointsInTokyo() {
+    const count = 2;
+    let randomPointsList = [];
+    let wardPolyList = [];
+
+    //let promiseList = [];
+
+    let fc = { 'type': 'FeatureCollection', 'features': [] };
+    fetchDataJson('tokyo-by-ward.geojson').then(json => {
+        //promiseList.push(json)
+        for (const ward of json.features) {
+            wardPolyList = getPolygonArray(ward);
+            wardRandomPointsList = [];
+            /*if (ward.geometry.type === 'Polygon') {
+                wardPolyList.push(ward.geometry.coordinates[0]);
+            } else if (ward.geometry.type === 'MultiPolygon') {
+                for (const poly of ward.geometry.coordinates) {
+                    wardPolyList.push(poly[0]);
+                }
+
+            }*/
+            let i = 0;
+            let index = 0;
+            while (i < count) {
+                const polygon = L.polygon(wardPolyList[index]);
+                randomPoint = randomPointInPoly(polygon);
+                randomPointsList.push(randomPoint);
+                i++;
+                index++;
+                if (index >= wardPolyList.length) {
+                    index = 0;
+                }
+                const orig = randomPoint.geometry.coordinates;
+                randomPoint.geometry.coordinates = [orig[1], orig[0]];
+
+                fc.features.push(randomPoint);
+
+                /*fetchReverseGeo(randomPoint.geometry.coordinates).then(geo => {
+                    promiseList.push(geo);
+                    for (const f of geo.features) {
+                        if (f.place_type === 'address') {
+                            randomPoint.address = f.text;
+                            break;
+                        }
+                    }
+                    //console.log(geo.features[0])
+                    //randomPoint.properties = geo.features[0].properties;
+
+                    //promiseList.push(geo);
+                });*/
+            }
+        }
+
+
+        //console.log(fc)
+
+        const listings = document.getElementById('asideList');
+        const listing = listings.appendChild(document.createElement('div'));
+        listing.className = 'item';
+
+        const link = listing.appendChild(document.createElement('a'));
+        link.href = makeTextFile(JSON.stringify(fc));
+        console.log(link.href)
+        link.className = 'title';
+        link.innerHTML = `GetFILE`;
+
+
+
+    });
+}
+
+var textFile = null,
+    makeTextFile = function (text) {
+        var data = new Blob([text], { type: 'text/plain' });
+
+        // If we are replacing a previously generated file we need to
+        // manually revoke the object URL to avoid memory leaks.
+        if (textFile !== null) {
+            window.URL.revokeObjectURL(textFile);
+        }
+
+        textFile = window.URL.createObjectURL(data);
+
+        // returns a URL you can use as a href
+        return textFile;
+    };
+
