@@ -1,0 +1,59 @@
+<html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+  <link href="./css/weather.css" rel="stylesheet" />
+  <script src="./js/constants.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+</head>
+
+<body>
+  <main>
+    <aside>
+      <ul class="asideList" id="asideList">
+        <li class="legend-title-strong">気象注意報・警報</li>
+
+        <!--li><a href="" class="asideAnchor">Link</a></li//-->
+      </ul>
+    </aside>
+    <section>
+      <input type="checkbox" id="myInput">
+      <label for="myInput">
+        <span class="bar top"></span>
+        <span class="bar middle"></span>
+        <span class="bar bottom"></span>
+      </label>
+
+      <div class="content">
+        <div id="map" class="map"></div>
+        <div class="overlay-list" id="overlay-list"></div>
+        <div class="map-overlay-legend">
+          <div class="legend-title">現場状況</div>
+          <div class="legend">
+            <span class="legend-key" style="background-color: blue;"></span>
+            静止画撮影ポイント（24時間以内）<br>
+            <span class="legend-key" style="background-color: green;"></span>
+            動画撮影ポイント（24時間以内）<br>
+          </div>
+
+          <div class="legend-title-strong">気象注意報・警報</div>
+          <div class="legend">
+            <span class="legend-key" style="background-color: yellow;"></span>
+            注意報発令中<br>
+            <span class="legend-key" style="background-color: red;"></span>
+            警報発令中<br>
+          </div>
+        </div>
+    </section>
+  </main>
+  <script src="./js/main.js"></script>
+  <script src="./js/weather.js"></script>
+</body>
+
+</html>

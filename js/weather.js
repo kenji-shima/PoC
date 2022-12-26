@@ -5,11 +5,61 @@ map = new mapboxgl.Map({
     zoom: 10
 });
 
+const SVGNS = 'http://www.w3.org/2000/svg';
+const DEGREE_TO_RADIAN = Math.PI / 180;
+const interactive = true;
+const auto = true;
+const svg = document.createElementNS(SVGNS, 'svg');
+svg.setAttributeNS(null, 'class', 'svg');
+document.getElementById('map').appendChild(svg);
+
+let waveLng;
+let waveLat;
+const wave1 = document.createElementNS(SVGNS, 'circle');
+wave1.setAttributeNS(null, 'class', interactive ? 'wave' : 'wave-bright');
+wave1.setAttributeNS(null, 'visibility', 'hidden');
+svg.appendChild(wave1);
+
+const wave2 = document.createElementNS(SVGNS, 'circle');
+wave2.setAttributeNS(null, 'class', interactive ? 'wave' : 'wave-bright');
+wave2.setAttributeNS(null, 'visibility', 'hidden');
+svg.appendChild(wave2);
+
+const updateWave = now => {
+    wave1.setAttributeNS(null, 'r', now / 10 % 100);
+    wave1.setAttributeNS(null, 'opacity', 1 - now / 3000 % 1);
+    wave2.setAttributeNS(null, 'r', (now / 10 + 200) % 100);
+    wave2.setAttributeNS(null, 'opacity', 1 - (now / 3000 + 0.5) % 1);
+};
+const repeat = now => {
+    updateWave(now);
+    requestAnimationFrame(repeat);
+};
+requestAnimationFrame(repeat);
+const updateMarker = info => {
+    const point = map.project([waveLng, waveLat]);
+    const [hx, hy] = [point.x, point.y]
+
+    wave1.setAttributeNS(null, 'cx', hx);
+    wave1.setAttributeNS(null, 'cy', hy);
+    //wave1.setAttributeNS(null, 'visibility', 'visible');
+
+    wave2.setAttributeNS(null, 'cx', hx);
+    wave2.setAttributeNS(null, 'cy', hy);
+    //wave2.setAttributeNS(null, 'visibility', 'visible');
+};
 map.on('load', () => {
     setCameraSource();
     //setDisasterPoints();
     setWarningWards();
     //randomPointsInTokyo()
+});
+
+map.on('move', () => {
+    if(waveLng){
+        updateMarker();
+    }
+    
 });
 
 
@@ -34,8 +84,11 @@ async function getCities() {
 }
 
 const warning_cities = ['中野区', '品川区', '江東区', '台東区', '渋谷区', '世田谷区', '港区', '足立区', '文京区', '新宿区'];
-const warning_type = ['大雨注意報', '大雨警報', '大雨・洪水警報'];
-const warning_color = ['yellow', 'orange', 'red'];
+const warning_type = ['大雨注意報', '大雨警報'];
+const warning_color = ['yellow', 'red'];
+
+let alert_area = [];
+let warning_area = [];
 
 function setWarningWards() {
     /*getTokyoWards().then(json => {
@@ -68,7 +121,7 @@ function setWarningWards() {
         }
 
         for (const city of warning_cities) {
-            const warning_index = getRandomInt(3);
+            const warning_index = getRandomInt(2);
             createListItem(city_list[city], warning_index);
             map.setFeatureState(
                 {
@@ -97,8 +150,8 @@ function setWarningWards() {
                         ['feature-state', 'warning'],
                         0,
                         warning_color[0],
-                        2,
-                        warning_color[2]
+                        1,
+                        warning_color[1]
                     ],
                     'rgba(255,255,255,0)'
                 ],
@@ -144,18 +197,24 @@ function createListItem(item, warning_index) {
 
     const link = listing.appendChild(document.createElement('a'));
     link.href = '#';
-    link.className = 'title';
+    //link.className = 'title';
     link.id = `link-${item.feature_id}`;
-    link.innerHTML = `<span>${item.name}</span>`;
+    link.innerHTML = `<span>${item.name}<br>${warning_type[warning_index]}</span>`;
 
     link.addEventListener('click', function () {
         flyToWard(item);
         //clearAllMarkers();
     });
 
-    const details = listing.appendChild(document.createElement('div'));
+    if(warning_index === 0){
+        warning_area.push(item.name);
+    }else if(warning_index === 1){
+        alert_area.push(item.name);
+    }
+
+    //const details = listing.appendChild(document.createElement('div'));
     //details.className = 'warning-type';
-    details.innerHTML = `<span>${warning_type[warning_index]}</span>`;
+    //details.innerHTML = ``;
 }
 
 let wardJson;
@@ -175,7 +234,7 @@ function filterByShowWards(pointsJson) {
         for (const feature of json.features) {
             if (warning_cities.includes(feature.properties.ward_ja)) {
                 const arr = getPolygonArray(feature);
-                for(const a of arr){
+                for (const a of arr) {
                     polyArray.push(a);
                 }
             }
@@ -185,16 +244,16 @@ function filterByShowWards(pointsJson) {
         for (const feature of pointsJson.features) {
             const cors = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
             var point = turf.point(cors);
-            
-            for(const p of polyArray){
-                
+
+            for (const p of polyArray) {
+
                 const poly = L.polygon(p);
                 var polygon = poly.toGeoJSON();
                 var inside = turf.inside(point, polygon);
 
                 //console.log(inside)
 
-                if(inside){
+                if (inside) {
                     fc.features.push(feature);
                 }
 
@@ -204,7 +263,7 @@ function filterByShowWards(pointsJson) {
     });
 }
 
-function setSource(json, name, color, func){
+function setSource(json, name, color, func) {
     map.addSource(`${name}_points`, {
         type: 'geojson',
         data: json,
@@ -220,10 +279,17 @@ function setSource(json, name, color, func){
         filter: ['!', ['has', 'point_count']],
         paint: {
             'circle-color': color,
-            'circle-radius': 7,
+            'circle-radius': 8,
             'circle-stroke-width': 1,
             'circle-stroke-color': '#fff'
         }
+    });
+
+    map.on('mousemove', `unclustered-${name}-points`, (event) => {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', `unclustered-${name}-points`, () => {
+        map.getCanvas().style.cursor = '';
     });
 
     map.addLayer({
@@ -422,6 +488,8 @@ function getRandomInt(max) {
 
 function closeOverlay(elem) {
     elem.parentNode.parentNode.parentNode.removeChild(elem.parentNode.parentNode);
+    wave1.setAttributeNS(null, 'visibility', 'hidden');
+    wave2.setAttributeNS(null, 'visibility', 'hidden');
     overlayCount--;
 }
 
@@ -430,12 +498,17 @@ let overlayCount = 0;
 function createPopup(currentFeature, func, color) {
     fetchReverseGeo(currentFeature.geometry.coordinates).then(json => {
         let place = '';
+        let ward = ''
         for (const f of json.features) {
-            if (f.place_type = 'address') {
+            if((f.id.startsWith('address') || f.id.startsWith('postcode')) && place === ''){
                 place = f.place_name;
                 place = place.substring(place.indexOf(',') + 1);
                 place = place.trim();
-                break;
+                
+            }else if(f.id.startsWith('locality') && ward === ''){
+                ward = f.text_ja;
+            }else if(f.id.startsWith('place') && ward === ''){
+                ward = f.text_ja;
             }
         }
 
@@ -452,20 +525,35 @@ function createPopup(currentFeature, func, color) {
             newChild.style.bottom = ((100 * overlayCount) + 10);
         }*/
 
-        newChild.innerHTML = `<div><a class='boxclose' onclick="closeOverlay(this)"></a></div><h3 style='background: ${color}'>${place}</h3><div>${current} 撮影</div>${window[func]()}`;
+        let warningText = '';
+
+        if(warning_area.includes(ward)){
+            warningText = `<div class="legend-title-warning">大雨注意報</div>`;
+        }else if(alert_area.includes(ward)){
+            warningText = `<div class="legend-title-strong">大雨警報</div>`;
+        }
+
+        newChild.innerHTML = `<div><a class='boxclose' onclick="closeOverlay(this)"></a></div><h3 style='background: ${color}'>${place}</h3><div>${current} 撮影</div>${warningText}${window[func]()}`;
 
         overlayCount++;
+
+        waveLng = currentFeature.geometry.coordinates[0];
+        waveLat = currentFeature.geometry.coordinates[1];
+
+        updateMarker();
+        wave1.setAttributeNS(null, 'visibility', 'visible');
+        wave1.setAttributeNS(null, 'visibility', 'visible');
 
     });
 
 }
 
-function getImageOverlay(){
+function getImageOverlay() {
     const image = getImage();
     return `<div><img onclick='toggleFullscreen(this)' src='./data/${image}.jpg' width='100%' height='100%' /></div>`;
 }
 
-function getVideoOverlay(){
+function getVideoOverlay() {
     return `<div><video width='100%' height='0%' controls loop autoplay> <source src='./data/video.mp4' type='video/mp4' />サポートされないブラウザです。</video></div>`;
 }
 

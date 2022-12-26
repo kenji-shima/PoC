@@ -9,8 +9,8 @@ function loadMap() {
         window.location.href = '/storeLocator.html';
     }else if (selectedMap === 'japanSearch'){
         window.location.href = '/japanSearch.html';
-    }else if(selectedMap === 'nhk-demo'){
-        window.location.href = '/nhk-demo.html';
+    }else if(selectedMap === 'weather'){
+        window.location.href = '/weather.html';
     }
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
