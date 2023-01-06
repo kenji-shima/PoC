@@ -1,6 +1,7 @@
 map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/kenji-shima/clbx9hi7m000714odsehmkdob',
+    //style: 'mapbox://styles/kenji-shima/clck4sxaf000414r7qc2h8by7',
     center: [lng, lat],
     zoom: 10
 });
@@ -90,6 +91,9 @@ const warning_color = ['yellow', 'red'];
 let alert_area = [];
 let warning_area = [];
 
+let city_list = {};
+const getCityId = (name) => Object.keys(city_list).find(key => city_list[key].name === name);
+
 function setWarningWards() {
     /*getTokyoWards().then(json => {
         let fc = { 'type': 'FeatureCollection', 'features': [] };
@@ -107,13 +111,14 @@ function setWarningWards() {
 
     getCities().then(json => {
 
-        const city_list = {};
+        //const city_list = {};
         for (const layer in json) {
             for (const worldview in json[layer].data) {
                 for (const feature in json[layer].data[worldview]) {
                     const featureData = json[layer].data[worldview][feature];
                     if (featureData.iso_3166_1 === 'JP') {
-                        city_list[featureData['name']] = featureData;
+                        //city_list[featureData['name']] = featureData;
+                        city_list[featureData.feature_id] = featureData;
 
                     }
                 }
@@ -122,12 +127,14 @@ function setWarningWards() {
 
         for (const city of warning_cities) {
             const warning_index = getRandomInt(2);
-            createListItem(city_list[city], warning_index);
+            //createListItem(city_list[city], warning_index);
+            createListItem(city_list[getCityId(city)], warning_index);
             map.setFeatureState(
                 {
                     source: 'city-data',
                     sourceLayer: 'boundaries_admin_3',
-                    id: city_list[city].feature_id
+                    //id: city_list[city].feature_id
+                    id: getCityId(city)
                 },
                 {
                     warning: warning_index
@@ -160,6 +167,28 @@ function setWarningWards() {
         },
             'waterway-label'
         );
+
+        map.on('mousemove', 'warning-cities', (event) => {
+            const popUps = document.getElementsByClassName('mapboxgl-popup');
+            if (popUps[0]) popUps[0].remove();
+            const features = map.queryRenderedFeatures(event.point, {
+                layers: ['warning-cities']
+            });
+            const currentFeature = features[0];
+            /*if(!alert_area.includes(currentFeature.id.toString()) && !warning_area.includes(currentFeature.id.toString())){
+                return;
+            }*/
+            
+            const popup = new mapboxgl.Popup({ closeOnClick: false, closeButton: false, closeOnMove: true })
+                .setLngLat(event.lngLat)
+                .setHTML(`<h4>${city_list[currentFeature.id].name}</h4>`)
+                .addTo(map);
+        });
+
+        map.on('mouseleave', 'warning-cities', () => {
+            const popUps = document.getElementsByClassName('mapboxgl-popup');
+            if (popUps[0]) popUps[0].remove();
+        });
 
         /*map.addSource('warning-wards', {
             type: 'geojson',
@@ -205,11 +234,12 @@ function createListItem(item, warning_index) {
         flyToWard(item);
         //clearAllMarkers();
     });
-
     if(warning_index === 0){
-        warning_area.push(item.name);
+        //warning_area.push(item.name);
+        warning_area.push(item.feature_id.toString());
     }else if(warning_index === 1){
-        alert_area.push(item.name);
+        //alert_area.push(item.name);
+        alert_area.push(item.feature_id.toString());
     }
 
     //const details = listing.appendChild(document.createElement('div'));
@@ -222,12 +252,8 @@ let wardArray = [];
 
 const cluster_color = '#0076D1';
 
-function filterByShowWards(pointsJson) {
+/*function filterByShowWards(pointsJson) {
     fetchDataJson('tokyo-by-ward.geojson').then(json => {
-        /*map.addSource('tokyo_wards', {
-            type: 'geojson',
-            data: json
-        });*/
 
         let polyArray = [];
 
@@ -261,7 +287,7 @@ function filterByShowWards(pointsJson) {
         }
 
     });
-}
+}*/
 
 function setSource(json, name, color, func) {
     map.addSource(`${name}_points`, {
@@ -360,12 +386,14 @@ function setSource(json, name, color, func) {
 function setCameraSource() {
     getVideoPoints().then(json => {
         setSource(json, 'video', 'blue', 'getVideoOverlay');
+        //setSource(json, 'video', 'pink', 'getVideoOverlay');
     });
 
     getCameraPoints().then(json => {
         //filterByShowWards(json)
 
         setSource(json, 'camera', 'green', 'getImageOverlay');
+        //setSource(json, 'camera', 'purple', 'getImageOverlay');
 
     });
 
@@ -474,6 +502,17 @@ function getImage() {
     }
 }
 
+function getVideo() {
+    const random = getRandomInt(3);
+    if (random === 0) {
+        return 'sunny';
+    } else if (random === 1) {
+        return 'sunset';
+    } else {
+        return 'thunder';
+    }
+}
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
@@ -527,9 +566,9 @@ function createPopup(currentFeature, func, color) {
 
         let warningText = '';
 
-        if(warning_area.includes(ward)){
+        if(warning_area.includes(getCityId(ward))){
             warningText = `<div class="legend-title-warning">大雨注意報</div>`;
-        }else if(alert_area.includes(ward)){
+        }else if(alert_area.includes(getCityId(ward))){
             warningText = `<div class="legend-title-strong">大雨警報</div>`;
         }
 
@@ -554,7 +593,8 @@ function getImageOverlay() {
 }
 
 function getVideoOverlay() {
-    return `<div><video width='100%' height='0%' controls loop autoplay> <source src='./data/video.mp4' type='video/mp4' />サポートされないブラウザです。</video></div>`;
+    const video = getVideo();
+    return `<div><video width='100%' height='0%' controls loop autoplay> <source src='./data/${video}.mp4' type='video/mp4' />サポートされないブラウザです。</video></div>`;
 }
 
 function toggleFullscreen(elem) {

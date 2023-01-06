@@ -1,0 +1,10 @@
+{
+    "version":1,
+    "layers":{
+        "chizuzou-zenken":{
+            "source" : "mapbox://tileset-source/kenji-shima/chizuzou-zenken",
+            "minzoom":0,
+            "maxzoom":8
+        }
+    }
+}

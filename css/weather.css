@@ -125,6 +125,7 @@ main {
 
 aside {
   background-color: #0076D1;
+  /*background-color: lightseagreen;*/
   position: fixed;
   top: 0;
   bottom: 0;
@@ -357,4 +358,9 @@ input[type="checkbox"]:checked~label .middle {
   /*color: #fff; */
   padding-left: 10px; 
   border-bottom: 2px solid rgba(255, 255, 255, .7);
+}
+
+.mapboxgl-popup {
+  padding-bottom: 10px;
+  opacity: 0.8;
 }

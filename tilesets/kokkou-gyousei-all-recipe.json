@@ -1,0 +1,10 @@
+{
+    "version":1,
+    "layers":{
+        "gyousei-all":{
+            "source" : "mapbox://tileset-source/kenji-shima/kokkou-gyousei-all-source",
+            "minzoom":9,
+            "maxzoom":12
+        }
+    }
+}

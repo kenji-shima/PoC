@@ -330,6 +330,17 @@ stores.features.forEach((store, i) => {
     store.properties.id = i;
 });
 
+const news = {
+    '13': {
+        '13119': { 'title': 'title1', 'summary': 'summary1', 'details': 'details1' },
+        '13120': { 'title': 'title1', 'summary': 'summary1', 'details': 'details1' }
+    },
+    '14': {
+        '14119': { 'title': 'title1', 'summary': 'summary1', 'details': 'details1' },
+        '14120': { 'title': 'title1', 'summary': 'summary1', 'details': 'details1' }
+    }
+}
+
 const session_token = uuidv4();
 
 let lng = 139.6806874;
@@ -395,12 +406,17 @@ async function fetchDataJson(file) {
     return await query.json();
 }
 
+async function fetchJson(file) {
+    const query = await fetch(file, { method: 'GET' });
+    return await query.json();
+}
+
 async function fetchReverseGeo(coordinates) {
     const query = await fetch(`${geocoding_uri}${coordinates[0]},${coordinates[1]}.json?${common_params}`, { method: 'GET' });
     return await query.json();
 }
 
-function getPolygonArray(ward){
+function getPolygonArray(ward) {
     let wardPolyList = [];
     if (ward.geometry.type === 'Polygon') {
         wardPolyList.push(ward.geometry.coordinates[0]);

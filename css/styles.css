@@ -90,3 +90,8 @@ p {
     font-family: sans-serif;
   }
 
+  .mapboxgl-popup {
+    padding-bottom: 10px;
+    opacity: 0.8;
+  }
+

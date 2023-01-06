@@ -1,0 +1,25 @@
+{
+    "version":1,
+    "layers":{
+        "gyousei-tokyo":{
+            "source" : "mapbox://tileset-source/kenji-shima/kokkou-gyousei-tokyo",
+            "minzoom":9,
+            "maxzoom":12
+        },
+        "gyousei-kanagawa":{
+            "source" : "mapbox://tileset-source/kenji-shima/kokkou-gyousei-kanagawa",
+            "minzoom":9,
+            "maxzoom":12
+        },
+        "gyousei-chiba":{
+            "source" : "mapbox://tileset-source/kenji-shima/kokkou-gyousei-chiba",
+            "minzoom":9,
+            "maxzoom":12
+        },
+        "gyousei-saitama":{
+            "source" : "mapbox://tileset-source/kenji-shima/kokkou-gyousei-saitama",
+            "minzoom":9,
+            "maxzoom":12
+        }
+    }
+}
