@@ -11,6 +11,8 @@ function loadMap() {
         window.location.href = '/japanSearch.html';
     }else if(selectedMap === 'weather'){
         window.location.href = '/weather.html';
+    }else if(selectedMap === 'administrative-division'){
+        window.location.href = '/administrativeDivision.html';
     }
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');

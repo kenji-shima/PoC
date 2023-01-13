@@ -1,0 +1,254 @@
+/**
+  * Create a position for the map
+  * on the page */
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.map-overlay {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    background: #fff;
+    overflow: auto;
+    border-radius: 3px;
+    max-height: 80%;
+    width: 90%;
+    padding: 10px;
+    font: 400 12px/22px 'Source Sans Pro', 'Helvetica Neue', sans-serif;
+    /*transition: transform .5s ease-in-out;*/
+    animation: slide-in 1s;
+}
+
+#features {
+    top: 0;
+    height: 100px;
+    margin-top: 20px;
+    width: 250px;
+}
+
+.mapboxgl-popup {
+    padding-bottom: 10px;
+    opacity: 0.8;
+}
+
+
+
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    color: #000;
+    /*font-family: 'DM Mono', monospace;*/
+}
+
+a {
+    /*text-decoration: none;*/
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.fall {
+    animation: fallAway forwards 1s ease-out 1;
+}
+
+@keyframes fallAway {
+    0% {
+        transform: rotateZ(0deg);
+        top: 0;
+        opacity: 1;
+    }
+
+    25% {
+        transform: rotateZ(-15deg);
+    }
+
+    100% {
+        top: 300px;
+        transform: rotateZ(-5deg);
+        opacity: 0;
+    }
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(500%);
+    }
+
+    to {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(-500%);
+    }
+
+    to {
+        transform: translateY(0%);
+    }
+}
+
+.card-list {
+    display: flex;
+    padding: 2em;
+    overflow-x: scroll;
+}
+
+.card-list::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.card-list::-webkit-scrollbar-thumb {
+    background: #201c29;
+    border-radius: 10px;
+    box-shadow: inset 2px 2px 2px hsla(0, 0%, 100%, .25), inset -2px -2px 2px rgba(0, 0, 0, .25);
+}
+
+.card-list::-webkit-scrollbar-track {
+    background: linear-gradient(90deg, #201c29, #201c29 1px, #17141d 0, #17141d);
+}
+
+.place {
+    font-size: 12px;
+    margin: 0 .5rem 0;
+    color: #7a7a8c;
+}
+
+a.boxclose {
+    float: right;
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #605F61;
+    border-radius: 30%;
+    background: -webkit-linear-gradient(-45deg, transparent 0%, transparent 46%, white 46%, white 56%, transparent 56%, transparent 100%), -webkit-linear-gradient(45deg, transparent 0%, transparent 46%, white 46%, white 56%, transparent 56%, transparent 100%);
+    background-color: #605F61;
+    box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+img.card-image {
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+    height: 100px;
+    width: 100%
+}
+
+.card {
+    height: 200px;
+    width: 200px;
+    min-width: 200px;
+    /*padding: 1.5rem;*/
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: -1rem 0 3rem #000;
+    display: flex;
+    flex-direction: column;
+    transition: .2s;
+    margin: 0;
+    scroll-snap-align: start;
+    clear: both;
+    position: relative;
+    animation: slide-in 1s;
+}
+
+.cardFall {
+    height: 200px;
+    width: 200px;
+    min-width: 200px;
+    /*padding: 1.5rem;*/
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: -1rem 0 3rem #000;
+    display: flex;
+    flex-direction: column;
+    transition: .2s;
+    margin: 0;
+    scroll-snap-align: start;
+    clear: both;
+    position: relative;
+    animation: fallAway forwards 1s ease-out 1;
+}
+
+.card:focus-within~.card,
+.card:hover~.card {
+    transform: translateX(130px);
+}
+
+.card:hover {
+    transform: translateY(-1rem);
+}
+
+.card:not(:first-child) {
+    margin-left: -130px;
+}
+
+
+.card-header {
+    padding: .5rem;
+    margin-bottom: auto;
+    overflow-y: scroll;
+}
+
+.card-header p {
+    font-size: 14px;
+    margin: 0;
+    color: #7a7a8c;
+}
+
+.card-header h2 {
+    font-size: 4px;
+    /*margin: .25rem 0 auto;*/
+    text-decoration: none;
+    color: inherit;
+    border: 0;
+    /*display: inline-block;*/
+    cursor: pointer;
+    overflow: scroll;
+}
+
+.card-header h2:hover {
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    text-shadow: none;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.article-details {
+    text-align: center;
+}
+
+.article-details h2 {
+    color: #212121;
+    line-height: 1.38;
+    -webkit-font-feature-settings: "palt";
+    font-feature-settings: "palt";
+    text-align: left;
+}
+
+.article-details p {
+    font-size: 14px;
+    margin: 0;
+    color: #7a7a8c;
+    text-align: left;
+}
+
+.article-details img {
+    width: 70%;
+}
+
+.article-body {
+    text-align: left;
+}

@@ -95,14 +95,6 @@ let city_list = {};
 const getCityId = (name) => Object.keys(city_list).find(key => city_list[key].name === name);
 
 function setWarningWards() {
-    /*getTokyoWards().then(json => {
-        let fc = { 'type': 'FeatureCollection', 'features': [] };
-        for (const item of json.features) {
-            if (warning_wards.includes(item.properties.ward_ja)) {
-                fc.features.push(item);
-                createListItem(item);
-            }
-        }*/
 
     map.addSource('city-data', {
         type: 'vector',
@@ -175,9 +167,6 @@ function setWarningWards() {
                 layers: ['warning-cities']
             });
             const currentFeature = features[0];
-            /*if(!alert_area.includes(currentFeature.id.toString()) && !warning_area.includes(currentFeature.id.toString())){
-                return;
-            }*/
             
             const popup = new mapboxgl.Popup({ closeOnClick: false, closeButton: false, closeOnMove: true })
                 .setLngLat(event.lngLat)
@@ -190,22 +179,6 @@ function setWarningWards() {
             if (popUps[0]) popUps[0].remove();
         });
 
-        /*map.addSource('warning-wards', {
-            type: 'geojson',
-            data: fc
-        });
-
-        map.addLayer({
-            id: 'warning-boundary',
-            type: 'fill',
-            source: 'warning-wards',
-            paint: {
-                'fill-color': '#ff0000',
-                'fill-opacity': 0.4
-            }
-        });*/
-
-        //console.log(lookupData)
     });
 }
 
@@ -241,53 +214,12 @@ function createListItem(item, warning_index) {
         //alert_area.push(item.name);
         alert_area.push(item.feature_id.toString());
     }
-
-    //const details = listing.appendChild(document.createElement('div'));
-    //details.className = 'warning-type';
-    //details.innerHTML = ``;
 }
 
 let wardJson;
 let wardArray = [];
 
 const cluster_color = '#0076D1';
-
-/*function filterByShowWards(pointsJson) {
-    fetchDataJson('tokyo-by-ward.geojson').then(json => {
-
-        let polyArray = [];
-
-        for (const feature of json.features) {
-            if (warning_cities.includes(feature.properties.ward_ja)) {
-                const arr = getPolygonArray(feature);
-                for (const a of arr) {
-                    polyArray.push(a);
-                }
-            }
-        }
-
-        let fc = { 'type': 'FeatureCollection', 'features': [] };
-        for (const feature of pointsJson.features) {
-            const cors = [feature.geometry.coordinates[1], feature.geometry.coordinates[0]];
-            var point = turf.point(cors);
-
-            for (const p of polyArray) {
-
-                const poly = L.polygon(p);
-                var polygon = poly.toGeoJSON();
-                var inside = turf.inside(point, polygon);
-
-                //console.log(inside)
-
-                if (inside) {
-                    fc.features.push(feature);
-                }
-
-            }
-        }
-
-    });
-}*/
 
 function setSource(json, name, color, func) {
     map.addSource(`${name}_points`, {
@@ -397,84 +329,11 @@ function setCameraSource() {
 
     });
 
-    /*fetchDataJson('tokyo-by-ward.geojson').then(json => {
-        /*map.addSource('tokyo_wards', {
-            type: 'geojson',
-            data: json
-        });*/
-
-    /*wardJson = json;
-
-    for (const feature of json.features) {
-        wardArray[feature.properties.ward_ja] = feature;
-    }
-});*/
 }
-
-/*let markerArray = [];
-
-async function getWardJson() {
-    return wardJson;
-}*/
-
-/*function setDisasterPointsIf(ward_ja) {
-
-    console.log(wardArray[ward_ja])
-
-    const now = new Date().getTime()
-    //fetchDataJson('tokyo-by-ward.geojson').then(json => {
-    getWardJson().then(json => {
-        //promiseList.push(json)
-        let targetWard;
-        for (const ward of json.features) {
-            if (ward.properties.ward_ja === ward_ja) {
-                targetWard = ward;
-                break;
-            }
-        }
-
-        if (targetWard) {
-            wardPolyList = getPolygonArray(targetWard);
-
-            for (const marker of map.getSource('disaster_points')._data.features) {
-
-                let i = 0;
-                let index = 0;
-                const polygon = L.polygon(wardPolyList[index]);
-
-                const cors = [marker.geometry.coordinates[1], marker.geometry.coordinates[0]];
-
-                var point = turf.point(cors);
-                var poly = polygon.toGeoJSON();
-                var inside = turf.inside(point, poly);
-
-                if (inside) {
-                    const el = document.createElement('div');
-                    el.className = 'alert-marker';
-
-                    el.addEventListener('click', (event) => {
-                        createPopup(marker);
-                    });
-
-                    const markerItem = new mapboxgl.Marker(el, { offset: [0, 23] })
-                        .setLngLat(marker.geometry.coordinates)
-                        .addTo(map);
-
-                    markerArray.push(markerItem);
-
-                }
-            }
-        }
-    });
-}*/
 
 function setDisasterPoints() {
 
     getCameraPoints().then(json => {
-        /*map.addSource('disaster_points', {
-            type: 'geojson',
-            data: json
-        });*/
 
         for (const marker of json.features) {
             const el = document.createElement('div');
@@ -490,40 +349,6 @@ function setDisasterPoints() {
         }
     });
 }
-
-function getImage() {
-    const random = getRandomInt(3);
-    if (random === 0) {
-        return 'sunshine';
-    } else if (random === 1) {
-        return 'thunder';
-    } else {
-        return 'blue_skies';
-    }
-}
-
-function getVideo() {
-    const random = getRandomInt(3);
-    if (random === 0) {
-        return 'sunny';
-    } else if (random === 1) {
-        return 'sunset';
-    } else {
-        return 'thunder';
-    }
-}
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
-
-/*function clearAllMarkers() {
-    for (const marker of markerArray) {
-        //map.remove(marker);
-        marker.remove();
-    }
-    markerArray = [];
-}*/
 
 function closeOverlay(elem) {
     elem.parentNode.parentNode.parentNode.removeChild(elem.parentNode.parentNode);
