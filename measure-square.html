@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link href="./css/measure-square.scss" rel="stylesheet" />
+    <script
+        src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet'
+        href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css'
+        type='text/css' />
+    <script src="./js/constants.js"></script>
+    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css"
+        type="text/css" />
+</head>
+
+<body>
+    <div id='map' class="map"></div>
+    <div class="map-overlay-left">
+        <label>長さ、面積を計測するには左ツールバーを使ってマップ上に線又はポリゴンを描画して下さい。</label><br><br>
+        <label>土地住所又は郵便番号に移動するには以下に入力して検索ボタンを押下して下さい。</label><br><br>
+        <span>
+            <textarea id="searchBox"></textarea>
+            <input style="vertical-align:top" type='button' value='検索' onclick="searchPostalCode()" />
+            <input style="vertical-align:top" type="button" value="クリア" onclick="clearSuggestions()" /><br>
+        </span>
+        <span>
+            <div id="suggestions"></div>
+        </span>
+    </div>
+    <div class="map-overlay-center">
+        <label>計測結果</label>&nbsp;<input style="vertical-align:top" type="button" value="クリア"
+            onclick="clearById('measure-results')" /><br></br>
+        <div id="measure-results"></div>
+    </div>
+    <div class="map-overlay-right">
+        <div>
+            <input type="radio" id="map-type1" name="map-type" value="map-type1" onclick="setMapStyle()" checked><label
+                for="map-type1">Mapbox 衛星</label>
+        </div>
+        <div>
+            <input type="radio" id="map-type2" name="map-type" value="map-type2"
+                onclick="setMapStyle('mapbox://styles/kenji-shima/clbq4qj5m000c15s1fm2ayr8r')"><label
+                for="map-type2">Mapbox Street</label>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+            <input type="radio" id="map-type3" name="map-type" value="map-type3"
+                onclick="addJOSMLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png')"><label
+                for="map-type3">GSI標準</label>
+        </div>
+        <div>
+            <input type="radio" id="map-type4" name="map-type" value="map-type4"
+                onclick="addJOSMLayer('https://cyberjapandata.gsi.go.jp/xyz/ort/{z}/{x}/{y}.jpg')"><label
+                for="map-type4">GSI Ortho</label>
+        </div>
+        <div>
+            <input type="radio" id="map-type5" name="map-type" value="map-type5"
+                onclick="addJOSMLayer('https://cyberjapandata.gsi.go.jp/xyz/airphoto/{z}/{x}/{y}.png')"><label
+                for="map-type5">GSI 航空</label>
+        </div>
+        <div>
+            <input type="radio" id="map-type6" name="map-type" value="map-type6"
+                onclick="addJOSMLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg')"><label
+                for="map-type6">GSI Seamless</label>
+        </div>
+        <div>
+            <input type="radio" id="map-type7" name="map-type" value="map-type7"
+                onclick="addJOSMLayer('http://tile.senmon.jpn.com/1.0.0/susono/{z}/{x}/{y}.png')"><label
+                for="map-type7">裾野市 航空写真オルソ画像</label>
+        </div>
+        <div>
+            <input type="radio" id="map-type8" name="map-type" value="map-type8"
+                onclick="addJOSMLayer('http://nyampire.conohawing.com/ortho-itoigawa-shi/{z}/{x}/{y}.png')"><label
+                for="map-type8">糸魚川市 航空写真オルソ画像</label>
+        </div>
+    </div>
+    <script src="./js/measure-square.js"></script>
+</body>
+
+</html>

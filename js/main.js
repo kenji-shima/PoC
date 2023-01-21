@@ -13,6 +13,8 @@ function loadMap() {
         window.location.href = '/weather.html';
     }else if(selectedMap === 'administrative-division'){
         window.location.href = '/administrativeDivision.html';
+    }else if(selectedMap === 'measure-square'){
+        window.location.href = '/measure-square.html';
     }
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
@@ -25,6 +27,7 @@ function init() {
     document.getElementById('features').style = 'visibility:hidden;';
     document.getElementById('legend').style = 'visibility:hidden;';
     document.getElementById('instructions').style = 'visibility: hidden;';
+    document.getElementById('calculation-box').style = 'visibility: hidden;';
 
     const mapcontainer = document.getElementById('map');
     mapcontainer.innerHTML = '';

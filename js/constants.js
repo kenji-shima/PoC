@@ -3669,6 +3669,11 @@ async function fetchReverseGeo(coordinates) {
     return await query.json();
 }
 
+async function fetchGeo(searchText) {
+    const query = await fetch(`${geocoding_uri}${searchText}.json?${common_params}`, { method: 'GET' });
+    return await query.json();
+}
+
 function getPolygonArray(ward) {
     let wardPolyList = [];
     if (ward.geometry.type === 'Polygon') {

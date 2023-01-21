@@ -13,6 +13,9 @@
         type='text/css' />
     <script src="./js/constants.js"></script>
     <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css"
+        type="text/css" />
 </head>
 
 <body>
@@ -37,10 +40,17 @@
                 <option value="weather">Weather</option>
                 <option value="administrative-division">Administrative Division</option>
                 <option value="boundaries">Boundaries</option>
+                <option value="dynamic-layer">Dynamic Layer</option>
+                <option value="measure-square">Measure Square</option>
+                <option value="real-time">Real Time</option>
                 <!--option value="test">Test</option//-->
             </select>
         </div>
     </div>
+    <div id="calculation-box" class="calculation-box">
+        <p>Draw a polygon using the draw tools.</p>
+        <div id="calculated-area"></div>
+        </div>
     <div id="instructions"></div>
     <div class='map-overlay' id='features'>
         <h2 id="mapType"></h2>

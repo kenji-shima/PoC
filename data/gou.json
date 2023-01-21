@@ -1,0 +1,20 @@
+[
+    {
+        "name": "1gou",
+        "distance": 1.3,
+        "longitude": 135.5181295,
+        "latitude": 34.61244389
+    },
+    {
+        "name": "2gou",
+        "distance": 2.2,
+        "longitude": 135.520588,
+        "latitude": 34.609909
+    },
+    {
+        "name": "3gou",
+        "distance": 3.3,
+        "longitude": 135.525333,
+        "latitude": 34.615035
+    }
+]
