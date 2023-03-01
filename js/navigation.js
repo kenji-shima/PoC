@@ -62,24 +62,8 @@ map.on('move', () => {
 
 });
 
-
-
-
 map.on('load', () => {
     startMarker = setMarker([lng, lat], 'blue');
-
-    /*map.addLayer({
-        "id": "random-points",
-        'type': 'fill',
-        'paint': {
-            'fill-color':'#ff7770'
-        },
-
-        "source": {
-            "type": "geojson",
-            "data": getRandomPoints()
-        }
-    });*/
 });
 
 map.on('contextmenu', (e) => {
@@ -140,17 +124,36 @@ function setMarker(coordinates, color) {
 function resetPrevious() {
     wave1.setAttributeNS(null, 'visibility', 'hidden');
     wave2.setAttributeNS(null, 'visibility', 'hidden');
+    waveLng = null;
+    waveLat = null;
     const wrapper = document.getElementById('map-overlay-wrapper');
     wrapper.innerHTML = '';
 
+    const menuwrapper = document.getElementById('menu-wrapper');
+    menuwrapper.innerHTML = '';
+
+    if(map.getLayer('route')){
+        map.removeLayer('route');
+    }
+    if (map.getSource('route')) {
+        map.removeSource('route')
+    }
     if (map.getLayer('intersecting-points')) {
         map.removeLayer('intersecting-points');
     }
     if (map.getSource('intersecting-points-src')) {
         map.removeSource('intersecting-points-src')
     }
+
+    if (map.getLayer('tp-line-layer')) {
+        map.removeLayer('tp-line-layer');
+    }
+    if (map.getSource('tp-line')) {
+        map.removeSource('tp-line')
+    }
 }
 
+let routeGeo = null;
 let intersectingPoints = null;
 async function getRoute(end) {
     resetPrevious();
@@ -163,10 +166,6 @@ async function getRoute(end) {
     const geojson = {
         type: 'Feature',
         properties: {},
-        /*geometry: {
-            type: 'LineString',
-            coordinates: route
-        }*/
         geometry: polyline.toGeoJSON(json.routes[0].geometry)
     };
 
@@ -192,6 +191,8 @@ async function getRoute(end) {
         });
     }
 
+    routeGeo = geojson.geometry;
+
     intersectingPoints = getIntersectingPoints(geojson.geometry);
     if (intersectingPoints.features.length == 0) {
         return;
@@ -212,20 +213,10 @@ async function getRoute(end) {
     });
 
     createMenu(intersectingPoints);
-    /*const instructions = document.getElementById('instructions');
-    const steps = data.legs[0].steps;
-
-    let tripInstructions = '';
-    for(const step of steps){
-        tripInstructions += `<li>${step.maneuver.instruction}</li>`;
-    }
-    instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(data.duration / 60)} min</strong></p><ol>${tripInstructions}</ol>`;
-    */
 }
 
 async function createMenu(intersectingPoints) {
     const menuwrapper = document.getElementById('menu-wrapper');
-    menuwrapper.innerHTML = '';
     const menu = menuwrapper.appendChild(document.createElement('div'));
     menu.className = 'map-overlay-menu';
     const title = menu.appendChild(document.createElement('h3'));
@@ -239,6 +230,9 @@ async function createMenu(intersectingPoints) {
         link.innerHTML = text;
         index++;
     }
+
+    const replay = menu.appendChild(document.createElement('div'));
+    replay.innerHTML = `<input type='button' value='再現' onclick='replay()' />`;
 }
 
 function focusPoint(index,place){
@@ -272,13 +266,6 @@ async function createPopup(index, place) {
     waveLat = intersectingPoints.features[index].geometry.coordinates[1];
 
     updateMarker();
-
-    /*onst popUps = document.getElementsByClassName('mapboxgl-popup');
-    if (popUps[0]) popUps[0].remove();
-    const popup = new mapboxgl.Popup({ closeOnClick: false })
-        .setLngLat(currentFeature.geometry.coordinates)
-        .setHTML(`<h3>${place.features[0].text_ja}</h3><span>事故発生件数：${count}</span>${div}`)
-        .addTo(map);*/
 }
 
 function getVideo() {
@@ -287,3 +274,124 @@ function getVideo() {
     return pre + eval('accident_' + (random + 1));
 }
 
+const computeCameraPosition = (
+    pitch,
+    bearing,
+    targetPosition,
+    altitude,
+    smooth = false
+) => {
+    var bearingInRadian = bearing / 57.29;
+    var pitchInRadian = (90 - pitch) / 57.29;
+
+    var lngDiff =
+        ((altitude / Math.tan(pitchInRadian)) *
+            Math.sin(-bearingInRadian)) /
+        70000; // ~70km/degree longitude
+    var latDiff =
+        ((altitude / Math.tan(pitchInRadian)) *
+            Math.cos(-bearingInRadian)) /
+        110000 // 110km/degree latitude
+
+    var correctedLng = targetPosition[0] + lngDiff;
+    var correctedLat = targetPosition[1] - latDiff;
+    
+    const newCameraPosition = {
+        lng: correctedLng,
+        lat: correctedLat
+    };
+
+    return newCameraPosition
+}
+
+const replay = () => {
+
+    resetPrevious();
+
+    // https://en.wikipedia.org/wiki/Transpeninsular_Line
+    const transpeninsularLine = {
+        type: "Feature",
+        properties: {
+            stroke: "#555555",
+            "stroke-width": 2,
+            "stroke-opacity": 1
+        },
+        geometry: routeGeo
+    };
+
+    map.addSource("tp-line", {
+        type: "geojson",
+        data: transpeninsularLine,
+        // Line metrics is required to use the 'line-progress' property
+        lineMetrics: true
+    });
+
+    map.addLayer({
+        id: "tp-line-layer",
+        type: "line",
+        source: "tp-line",
+        paint: {
+            "line-color": "rgba(0,0,0,0)",
+            "line-width": 8,
+            "line-opacity": 0.7
+        }
+    });
+    map.setFog({}); // Set the default atmosphere style
+
+    // アニメーションの前に、線の長さを計算します。
+    const pathDistance = turf.lineDistance(transpeninsularLine);
+
+    let startTime;
+    const duration = 10000;
+
+    const frame = (time) => {
+        if (!startTime) startTime = time;
+        const animationPhase = (time - startTime) / duration;
+        //const animationPhaseDisplay = animationPhase.toFixed(2);
+
+        // animationPhase に基づいて、パスに沿った距離を計算します。
+        const targetPosition = turf.along(transpeninsularLine, pathDistance * animationPhase).geometry.coordinates;
+        const bearing = 60 - animationPhase * 200.0;
+
+        const altitude = 200;
+
+        const cameraPosition = computeCameraPosition(60, bearing, targetPosition, altitude);
+        const camera = map.getFreeCameraOptions();
+
+        camera.position = mapboxgl.MercatorCoordinate.fromLngLat(cameraPosition, altitude);
+        camera.lookAtPoint(targetPosition);
+
+        map.setFreeCameraOptions(camera);
+
+        // Reduce the visible length of the line by using a line-gradient to cutoff the line
+        // animationPhase is a value between 0 and 1 that reprents the progress of the animation
+        map.setPaintProperty("tp-line-layer", "line-gradient", [
+            "step",
+            ["line-progress"],
+            "yellow",
+            animationPhase,
+            "rgba(0, 0, 0, 0)"
+        ]);
+
+        if (animationPhase > 1) {
+            return;
+        }
+        window.requestAnimationFrame(frame);
+    };
+
+    window.requestAnimationFrame(frame);
+
+    // repeat
+    const intervalid = setInterval(() => {
+        startTime = undefined;
+        window.requestAnimationFrame(frame);
+    }, duration + 1500);
+
+    const stopInterval = () => {
+        clearInterval(intervalid);
+    };
+
+    setTimeout(stopInterval,duration);
+};
+
+window.replay = replay;

@@ -28,6 +28,7 @@ function search() {
 
 function setSuggestionList(searchText) {
     getSuggested(searchText).then(json => {
+        //console.log(json)
         removePopups()
         removeAllMarkers()
         setMarker([lng, lat], 'blue')
@@ -53,6 +54,7 @@ function setSuggestionList(searchText) {
             details.innerHTML = `${item.description}<br>`;
 
             getGeocoding(item.description).then(geolist => {
+                //console.log(geolist)
                 //console.log(geolist)
                 const cors = geolist.features[0].geometry.coordinates
                 const marker = setMarker(cors)
