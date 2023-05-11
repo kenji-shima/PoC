@@ -17,8 +17,17 @@ map.on('load', () => {
     initZoom('Sweetgreen Locator');
 });
 
+let matrixCoords = '';
+let startCoords = '';
 function buildLocationList(stores) {
     for (const store of stores.features) {
+        if(startCoords == ''){
+            startCoords = store.geometry.coordinates[0] + ',' + store.geometry.coordinates[1];
+        }
+        if(matrixCoords.length > 0){
+            matrixCoords = matrixCoords + ';'
+        }
+        matrixCoords = matrixCoords + store.geometry.coordinates[0] + ',' + store.geometry.coordinates[1];
         const listings = document.getElementById('listings');
         const listing = listings.appendChild(document.createElement('div'));
         listing.id = `listing-${store.properties.id}`;
@@ -55,6 +64,9 @@ function buildLocationList(stores) {
         }
 
     }
+    fetchJson(`https://api.mapbox.com/directions-matrix/v1/mapbox/walking/${matrixCoords}?annotations=duration&access_token=${mapboxgl.accessToken}`).then(json => {
+        console.log(json)
+    })
 }
 
 function flyToStore(currentFeature) {

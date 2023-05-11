@@ -10,8 +10,9 @@ map = new mapboxgl.Map({
 
 map.on('click', (event) => {
     const features = map.queryRenderedFeatures(event.point, {
-        layers: ['chicago-parks']
+        layers: ['chicago-parks','poi-label']
     });
+    console.log(features)
     if (!features.length) {
         return;
     }

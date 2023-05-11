@@ -28,7 +28,7 @@ function search() {
 
 function setSuggestionList(searchText) {
     getSuggested(searchText).then(json => {
-        //console.log(json)
+        console.log(json)
         removePopups()
         removeAllMarkers()
         setMarker([lng, lat], 'blue')

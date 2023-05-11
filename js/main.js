@@ -17,6 +17,8 @@ function loadMap() {
         window.location.href = '/measure-square.html';
     }else if(selectedMap === 'navigation'){
         window.location.href = '/navigation.html';
+    }else if(selectedMap === 'mpl'){
+        window.location.href = '/mpl.html'
     }
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');

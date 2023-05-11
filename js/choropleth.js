@@ -1,7 +1,9 @@
 map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/kenji-shima/claqgq317000k14noi8pi9bjk'
+    style: 'mapbox://styles/kenji-shima/claqgq317000k14noi8pi9bjk',
 });
+
+console.log(map._log)
 
 map.on(
     'load', () => {

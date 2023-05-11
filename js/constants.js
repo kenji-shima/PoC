@@ -3594,8 +3594,8 @@ const first_day_of_month = getFirstDayOfMonth();
 
 const session_token = uuidv4();
 
-let lng = 139.6806874;
-let lat = 35.697656;
+let lng = 139.62722;
+let lat = 35.45305;
 
 const search_uri = 'https://api.mapbox.com/search/v1/';
 
