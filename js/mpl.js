@@ -73,7 +73,7 @@ map.on('load', () => {
         }
       });
 
-      /*map.addLayer({
+      map.addLayer({
         id: 'threebox-layer',
         type: 'custom',
         renderingMode: '3d',
@@ -98,7 +98,7 @@ map.on('load', () => {
             tb.update();
         }
         
-    });*/
+    });
 
 });
 
@@ -221,40 +221,6 @@ function createMenu() {
     const replay = menu.appendChild(document.createElement('div'));
     replay.innerHTML = `<a class='replay' onclick='replay()' >ルート上を移動</a>`;
 
-}
-
-
-function focusPoint(index, place) {
-    map.easeTo({
-        center: intersectingPoints.features[index].geometry.coordinates,
-        zoom: 18,
-        bearing: map.getBearing() + 60,
-        pitch: 60,
-        duration: 2000
-    });
-
-    createOverlay(index, place);
-}
-
-window.focusPoint = focusPoint;
-
-async function createOverlay(index, place) {
-    //const place = await fetchReverseGeo(currentFeature.geometry.coordinates);
-    const video = getVideo();
-    const count = getRandomInt(1000);
-    const videoDiv = `<h3>${place}</h3><span>事故発生件数：${count}</span><div><video width='100%' height='0%' controls loop autoplay> <source src='${video}' type='video/mp4' />サポートされないブラウザです。</video></div>`;
-
-    const wrapper = document.getElementById('map-overlay-wrapper');
-    wrapper.innerHTML = '';
-    const div = wrapper.appendChild(document.createElement('div'));
-    div.appendChild
-    div.className = 'map-overlay';
-    div.innerHTML = videoDiv;
-
-    waveLng = intersectingPoints.features[index].geometry.coordinates[0];
-    waveLat = intersectingPoints.features[index].geometry.coordinates[1];
-
-    updateMarker();
 }
 
 const computeCameraPosition = (
@@ -386,9 +352,9 @@ const replay = () => {
             return;
         }
 
-        /*modelObj.rotation.z = getBearing(modelPreviousPosition, targetPosition)
+        modelObj.rotation.z = getBearing(modelPreviousPosition, targetPosition)
         modelObj.setCoords(targetPosition)
-        modelPreviousPosition = targetPosition*/
+        modelPreviousPosition = targetPosition
 
         window.requestAnimationFrame(frame);
     };

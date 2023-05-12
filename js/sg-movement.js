@@ -11,7 +11,7 @@ map = new mapboxgl.Map({
 
 map.on('load', () => {
 
-    fetchDataJson('SG_movement.geojson').then(json => {
+    /*fetchDataJson('SG_movement.geojson').then(json => {
 
         var data = {
             "type": "FeatureCollection",
@@ -58,25 +58,36 @@ map.on('load', () => {
             // Make extrusions slightly opaque to see through indoor walls.
             'fill-extrusion-opacity': 0.7
             }
+            });*/
+
+            map.addSource(
+                'r-data',
+                {
+                    type: 'geojson',
+                    data: './data/SG_RoutableAll.geojson'
+                }
+            );
+            
+            map.addLayer({
+                id: 'r-layer',
+                type: 'circle',
+                source: 'r-data',
+                paint: {
+                  'circle-radius': 5,
+                  'circle-color': '#FF0000'
+                }
             });
+
+
     })
 
     
-
-    /*map.addLayer({
-        id: 'mp-layer',
-        type: 'circle',
-        source: 'm-data',
-        paint: {
-          'circle-radius': 5,
-          'circle-color': '#FF0000'
-        }
-    });*/
+    
 
 
     
 
     
 
-})
+
 
