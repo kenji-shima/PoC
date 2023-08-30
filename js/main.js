@@ -19,6 +19,14 @@ function loadMap() {
         window.location.href = '/navigation.html';
     }else if(selectedMap === 'mpl'){
         window.location.href = '/mpl.html'
+    }else if(selectedMap === 'mpl-3d'){
+        window.location.href = '/mpl-3d.html'
+    }else if(selectedMap === 'real-estate'){
+        window.location.href = '/realEstate.html'
+    }else if(selectedMap === 'optimization-v2-playground'){
+        window.location.href = '/optimization-v2-playground.html'
+    }else if(selectedMap === 'search-playground'){
+        window.location.href = '/search-playground.html'
     }
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');

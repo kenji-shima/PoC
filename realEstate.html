@@ -1,0 +1,61 @@
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <script type="text/javascript">
+        function openPopup(url){
+            const xCoordinate = window.screenX;
+            const yCoordinate = window.screenY;
+            const mainWidth = window.innerWidth;
+            const mainHeight = window.innerHeight*0.95;
+            window.open(url, 'Popup Window', `left=${xCoordinate},top=${yCoordinate},width=${mainWidth},height=${mainHeight},toolbar=no,menubar=no,location=no,status=no`);
+        }
+    </script>
+    <style>
+        body,
+        html {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
+                font-family: 'Open Sans', sans-serif;
+        }
+        .container {
+            height: 10%; 
+            width: 100%; 
+            background-color: blue; 
+            color: #FFF; 
+            display: flex;
+        }
+        .element{
+            width: 20%; 
+            margin: 10px;
+        }
+        a {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        a:visited {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="height: 90%;">
+        <iframe height="100%" width="100%" src="https://demos.mapbox.com/mapbox-real-estate/"></iframe>
+    </div>  
+    <div class="container">
+        <div class="element"><a onclick="openPopup('https://mapbox-scrollytelling.webflow.io/');">エリアツアー</a></div>
+        <div class="element"><a onclick="openPopup('https://senseable.mit.edu/desirable-streets/');">街なか散策</a></div>
+        <div class="element"><a onclick="openPopup('https://www.developmentactivity.melbourne.vic.gov.au/');">物件と周辺状況</a></div>
+        <div class="element"><a onclick="openPopup('https://parallel.co.uk/netherlands/#14.01/52.36542/4.90466/-24.5/15');">築年状況</a></div>
+        <div class="element"><a onclick="openPopup('https://demos.mapbox.com/popdensity/');">経年資産価値</a></div>
+        <div class="element"><a onclick="openPopup('https://mapbox-www-japanjv.webflow.io/labs/maps-for-your-safety');">防災マップ</a></div>
+    </div>     
+</body>
+
+</html>

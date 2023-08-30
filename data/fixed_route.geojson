@@ -1,0 +1,148 @@
+{
+"type": "FeatureCollection",
+"features": [
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.7671248,35.68123620000001]
+	},
+	"properties": {
+		"type": "origin",
+		"comment": "スタート"
+	}
+},
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.7455003,35.6586589]
+	},
+	"properties": {
+		"type": "waypoint",
+		"comment": "中継地点１"
+	}
+},
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.746345,35.634526]
+	},
+	"properties": {
+		"type": "waypoint",
+		"comment": "中継地点２"
+	}
+},
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.740825,35.5922219]
+	},
+	"properties": {
+		"type": "waypoint",
+		"comment": "お知らせ地点１"
+	}
+},
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.6967214,35.5294013]
+	},
+	"properties": {
+		"type": "waypoint",
+		"comment": "お知らせ地点２"
+	}
+},
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.6698764717888,35.49640188206356]
+	},
+	"properties": {
+		"type": "waypoint",
+		"comment": "お知らせ地点３"
+	}
+},
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.3624380903531,35.443033801284535]
+	},
+	"properties": {
+		"type": "waypoint",
+		"comment": "折り返し地点"
+	}
+},
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.6699191531952,35.49643810352244]
+	},
+	"properties": {
+		"type": "waypoint",
+		"comment": "お知らせ地点４"
+	}
+},
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.6979648656761,35.52921369705601]
+	},
+	"properties": {
+		"type": "waypoint",
+		"comment": "お知らせ地点５"
+	}
+},
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.7393749,35.5928487]
+	},
+	"properties": {
+		"type": "waypoint",
+		"comment": "お知らせ地点６"
+	}
+},
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.74584879133224,35.635738051306895]
+	},
+	"properties": {
+		"type": "waypoint",
+		"comment": "中継地点３"
+	}
+},
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.7458082,35.6591013]
+	},
+	"properties": {
+		"type": "waypoint",
+		"comment": "中継地点４"
+	}
+},
+{
+	"type": "Feature",
+	"geometry": {
+		"type": "Point",
+		"coordinates": [139.7671248,35.68123620000001]
+	},
+	"properties": {
+		"type": "destination",
+		"comment": "エンド"
+	}
+}
+	]
+}

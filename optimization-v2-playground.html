@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+    <link href="./css/optimization-v2-playground.css" rel="stylesheet" />
+    <script src="./js/constants.js"></script>
+</head>
+
+<body>
+    <div id="map" class="map"></div>
+    <div class="overlay-tab">
+        <div class="switch-field">
+            <input type="radio" id="radio-one" name="switch-one" value="1" checked onchange="toggleInMode()" />
+            <label for="radio-one">設定</label>
+            <input type="radio" id="radio-two" name="switch-one" value="2"  onchange="toggleInMode()" />
+            <label for="radio-two">結果</label>
+        </div>
+    </div>
+    <div id="overlay" class="overlay">
+        <div id="inmode-contents">
+            <div class="overlay-line">・右クリックで<div style="color:red; font-weight: bold;">集荷ポイント</div>と<div
+                    style="color:green; font-weight: bold;">配達ポイント</div>を設定</div>
+            <div class="overlay-line">・各ポイント同士を左クリックで繋ぐ</div>
+            <div class="overlay-line">・接続線を左クリックで要件設定</div>
+            <br>
+            <div>
+                <div style="text-align: right;"><button class="modal-button"
+                        onclick="calculateSolution()">ルート計算</button>
+                </div>
+            </div>
+        </div>
+        <div id="outmode-contents" style="display: none;">
+            <div class="overlay-line">最適ルート計算/表示中</div>
+        </div>
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-button" style="background-color: red;" onclick="addTypeMarker('pickup')">集荷</button>
+            <button class="modal-button" style="background-color: green;" onclick="addTypeMarker('dropoff')">配達</button>
+            <!--button class="modal-button" onclick="addTypeMarker('vehicle')">車両</button//-->
+        </div>
+    </div>
+    <div id="shipment-modal" class="shipment-modal">
+        <div class="modal-content">
+            集荷時間帯<input type="time" id="shipment-pickup-startime" /><input type="time" id="shipment-pickup-endtime" />
+            配達時間帯<input type="time" id="shipment-dropoff-startime" /><input type="time" id="shipment-dropoff-endtime" />
+            数量<input type="number" id="shipment-item-count" />
+            集荷時間（分）<input type="number" id="shipment-pickup-duration" />
+            配達時間（分）<input type="number" id="shipment-dropoff-duration" />
+            <!--要件<input type="text" id="shipment-requirements" / //-->
+            <input type="hidden" id="shipment-id" />
+            <button class="modal-button" onclick="submitShipment()">決定</button>
+        </div>
+    </div>
+    <div id="vehicle-modal" class="vehicle-modal">
+        <div class="modal-content">
+            始業点<select></select>
+            終業点<select></select>
+            始業時間<input type="time" id="vehicle-starttime" />
+            終業時間<input type="time" id="vehicle-endtime" />
+            積載可能アイテム数<input type="number" id="vehicle-item-count" />
+            要件<input type="text" id="vehicle-requirements" />
+            <input type="hidden" id="vehicle-id" />
+            <button class="modal-button" onclick="updateVehicle()">決定</button>
+        </div>
+    </div>
+    <script src="./js/optimization-v2-playground.js" type="module"></script>
+</body>
+
+</html>

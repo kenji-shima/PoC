@@ -33,42 +33,42 @@ map.on('load', async function () {
                 { defaultLights: true }
             );
 
-            var options = {
-                obj: './data/nathan_animated_man.glb',
-                type: 'glb',
-                scale: 0.5,
-                units: 'meters',
-                rotation: { x: 90, y: 0, z: 0 } //default rotation
-            }
+            var lngInc = lng
+            var latInc = lat
 
-            //var lngInc = lng
-            //var latInc = lat
+            var inc = 0.001
 
-            //var inc = 0.001
+            for(const feature of json.features){
+                lngInc = lngInc + inc
+                latInc = latInc + inc
 
-            
+                const options = {
+                    obj: './data/pine_tree_pink.glb',
+                    type: 'glb',
+                    scale: 0.05,
+                    units: 'meters',
+                    rotation: { x: 90, y: 0, z: 0 }, //default rotation
+                    coordinates : feature.geometry.coordinates
+                }
 
-            /*for(let feature of json.features){
-                
+                //if(list.length > 5) options.obj = './data/nathan_animated_man.glb'
                 tb.loadObj(options, function (model) {
-                    //console.log(model.animations)
-                    //lngInc = lngInc + inc
-                    //latInc = latInc + inc
-                    var c = feature.geometry.coordinates
-                    soldier = model.setCoords(c);
+                    
+                    //var c = feature.geometry.coordinates
+                    let soldier = model.setCoords(options.coordinates);
 
                     // Set the model's animation
-                    var mixer = new THREE.AnimationMixer(model);
+                    /*var mixer = new THREE.AnimationMixer(model);
                     var clip = THREE.AnimationClip.findByName(model.animations, "Take 001");
                     var action = mixer.clipAction(clip);
-                    action.play();
-
+                    action.play();*/
 
                     tb.add(soldier);
+                    
                 })
-                
-            }*/
-            tb.loadObj(options, function (model) {
+            }
+            
+            /*tb.loadObj(options, function (model) {
                 // Set the model's position
                 model.setCoords([lng, lat]);
             
@@ -80,7 +80,7 @@ map.on('load', async function () {
             
                 // Add the model to the map
                 tb.add(model);
-            });
+            });*/
  
         },
         render: function (gl, matrix) {

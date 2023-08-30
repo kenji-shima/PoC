@@ -112,3 +112,22 @@ p {
         font-size: 13px;
         }
 
+        .google-marker {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            background-color: #ff0000; /* Replace with your desired color */
+            border-radius: 50% 50% 50% 0;
+            overflow: hidden;
+          }
+          
+          .google-marker img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+          }
+

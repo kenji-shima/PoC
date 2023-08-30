@@ -36,12 +36,63 @@ function tileQuery(){
     })
 }
 
+
 map.on('load',() =>{
     initZoom("Cluster-like or Heatmap-like");
     document.getElementById('features').style = 'visibility:visible;';
     setDynamicLayer();
     //tileQuery();
+
+    map.addSource('markers', {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [],
+        },
+      });
+    
+      // Add a symbol layer to render the markers
+      map.addLayer({
+        id: 'marker-layer',
+        type: 'symbol',
+        source: 'markers',
+        layout: {
+          'icon-image': './images/google.png',
+          'icon-size': 1,
+          'text-field': 'TEST GOOGLE     95.0点',
+          'text-font': ['Open Sans Regular'],
+          'text-offset': [0, 0.6],
+          'text-anchor': 'top',
+        },
+        paint: {
+          'text-color': '#000000',
+        },
+      });
+    
+      // Create a marker feature with image URL and label
+      const markerFeature = {
+        type: 'Feature',
+        geometry: {
+          type: 'Point',
+          coordinates: [lng, lat], // Replace with your coordinates
+        },
+        properties: {
+          icon: 'custom-icon', // Replace with your icon image name
+          label: 'Your Label', // Replace with your label text
+        },
+      };
+    
+      // Add the marker feature to the GeoJSON source
+      map.getSource('markers').setData(markerFeature);
+      map.loadImage('/images/google.png', (error, image) => {
+        if (error) throw error;
+      
+        // Add the custom icon image to the map
+        map.addImage('custom-icon', image);
+      });
 })
+// Load the custom icon image
+
 
 const color = 'purple';
 function setDynamicLayer(){

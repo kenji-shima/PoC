@@ -3,8 +3,12 @@
     <meta charset="utf-8" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <!--script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' //-->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://unpkg.com/deck.gl@^7.0.0/dist.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <meta name='viewport' content='width=device-width, initial-scale=1' />
     <link href="./css/styles.css" rel="stylesheet" />
     <script
@@ -12,11 +16,11 @@
     <link rel='stylesheet'
         href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css'
         type='text/css' />
-    <script src="./js/constants.js"></script>
+    <script src="/js/constants.js"></script>
     <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
     <!--script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script//-->
-    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js"></script>
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css"
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.1/mapbox-gl-draw.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.1/mapbox-gl-draw.css"
         type="text/css" />
         <script src="https://cdn.jsdelivr.net/gh/jscastro76/threebox@v.2.2.2/dist/threebox.min.js" type="text/javascript"></script>
         <link href="https://cdn.jsdelivr.net/gh/jscastro76/threebox@v.2.2.2/dist/threebox.css" rel="stylesheet" />
@@ -57,7 +61,14 @@
                 <option value="gradient-line">Gradient Line</option>
                 <option value="threebox">Threebox</option>
                 <option value="mpl">MPL</option>
+                <option value="mpl-3d">MPL 3D</option>
                 <option value="sg-movement">Movement in Singapore</option>
+                <option value="optimization-v2-poc">Optimization V2 PoC</option>
+                <option value="real-estate">Real Estate</option>
+                <option value="point-cloud">Point Cloud</option>
+                <option value="optimization-v2-playground">Optimization V2 Playground</option>
+                <option value="v3">GLJS v.3</option>
+                <option value="search-playground">Search Playground</option>
             </select>
         </div>
     </div>
@@ -71,7 +82,8 @@
         <div id='pd'></div>
     </div>
     <div class='map-overlay' id='legend'></div>
-    <script src="./js/main.js"></script>
+    <script src="/js/main.js"></script>
+
 </body>
 
 </html>

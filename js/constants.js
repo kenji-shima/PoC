@@ -3674,6 +3674,17 @@ async function fetchGeo(searchText) {
     return await query.json();
 }
 
+async function postJson(url, data){
+    const query = fetch(url, {
+        method : 'POST',
+        headers : {
+            'Content-Type' : 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    return (await query).json()
+}
+
 function getPolygonArray(ward) {
     let wardPolyList = [];
     if (ward.geometry.type === 'Polygon') {

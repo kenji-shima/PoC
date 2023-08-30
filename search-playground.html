@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script>
+    <script
+        src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet'
+        href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css'
+        type='text/css' />
+    <link href="./css/japanSearch.css" rel="stylesheet" />
+    <script src="./js/constants.js"></script>
+</head>
+
+<body>
+    <div class='sidebar'>
+        <div class='heading'>
+            
+            <input type='textbox' id="searchBox" />
+            <input type='button' value='検索' onclick="search()" /><br>
+            <span>範囲：<input id="radius" type="number" style="width: 50px" value="100" />&nbsp;km<br>
+            <!--input type="checkbox" id="google" /> GoogleMapsと比較
+            <img width="20" height="20" src="./images/google.png" style="visibility: hidden;" //--></span>
+            <span style="visibility: hidden;">results:<span id="count">0</span>
+            </span>
+        </div>
+        <div id='listings' class='listings'></div>
+    </div>
+    <div id="map" class="map"></div>
+    <!--div class='map-overlay' id='features'>
+        <h2 id="mapType"></h2>
+        <div id='pd'></div>
+    </div //-->
+    <script src="./js/main.js"></script>
+    <script src="./js/search-playground.js"></script>
+</body>
+
+</html>

@@ -73,7 +73,7 @@ map.on('load', () => {
         }
       });
 
-      map.addLayer({
+      /*map.addLayer({
         id: 'threebox-layer',
         type: 'custom',
         renderingMode: '3d',
@@ -91,6 +91,14 @@ map.on('load', () => {
       
                 // Add the model to the map
                 tb.add(model);
+
+                const animations = model.animations;
+                mixer = new THREE.AnimationMixer(model);
+                const clipAction = mixer.clipAction(animations[0]);
+  
+                // Start playing the animation
+                clipAction.play();
+
             });
  
         },
@@ -98,9 +106,11 @@ map.on('load', () => {
             tb.update();
         }
         
-    });
+    });*/
 
 });
+
+var mixer;
 
 map.on('contextmenu', (e) => {
     setStartMarker(e.lngLat['lng'], e.lngLat['lat']);
@@ -312,8 +322,10 @@ const replay = () => {
    var modelPreviousPosition = [lng, lat]
 
    setMPLPoints([lng, lat])
-
+   //const clock = new THREE.Clock();
     const frame = (time) => {
+        //const delta = clock.getDelta();
+        //mixer.update(delta)
         let pitch = setPitch;
         let altitude = setAltitude;
         if (!startTime) startTime = time;
@@ -352,9 +364,9 @@ const replay = () => {
             return;
         }
 
-        modelObj.rotation.z = getBearing(modelPreviousPosition, targetPosition)
+        /*modelObj.rotation.z = getBearing(modelPreviousPosition, targetPosition)
         modelObj.setCoords(targetPosition)
-        modelPreviousPosition = targetPosition
+        modelPreviousPosition = targetPosition*/
 
         window.requestAnimationFrame(frame);
     };
@@ -393,7 +405,7 @@ function getMetersDiff(start, end){
 
 var types = [];
 function setMPLPoints(targetPosition){
-    const tileset = 'mapbox.mpl-v2-0-0';
+    const tileset = 'mapbox.mpl-v2';
     const radius = 1609;
     const limit = 50;
 
@@ -426,11 +438,11 @@ function setMPLPoints(targetPosition){
 
 
 var modelOptions = {
-    obj: './data/car.glb',
-    type: 'glb',
-    scale: 0.07,
+    obj: './data/Birb.fbx',
+    type: 'fbx',
+    scale: 0.05,
     units: 'meters',
-    rotation: { x: 90, y: 180, z: 0 } //default rotation
+    rotation: { x: 90, y: 270, z: 0 } //default rotation
 }
 
 var modelObj

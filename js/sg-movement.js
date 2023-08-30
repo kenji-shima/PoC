@@ -64,7 +64,7 @@ map.on('load', () => {
                 'r-data',
                 {
                     type: 'geojson',
-                    data: './data/SG_RoutableAll.geojson'
+                    data: './data/SG_Routable_Intersected.geojson'
                 }
             );
             

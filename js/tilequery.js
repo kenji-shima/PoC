@@ -2,7 +2,8 @@
 map = new mapboxgl.Map({
     container: 'map', // The container ID
     style: 'mapbox://styles/mapbox/light-v11', // The map style to use
-    center: [-105.0178157, 39.737925], // Starting position [lng, lat]
+    //center: [-105.0178157, 39.737925], // Starting position [lng, lat]]
+    center: [-79.91746, 40.44356],
     zoom: 12 // Starting zoom level
 });
 
@@ -20,15 +21,18 @@ map.on('load', () => {
 
     const marker = new mapboxgl.Marker({ color: '#008000' });
     geocoder.on('result', async (event) => {
-        const point = event.result.center;
+        //const point = event.result.center;
+        const point = [-79.91746,40.44356];
         marker.setLngLat(point).addTo(map);
 
-        const tileset = 'kenji-shima.3apgvfi6';
+        //const tileset = 'kenji-shima.3apgvfi6';
+        const tileset = 'kenji-shima.test-tiles';
         const radius = 1609;
         const limit = 50;
 
         const query = await fetch(`https://api.mapbox.com/v4/${tileset}/tilequery/${point[0]},${point[1]}.json?radius=${radius}&limit=${limit}&access_token=${mapboxgl.accessToken}`, { method: 'GET' });
         const json = await query.json();
+        console.log(json)
         map.getSource('tilequery').setData(json);
     });
 

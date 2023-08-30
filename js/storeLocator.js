@@ -97,6 +97,7 @@ function addMarkers() {
             .addTo(map);
 
         el.addEventListener('click', (event) => {
+            
             flyToStore(marker);
             createPopup(marker);
             const activeItem = document.getElementsByClassName('active');
