@@ -1,0 +1,162 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+h2,
+h3 {
+    margin: 10px;
+    font-size: 18px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+p {
+    margin: 10px;
+}
+
+/**
+  * Create a position for the map
+  * on the page */
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+/**
+  * Set rules for how the map overlays
+  * (information box and legend) will be displayed
+  * on the page. */
+.map-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #fff;
+    margin-right: 20px;
+    font-family: Arial, sans-serif;
+    overflow: auto;
+    border-radius: 3px;
+}
+
+.map-selector {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    margin-left: 20px;
+    margin-top: 60px;
+    font-family: Arial, sans-serif;
+    overflow: auto;
+    border-radius: 3px;
+}
+
+#features {
+    top: 0;
+    background-color: black;
+    color: white;
+    opacity: 0.8;
+    margin-top: 20px;
+    width: 250px;
+}
+
+#legend {
+    padding: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    line-height: 18px;
+    height: 150px;
+    margin-bottom: 40px;
+    width: 100px;
+}
+
+.legend-key {
+    display: inline-block;
+    border-radius: 20%;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+}
+
+#instructions {
+    position: absolute;
+    margin: 20px;
+    width: 25%;
+    top: 140px;
+    bottom: 20px;
+    padding: 20px;
+    background-color: #fff;
+    overflow-y: scroll;
+    font-family: sans-serif;
+}
+
+.mapboxgl-popup {
+    padding-bottom: 10px;
+    opacity: 0.8;
+}
+
+.calculation-box {
+    height: 75px;
+    width: 150px;
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    text-align: center;
+}
+
+p {
+    font-family: 'Open Sans';
+    margin: 0;
+    font-size: 13px;
+}
+
+.google-marker {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: #ff0000;
+    /* Replace with your desired color */
+    border-radius: 50% 50% 50% 0;
+    overflow: hidden;
+}
+
+.google-marker img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
+
+table {
+    font-size: 12px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table,
+th,
+td {
+    border: 1px solid white;
+}
+
+tr{
+    color: white;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+}
+
+
+.session {
+    margin-bottom: 20px;
+  }

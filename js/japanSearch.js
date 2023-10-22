@@ -165,6 +165,7 @@ async function getGeocoding(address) {
 async function getSuggested(searchText) {
     const bbox = getBbox();
     const sbox = bbox[0] + ',' + bbox[1] + ',' + bbox[2] + ',' + bbox[3]
+    console.log(`${search_uri}suggest/${searchText}?${common_params}&limit=100&session_token=${session_token}&origin=${lng},${lat}&bbox=${sbox}`)
     const query = await fetch(`${search_uri}suggest/${searchText}?${common_params}&limit=100&session_token=${session_token}&origin=${lng},${lat}&bbox=${sbox}`, { method: 'GET' });
     return await query.json();
 }

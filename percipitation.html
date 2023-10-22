@@ -1,0 +1,35 @@
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.2/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://unpkg.com/deck.gl@^7.0.0/dist.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link href="./css/percipitation.css" rel="stylesheet" />
+    <script src="/js/constants.js"></script>
+</head>
+
+<body>
+    <div id='map'></div>
+    <div class='map-overlay' id='features'>
+        <label><input type="radio" name="type" value="a" checked>APIコール</label>
+        <label><input type="radio" name="type" value="l" >Mapから取得</label>
+        <h2 id="mapType">降雨量</h2>
+        <div id='pd'></div>
+        <div>
+            <table id="rainfall"></table>
+        </div>
+        <div class='session' id='sliderbar'>
+            <h2>時間: <label id='active-hour'>5分</label></h2>
+            <input id='slider' class='row' type='range' min='5' max='60' step='5' value='5' />
+        </div>
+    </div>
+
+    <script src="/js/percipitation.js"></script>
+</body>
+
+</html>

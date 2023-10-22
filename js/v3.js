@@ -2,53 +2,89 @@ map = new mapboxgl.Map({
     container: 'map', // container id
     center: [lng, lat], // starting position
     zoom: 16, // starting zoom
-    "sources": {
+    /*"sources": {
         "composite": {
             "url": "mapbox://mapbox.mapbox-bathymetry-v2,mapbox.mapbox-streets-v8,mapbox.mapbox-terrain-v2",
             "type": "vector"
         }
     },
     "sprite": "mapbox://sprites/kenji-shima/clksifwsf00am01oh0pjc8nkn/dcnfp95hzgfearkua82mjc98c",
-    "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
-    style:"mapbox://styles/kenji-shima/clck4sxaf000414r7qc2h8by7"
+    style:"mapbox://styles/kenji-shima/clck4sxaf000414r7qc2h8by7"*/
+    //"glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf"
 });
 
-map.on('load', () => {
+map.on('load.style', () => {
+    map.setConfigProperty("basemap", "font", "DIN Pro");
+})
 
+map.on('load', () => {
+    map.setConfigProperty("basemap", "glyphs", "mapbox://fonts/mapbox/{fontstack}/{range}.pbf");
     // Get the map style object
     var style = map.getStyle();
-    console.log(style)
+
+    //console.log(style)
 
     // Extract all the layers from the style object
     var layers = style.layers;
 
-    // Now you can work with the 'layers' array to access each layer
-    /*console.log(style.sources["compositebasemap"]);
-
-    style.sources["3dbuildingsbasemap"] = "{type: 'batched-model'}"
-    style.sources["treesbasemap"] = "{type: 'vector', url: 'mapbox://mapbox.mapbox-models-v1'}"
-    
-    style.sources["compositebasemap"] = "{type: 'vector', url: 'mapbox://mapbox.mapbox-bathymetry-v2,mapbox.mapbox-streets-v8,mapbox.mapbox-terrain-v2'}"*/
-
-    /*map.setConfigProperty('basemap', 'showPlaceLabels', false);
-    map.setConfigProperty('basemap', 'showRoadLabels', false);
+    map.setConfigProperty('basemap', 'showPlaceLabels', false);
+    /*map.setConfigProperty('basemap', 'showRoadLabels', false);
     map.setConfigProperty('basemap', 'showPointOfInterestLabels', false);
-    map.setConfigProperty('basemap', 'showTransitLabels', false);
-    map.setConfigProperty('basemap', 'lightPreset', 'day');*/
+    map.setConfigProperty('basemap', 'showTransitLabels', false);*/
+    map.setConfigProperty('basemap', 'lightPreset', 'night');
+    map.setConfigProperty('basemap', 'font', "DIN Pro")
+ 
+    map.addSource('movement-data', {
+        type: 'geojson',
+        data: './data/2022-shinagawa-movement.geojson' // Replace with the URL to your GeoJSON data or provide the GeoJSON object directly
+      });
+    
+      /*map.addLayer({
+        id: 'bounds-layer-',
+        //slot: 'bottom',
+        type: 'circle',
+        source: 'movement-data',
+        paint: {
+          'circle-color': 'white',
+          'circle-opacity': 0.8,
+          'circle-radius': 10,
+          'circle-blur': 0.5,
+          "circle-emissive-strength":0.9,
+        },
+        
+        minzoom: 13
+      });*/
 
-    map.addSource('streets-v8', {
-        type: 'vector',
-        url: 'mapbox://mapbox.mapbox-streets-v8'
-    });
+      map.addLayer({
+        id: 'bounds-layer-',
+        //slot: 'bottom',
+        type: 'fill',
+        source: 'movement-data',
+        paint: {
+          'fill-color': 'white',
+          'fill-opacity': 0.8,
+          "fill-emissive-strength":0.9,
+        },
+        
+        minzoom: 5
+      });
 
+
+})
+
+const test = () =>{
     map.addLayer({
         "id": "new-poi-label",
+        //"slot": "middle",
         "type": "symbol",
         "metadata": {
             "mapbox:featureComponent": "point-of-interest-labels",
             "mapbox:group": "Point of interest labels, poi-labels"
         },
-        "source": "streets-v8",
+        source: {
+            type: 'vector',
+            url: 'mapbox://mapbox.mapbox-streets-v8'
+        },
         "source-layer": "poi_label",
         "minzoom": 6,
         "filter": [
@@ -118,6 +154,7 @@ map.on('load', () => {
             "text-field": ["coalesce", ["get", "name_ja"], ["get", "name"]]
         },
         "paint": {
+            //"text-emissive-strength": 1,
             "icon-opacity": [
                 "step",
                 ["zoom"],
@@ -151,8 +188,8 @@ map.on('load', () => {
             ]
         }
     })
+}
 
-
-})
+setTimeout(test, 2000)
 
 

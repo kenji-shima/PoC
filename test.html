@@ -1,196 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet" />
-    <style>
-        #map,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-        }
-    </style>
+    <meta charset="utf-8">
+    <title>Add Search Box for Japan</title>
+    <!-- Default styling. Feel free to remove! -->
+    <link href="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.min.css" rel="stylesheet">
+    <!--script id="search-js" defer="./js/search-js.js" src="https://api.mapbox.com/search-js/v1.0.0-beta.15/web.js"></script//-->
+    <script id="search-js" defer="./js/search-js.js" src="./js/search-js.js"></script>
+    <script src="https://api.mapbox.com/search-js/v1.0.0-beta.15/core.js"></script>
+    <!--script
+        src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script//-->
+    <script src="./js/geocoder-js.js"></script>
+    <link rel='stylesheet'
+        href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css'
+        type='text/css' />
 </head>
 
 <body>
-    <div id="map"></div>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
-    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+    <!-- Load Mapbox GL JS -->
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+
+    <div id="map" style="position: absolute; width: 100%; height: 100%"></div>
     <script>
-        mapboxgl.accessToken = 'pk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xhZ2NmZ3BiMGFqbzNubThpbWMxOXU3MCJ9.JlXUW8MwwX1LhhMnbWyUQw';
 
+        /*const {
+            MapboxSearch,
+            SearchSession
+        } = mapboxsearchcore;*/
+        const ACCESS_TOKEN = 'pk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xhZ2NmZ3BiMGFqbzNubThpbWMxOXU3MCJ9.JlXUW8MwwX1LhhMnbWyUQw';
+        mapboxgl.accessToken = ACCESS_TOKEN;
         const map = new mapboxgl.Map({
-            container: 'map', // container ID
-            style: 'mapbox://styles/mapbox/streets-v11', // style URL
-            //center: [-73.94784073645798, 40.79784015133043], // starting position [lng, lat]
-            center : [-122.411, 37.773],
-            zoom: 11.462054837977956 // starting zoom
+            container: 'map',
+            style: 'mapbox://styles/kenji-shima/clck4sxaf000414r7qc2h8by7',
+            center: [139.77, 35.68],
+            zoom: 6
         });
+        const searchJS = document.getElementById('search-js');
+        searchJS.onload = function () {
+            const searchBox = new MapboxSearchBox();
+            searchBox.accessToken = ACCESS_TOKEN;
+            searchBox.options = {
+                language: 'ja',
+                country: 'JP',
+                limit: 2,
+                reverseGeocode: true
 
-        map.on('load', main)
-
-        async function main() {
-            //const res = await fetch(`https://api.mapbox.com/directions/v5/mapbox/driving/-73.99156486140473%2C40.7286773992962%3B-74.01075805485813%2C40.86499140725101?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${mapboxgl.accessToken}`)
-            const res = await fetch(`https://api.mapbox.com/directions/v5/mapbox/driving/-122.411%2C37.773%3B-122.40061448679577%2C37.763252389415186%3B-122.43072747880516%2C37.76359647118012?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=${mapboxgl.accessToken}`)
-            const json = await res.json()
-            const { routes } = json
-            const geometries = routes.map(r => turf.feature(r.geometry))
-
-            map.addSource('route', {
-                'type': 'geojson',
-                'data': turf.featureCollection(geometries)
-            })
-
-            map.addLayer({
-                'id': 'route',
-                'type': 'line',
-                'source': 'route',
-                'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round',
-                },
-                'paint': {
-                    'line-color': '#888',
-                    'line-width': 8,
-                    'line-opacity': 0.50,
-                }
+            };
+            const session = new SearchSession(searchBox)
+            searchBox.addEventListener('suggest', (event) => {
+                console.log(event.detail)
+                /*test().then(f => {
+                    console.log(f)
+                })*/
+                // ...
             });
+            //search.reverse('8.538961,47.372476')
+            searchBox.marker = true;
+            searchBox.mapboxgl = mapboxgl;
+            map.addControl(searchBox);
 
-            const intersections = turf.lineIntersect(geometries[0], geometries[1])
+            const geocoder = new MapboxGeocoder({
+                // Initialize the geocoder
+                accessToken: ACCESS_TOKEN, // Set the access token
+                mapboxgl: mapboxgl, // Set the mapbox-gl instance
+                marker: false, // Do not use the default marker style
+                reverseGeocode: true
+            });
+            map.addControl(geocoder)
 
-            map.addSource('intersections', {
-                'type': 'geojson',
-                'data': intersections,
+            
+            //const sessionToken = new SessionToken();
+            /*test(search).then(f => {
+                console.log(f)
+            })*/
+
+
+        };
+
+        async function test() {
+            const search = new MapboxSearch({
+                accessToken: 'pk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xhZ2NmZ3BiMGFqbzNubThpbWMxOXU3MCJ9.JlXUW8MwwX1LhhMnbWyUQw'
             })
 
-            map.addLayer({
-                'id': 'intersections',
-                'type': 'circle',
-                'source': 'intersections',
-                'paint': {
-                    'circle-color': '#4264fb',
-                    'circle-radius': 8,
-                    'circle-stroke-width': 2,
-                    'circle-stroke-color': '#ffffff'
-                }
-            })
-
-            const selected = longestDistanceBetweenPoints(intersections)
-
-            map.addSource('selected-intersections', {
-                'type': 'geojson',
-                'data': selected,
-            })
-
-            map.addLayer({
-                'id': 'selected-intersections',
-                'type': 'circle',
-                'source': 'selected-intersections',
-                'paint': {
-                    'circle-color': '#FF0000',
-                    'circle-radius': 8,
-                    'circle-stroke-width': 2,
-                    'circle-stroke-color': '#ffffff'
-                }
-            })
-
-            const slices = lineSlices(selected.features[0], selected.features[1], geometries)
-            map.addSource('selected-slices', {
-                'type': 'geojson',
-                'data': slices,
-            })
-
-            map.addLayer({
-                'id': 'selected-slices',
-                'type': 'line',
-                'source': 'selected-slices',
-                'layout': {
-                    'line-join': 'round',
-                    'line-cap': 'round',
-                },
-                'paint': {
-                    'line-color': '#FF0000',
-                    'line-width': 8,
-                    'line-opacity': 0.50,
-                }
-            })
-
-            const mps = midpoints(slices)
-
-            map.addSource('selected-midpoints', {
-                'type': 'geojson',
-                'data': mps,
-            })
-
-            map.addLayer({
-                'id': 'selected-midpoints',
-                'type': 'circle',
-                'source': 'selected-midpoints',
-                'paint': {
-                    'circle-color': '#00FF00',
-                    'circle-radius': 8,
-                    'circle-stroke-width': 2,
-                    'circle-stroke-color': '#ffffff'
-                }
-            })
+            const session2 = new SearchSession(search);
+            const features = await search.reverse('8.538961,47.372476')
+            return features
         }
 
-        // this function should be renamed something like
-        // longestLengthBetweenPointsOnLine, and pass the route
-        // geometry and use turf.length instead of turf.distance
-        // as portions of the route can double back and make
-        // turf.distance inaccurate.
-        function longestDistanceBetweenPoints({ features }) {
-            let longestDistance = 0
-            let foundP1 = null
-            let foundP2 = null
+        const {
+            MapboxSearch,
+            SearchSession
+        } = mapboxsearchcore;
 
-            for (let i = 1; i < features.length; i += 1) {
-                const p1 = features[i - 1]
-                const p2 = features[i]
 
-                // use turf.length instead
-                const dist = turf.distance(p1, p2)
-
-                if (dist > longestDistance) {
-                    foundP1 = p1
-                    foundP2 = p2
-                    longestDistance = dist
-                }
-            }
-
-            return turf.featureCollection([foundP1, foundP2])
-        }
-
-        function lineSlices(p1, p2, geos) {
-            const slices = []
-
-            for (const geo of geos) {
-                slices.push(turf.lineSlice(p1, p2, geo))
-            }
-
-            return turf.featureCollection(slices)
-        }
-
-        function midpoints({ features }) {
-            const result = []
-
-            for (const feature of features) {
-                const length = turf.length(feature)
-                const midpoint = turf.along(feature, length / 2)
-
-                result.push(midpoint)
-            }
-
-            return turf.featureCollection(result)
-        }
     </script>
+
 </body>
 
 </html>

@@ -27,6 +27,10 @@ function loadMap() {
         window.location.href = '/optimization-v2-playground.html'
     }else if(selectedMap === 'search-playground'){
         window.location.href = '/search-playground.html'
+    }else if(selectedMap === 'map-matching'){
+        window.location.href = '/map-matching.html'
+    }else if(selectedMap === 'percipitation'){
+        window.location.href = '/percipitation.html'
     }
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
