@@ -54,14 +54,39 @@ map.on('load', () => {
     //setDisasterPoints();
     setWarningWards();
     //randomPointsInTokyo()
+
+    fitAllCameraPoints()
 });
 
 map.on('move', () => {
     if(waveLng){
         updateMarker();
     }
+    //console.log(map.getZoom())
     
 });
+
+map.on('moveend', testZoom);
+
+function fitAllCameraPoints(){
+    
+    getCameraPoints().then(json => {
+        var bounds = new mapboxgl.LngLatBounds(json.features[0].geometry.coordinates,json.features[0].geometry.coordinates)
+        json.features.forEach(f => {
+            //console.log(f.geometry.coordinates)
+            bounds.extend(f.geometry.coordinates)
+        });
+
+        map.fitBounds(bounds, {
+            padding: 50
+        })
+    })
+   
+}
+
+function testZoom(){
+    console.log(`Zoom level: ${map.getZoom()}`)
+}
 
 
 async function getCameraPoints() {

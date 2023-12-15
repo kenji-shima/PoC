@@ -31,6 +31,8 @@ function loadMap() {
         window.location.href = '/map-matching.html'
     }else if(selectedMap === 'percipitation'){
         window.location.href = '/percipitation.html'
+    }else if(selectedMap === '3d-route'){
+        window.location.href = '/3d-route.html'
     }
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');

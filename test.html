@@ -3,98 +3,55 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Add Search Box for Japan</title>
-    <!-- Default styling. Feel free to remove! -->
-    <link href="https://api.mapbox.com/mapbox-assembly/v1.3.0/assembly.min.css" rel="stylesheet">
-    <!--script id="search-js" defer="./js/search-js.js" src="https://api.mapbox.com/search-js/v1.0.0-beta.15/web.js"></script//-->
-    <script id="search-js" defer="./js/search-js.js" src="./js/search-js.js"></script>
-    <script src="https://api.mapbox.com/search-js/v1.0.0-beta.15/core.js"></script>
-    <!--script
-        src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script//-->
-    <script src="./js/geocoder-js.js"></script>
-    <link rel='stylesheet'
-        href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css'
-        type='text/css' />
+    <title>Style circles with a data-driven property</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Load Mapbox GL JS -->
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
-
-    <div id="map" style="position: absolute; width: 100%; height: 100%"></div>
+    <div id="map"></div>
     <script>
-
-        /*const {
-            MapboxSearch,
-            SearchSession
-        } = mapboxsearchcore;*/
-        const ACCESS_TOKEN = 'pk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xhZ2NmZ3BiMGFqbzNubThpbWMxOXU3MCJ9.JlXUW8MwwX1LhhMnbWyUQw';
-        mapboxgl.accessToken = ACCESS_TOKEN;
+        mapboxgl.accessToken = 'pk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xhZ2NmZ3BiMGFqbzNubThpbWMxOXU3MCJ9.JlXUW8MwwX1LhhMnbWyUQw';
         const map = new mapboxgl.Map({
             container: 'map',
-            style: 'mapbox://styles/kenji-shima/clck4sxaf000414r7qc2h8by7',
-            center: [139.77, 35.68],
-            zoom: 6
+            // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+            style: 'mapbox://styles/mapbox/light-v11',
+            zoom: 12,
+            center: [-122.4473, 37.7535]
         });
-        const searchJS = document.getElementById('search-js');
-        searchJS.onload = function () {
-            const searchBox = new MapboxSearchBox();
-            searchBox.accessToken = ACCESS_TOKEN;
-            searchBox.options = {
-                language: 'ja',
-                country: 'JP',
-                limit: 2,
-                reverseGeocode: true
 
-            };
-            const session = new SearchSession(searchBox)
-            searchBox.addEventListener('suggest', (event) => {
-                console.log(event.detail)
-                /*test().then(f => {
-                    console.log(f)
-                })*/
-                // ...
-            });
-            //search.reverse('8.538961,47.372476')
-            searchBox.marker = true;
-            searchBox.mapboxgl = mapboxgl;
-            map.addControl(searchBox);
-
-            const geocoder = new MapboxGeocoder({
-                // Initialize the geocoder
-                accessToken: ACCESS_TOKEN, // Set the access token
-                mapboxgl: mapboxgl, // Set the mapbox-gl instance
-                marker: false, // Do not use the default marker style
-                reverseGeocode: true
-            });
-            map.addControl(geocoder)
-
-            
-            //const sessionToken = new SessionToken();
-            /*test(search).then(f => {
-                console.log(f)
-            })*/
-
-
-        };
-
-        async function test() {
-            const search = new MapboxSearch({
-                accessToken: 'pk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xhZ2NmZ3BiMGFqbzNubThpbWMxOXU3MCJ9.JlXUW8MwwX1LhhMnbWyUQw'
-            })
-
-            const session2 = new SearchSession(search);
-            const features = await search.reverse('8.538961,47.372476')
-            return features
-        }
-
-        const {
-            MapboxSearch,
-            SearchSession
-        } = mapboxsearchcore;
-
-
+        map.on('load', () => {
+            // Add the vector tileset as a source.
+            map.addLayer(
+                {
+                    'id': 'population',
+                    'type': 'circle',
+                    'source': {
+                        type: 'vector',
+                        url: 'mapbox://examples.8fgz4egr'
+                    },
+                    'source-layer': 'sf2010',
+                    'paint': {
+                        'circle-radius': 1.75,
+                        'circle-color': '#fbb03b'
+                    }
+                }
+            );
+        });
     </script>
 
 </body>

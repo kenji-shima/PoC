@@ -5,8 +5,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <!--script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' //-->
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.2/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.0-beta.2/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css' rel='stylesheet' />
     <script src="https://unpkg.com/deck.gl@^7.0.0/dist.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <meta name='viewport' content='width=device-width, initial-scale=1' />
@@ -34,6 +34,7 @@
             <h3>Select Map Type</h3>
             <select id="mapSelector" onchange="loadMap()">
                 <option value=""></option>
+                <option value="3d-route">3D Route</option>
                 <option value="percipitation">Percipitation</option>
                 <option value="map-matching">Map Matching</option>
                 <option value="choropleth">Choropleth</option>

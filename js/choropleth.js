@@ -1,6 +1,7 @@
 map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/kenji-shima/claqgq317000k14noi8pi9bjk',
+    //style: 'mapbox://styles/kenji-shima/claqgq317000k14noi8pi9bjk',
+    style: 'mapbox://styles/kenji-shima/cllswormg004m01of9s5o9g3k'
 });
 
 console.log(map._log)
@@ -51,6 +52,48 @@ map.on(
 
         document.getElementById('features').style = 'visibility:visible;';
         document.getElementById('legend').style = 'visibility:visible;';
+
+        map.addLayer({
+            id: `test`,
+            type: "fill",
+            source: {
+                'type': 'geojson',
+                'data': `./data/SingaporeTest.geojson`
+            },
+            paint:{
+                "fill-color" : "red",
+                "fill-opacity" : 0.5
+            },
+        })
+
+        map.addSource('mapillary', {
+            'type': 'vector',
+            'tiles': [
+            'https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=MLY|4142433049200173|72206abe5035850d6743b23a49c41333'
+            ],
+            'minzoom': 0,
+            'maxzoom': 12
+            });
+
+            map.addLayer(
+                {
+                'id': 'mapillary', // Layer ID
+                'type': 'line',
+                'source': 'mapillary', // ID of the tile source created above
+                // Source has several layers. We visualize the one with name 'sequence'.
+                'source-layer': 'sequence',
+                'layout': {
+                'line-cap': 'round',
+                'line-join': 'round'
+                },
+                'paint': {
+                'line-opacity': 0.6,
+                'line-color': 'rgb(53, 175, 109)',
+                'line-width': 2
+                }
+                },
+                'road-label-simple' // Arrange our new layer beneath labels and above roads
+                );
 
 
     }

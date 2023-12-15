@@ -131,7 +131,7 @@ const test = () =>{
                 [
                     "step",
                     ["get", "sizerank"],
-                    ["literal", [0, 0]],
+                    ["literal", [0, 0.8]],
                     5,
                     ["literal", [0, 0.8]]
                 ],
@@ -139,7 +139,7 @@ const test = () =>{
                 [
                     "step",
                     ["get", "sizerank"],
-                    ["literal", [0, 0]],
+                    ["literal", [0, 0.8]],
                     13,
                     ["literal", [0, 0.8]]
                 ]
