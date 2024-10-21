@@ -1,0 +1,60 @@
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css' rel='stylesheet' />
+    <link href="./css/percipitation.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id='map'></div>
+    <!--div class='map-overlay' id='features'>
+        <label><input type="radio" name="type" value="a" checked>APIコール</label>
+        <label><input type="radio" name="type" value="l">Mapから取得</label>
+        <h2 id="mapType">降雨量</h2>
+        <div id='pd'></div>
+        <div>
+            <table id="rainfall"></table>
+        </div>
+        <div class='session' id='sliderbar'>
+            
+            <input id='slider' class='row' type='range' min='0' step='1' value="0" />
+        </div>
+    </div-->
+    <div class="map-overlay-bottom">
+        <select id="dateselect" onchange="onDateSelect(this.value)">
+        </select>
+        <label id='active-datetime'>　</label>
+        <div class="time" id="timediv">
+        </div>
+        <input type="range" min="0" step="1" value="0" class="slider" id="slider" />
+
+    </div>
+    <div class="legend">
+        <div class="legend-scale" id="precipitation">
+            <div class="legend-bar-precipitation">
+                <span class="label" style="left: 0%;">mm/h</span>
+                <span class="label" style="left: 8%;">2</span>
+                <span class="label" style="left: 16%;">4</span>
+                <span class="label" style="left: 24%;">8</span>
+                <span class="label" style="left: 32%;">12</span>
+                <span class="label" style="left: 40%;">16</span>
+                <span class="label" style="left: 48%;">24</span>
+                <span class="label" style="left: 56%;">32</span>
+                <span class="label" style="left: 64%;">40</span>
+                <span class="label" style="left: 72%;">48</span>
+                <span class="label" style="left: 80%;">56</span>
+                <span class="label" style="left: 88%;">64</span>
+                <span class="label" style="left: 96%;">80</span>
+                <span class="label" style="left: 100%;">200</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/precipitation-raster.js"></script>
+</body>
+
+</html>

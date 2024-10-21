@@ -5,7 +5,8 @@ map = new mapboxgl.Map({
     style: 'mapbox://styles/kenji-shima/claw87fvj000615lndfpr7owd',
     //center: [-87.661557, 41.893748],
     center: [lng,lat],
-    zoom: 10.7
+    zoom: 10.7,
+    language: "ja,en"
 });
 
 map.on('click', (event) => {
@@ -90,6 +91,29 @@ map.on('load',() =>{
         // Add the custom icon image to the map
         map.addImage('custom-icon', image);
       });
+
+      map.addSource('gsi-terrain-raster', {
+        "type": "vector",
+        "minzoom": 1,
+        "maxzoom": 18,
+        "tiles": ["https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=MLY|4142433049200173|72206abe5035850d6743b23a49c41333"],
+        "tileSize": 512,
+      })
+
+      // 標高分解能
+      const u = 0.1
+
+      // 標高タイルラスターレイヤ
+      map.addLayer({
+        id: 'gsi-terrain-raster',
+        source: 'gsi-terrain-raster',
+        type: 'line',
+        'source-layer': 'sequence',
+        paint: {
+          // 初期状態で全ての標高に対して透明を指定
+          'line-color': 'green',
+        }
+      })
 })
 // Load the custom icon image
 

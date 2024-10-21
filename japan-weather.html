@@ -1,0 +1,89 @@
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v1.0.0/mapbox-gl-language.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css' rel='stylesheet' />
+  <script src="https://unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <script src="https://kenji-shima.github.io/resource-files/utils.js"></script>
+  <link href="./css/japan-weather.css" rel="stylesheet" />
+  <script type="module" src="./js/japan-weather.js"></script>
+
+</head>
+
+<body>
+  <div id="map" class="map"></div>
+  <div class="map-overlay-right">
+    
+    <div>
+      <div class="title">タイルセット</div>
+    </div>
+    <div id="layers">
+      <select id="tileset-selector" onchange="changeTileset(this.value)">
+      </select>
+    </div>
+    <div>
+      <div class="title">レイヤー</div>
+    </div>
+    <div id="layers">
+      <select id="layer-selector">
+      </select>
+    </div>
+    <br>
+    
+    <div>
+      <div class="title">カラー・スケール</div>
+    </div>
+    <div id="colorscales">
+      <select id="colorscale-selector" onchange="changeColorscaleType(this.value)">
+      </select>
+    </div>
+    <div>
+      <div class="title">カラー・リサンプリング</div>
+    </div>
+    <div id="colorsampling">
+      <select id="colorsampling-selector" onchange="changeColorSampling(this.value)">
+        <option value="step">nearest + step</option>
+        <option value="interpolate">bilinear + interpolate</option>
+      </select>
+    </div>
+    <div class="title">プロジェクション</div>
+    <div>
+      <select id="projection-selector" onchange="changeProjection(this.value)">
+        <option value="globe">Globe</option>
+        <option value="mercator">Mercator</option>
+        <option value="albers">Albers</option>
+        <option value="equalEarth">Equal Earth</option>
+        <option value="equirectangular">Equirectangular</option>
+        <option value="naturalEarth">Natural Earth</option>
+        <option value="lambertConformalConic">Lambert Conformal Conic</option>
+        <option value="winkelTripel">Winkel Tripel</option>
+      </select>
+    </div>
+    <br>
+    <div class="title">ズームレベル</div>
+    <div id="zoom"></div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-scale" id="waveheight">
+      <div class="legend-bar">
+      </div>
+    </div>
+  </div>
+
+  <div class="map-overlay-bottom">
+    <label id='active-datetime'>　</label>&nbsp;&nbsp;&nbsp;<button id="auto" onclick="play()">再生</button>
+    <div class="time" id="timediv">
+    </div>
+    <input type="range" min="0" step="1" value="0" class="slider" id="slider" onchange="changeBand(this.value)" />
+
+</div>
+
+</body>
+
+</html>

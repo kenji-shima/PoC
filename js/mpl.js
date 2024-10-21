@@ -156,12 +156,8 @@ function resetPrevious(remove_menu) {
         menuwrapper.innerHTML = '';
     }
 
-    if (map.getLayer('route')) {
-        map.removeLayer('route');
-    }
-    if (map.getSource('route')) {
-        map.removeSource('route')
-    }
+    removeAllRoutes(map)
+
     if (map.getLayer('tp-line-layer')) {
         map.removeLayer('tp-line-layer');
     }
@@ -183,43 +179,12 @@ function resetPrevious(remove_menu) {
 let routeGeo = null;
 let intersectingPoints = null;
 async function getRoute(end) {
-    resetPrevious(true);
-    const start = [lng, lat];
-    const query = await fetch(`${directions_uri}driving/${start[0]},${start[1]};${end[0]},${end[1]}?overview=full&steps=true&geometries=polyline&access_token=${mapboxgl.accessToken}`, { method: 'GET' });
-    const json = await query.json();
-
-    const data = json.routes[0];
-    const route = data.geometry.coordinates;
-    const geojson = {
-        type: 'Feature',
-        properties: {},
-        geometry: polyline.toGeoJSON(json.routes[0].geometry)
-    };
-
-    if (map.getSource('route')) {
-        map.getSource('route').setData(geojson);
-    } else {
-        map.addLayer({
-            id: 'route',
-            type: 'line',
-            source: {
-                type: 'geojson',
-                data: geojson
-            },
-            layout: {
-                'line-join': 'round',
-                'line-cap': 'round'
-            },
-            paint: {
-                'line-color': 'red',
-                'line-width': 5,
-                'line-opacity': 0.75
-            }
-        });
+    resetPrevious(true)
+    const start = [lng, lat]
+    await setRoute(map, start, end, 'red')
+    for(let id in routes){
+        routeGeo = routes[id]
     }
-
-    routeGeo = geojson.geometry;
-
     createMenu();
 }
 
@@ -307,7 +272,7 @@ const replay = () => {
     });
     map.setFog({}); // Set the default atmosphere style
 
-    // アニメーションの前に、線の長さを計算します。
+    // アニメーションの前に、線の長さを計算
     const pathDistance = turf.lineDistance(transpeninsularLine, 'kilometers');
 
     const speed = 20;
@@ -332,7 +297,7 @@ const replay = () => {
         const animationPhase = (time - startTime) / duration;
         //const animationPhaseDisplay = animationPhase.toFixed(2);
 
-        // animationPhase に基づいて、パスに沿った距離を計算します。
+        // animationPhase に基づいて、パスに沿った距離を計算
         const targetPosition = turf.along(transpeninsularLine, pathDistance * animationPhase).geometry.coordinates;
         const bearing = 60 - animationPhase * 50.0;
 

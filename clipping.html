@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Use a clip layer to replace a landmark on the map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+#info { position: absolute; background: white; padding: 10px; z-index: 1; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id="info">Hover over the map to see feature info.</div>
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoic3ZjLW9rdGEtbWFwYm94LXN0YWZmLWFjY2VzcyIsImEiOiJjbGtxbXN6MmswMDMyM3FvMXE0aGV6NnMyIn0.S6k-kZxuZ4RkRGuaazdCOg';
+    const map = (window.map = new mapboxgl.Map({
+        container: 'map',
+        center: [-0.126326, 51.533582],
+        zoom: 15.27,
+        pitch: 42,
+        bearing: -50,
+        //style: 'mapbox://styles/mapbox/standard',
+        style: 'mapbox://styles/mapbox/streets-v12',
+        minZoom: 15,
+        maxZoom: 16
+    }));
+
+    map.on('style.load', () => {
+        // set the light preset to be in dusk mode.
+        //map.setConfigProperty('basemap', 'lightPreset', 'dusk');
+
+        // add a geojson source with a polygon to be used in the clip layer.
+        map.addSource('eraser', {
+            'type': 'geojson',
+            'data': {
+                'type': 'FeatureCollection',
+                'features': [
+                    {
+                        'type': 'Feature',
+                        'properties': {},
+                        'geometry': {
+                            'coordinates': [
+                                [
+                                    [-0.12573, 51.53222],
+                                    [-0.12458, 51.53219],
+                                    [-0.12358, 51.53492],
+                                    [-0.12701, 51.53391],
+                                    [-0.12573, 51.53222]
+                                ]
+                            ],
+                            'type': 'Polygon'
+                        }
+                    }
+                ]
+            }
+        });
+
+        // add a geojson source which specifies the custom model to be used by the model layer.
+        map.addSource('model', {
+            'type': 'geojson',
+            'data': {
+                'type': 'Feature',
+                'properties': {
+                    'model-uri':
+                        'https://docs.mapbox.com/mapbox-gl-js/assets/tower.glb'
+                        //'https://kenji-shima.github.io/resource-files/models/Dog.gltf'
+                },
+                'geometry': {
+                    'coordinates': [-0.12501974, 51.5332374],
+                    'type': 'Point'
+                }
+            }
+        });
+
+        // add the clip layer and configure it to also remove symbols and trees.
+        // `clip-layer-scope` layout property is used to specify that only models from the Mapbox Standard Style should be clipped.
+        // this will prevent the newly added model from getting clipped.
+        map.addLayer({
+            'id': 'eraser',
+            'type': 'clip',
+            'source': 'eraser',
+            'layout': {
+                // specify the layer types to be removed by this clip layer
+                'clip-layer-types': ['symbol', 'model'],
+                'clip-layer-scope': ['basemap']
+            }
+        });
+
+        // add the model layer and specify the appropriate `slot` to ensure the symbols are rendered correctly.
+        map.addLayer({
+            'id': 'tower',
+            'type': 'model',
+            'slot': 'middle',
+            'source': 'model',
+            'minzoom': 15,
+            'layout': {
+                'model-id': ['get', 'model-uri']
+            },
+            'paint': {
+                'model-opacity': 1,
+                'model-rotation': [0.0, 0.0, 35.0],
+                'model-scale': [0.8, 0.8, 1.2],
+                //'model-scale': [20, 20, 20],
+                'model-color-mix-intensity': 0,
+                'model-cast-shadows': true,
+                //'model-emissive-strength': 5
+            }
+        });
+
+        map.on('click', (event) => {
+        // Query all rendered features at the point where the mouse is
+        const features = map.queryRenderedFeatures(event.point, {
+            layers: ['tower'] // Specify the layer to query
+        });
+
+        console.log(features);
+
+        // Display feature properties in the info box
+        document.getElementById('info').innerHTML = features.length
+            ? `Feature: ${features[0].properties.name}`
+            : 'No features';
+    });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<html>
+
+<head>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        h2,
+        h3 {
+            margin: 10px;
+            font-size: 18px;
+        }
+
+        h3 {
+            font-size: 16px;
+        }
+
+        p {
+            margin: 10px;
+        }
+
+        .info {
+            font-size: 12px;
+            text-align: right;
+        }
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #fff;
+            margin-right: 20px;
+            font-family: Arial, sans-serif;
+            overflow: auto;
+            border-radius: 3px;
+        }
+
+        .map-selector {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #fff;
+            margin-left: 20px;
+            margin-top: 60px;
+            font-family: Arial, sans-serif;
+            overflow: auto;
+            border-radius: 3px;
+        }
+
+        #features {
+            top: 0;
+            height: 80px;
+            margin-top: 20px;
+            width: 250px;
+            padding: 1em;
+            background-color: #000;
+            opacity: 60%;
+            color: #fff;
+        }
+
+        #instructions {
+            position: absolute;
+            margin: 20px;
+            width: 25%;
+            top: 140px;
+            bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            overflow-y: scroll;
+            font-family: sans-serif;
+        }
+
+        .mapboxgl-popup {
+            padding-bottom: 10px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='map'></div>
+    <div class='map-overlay' id='features'>
+        <div id='pd'></div>
+        <div>
+            Layer<br>
+            <select id="layer" name="layer" onchange="setLayer()">
+                <option value="" selected></option>
+            </select><br><br>
+        </div>
+    </div>
+    <script src="./js/weather-watch.js"></script>
+</body>
+
+</html>

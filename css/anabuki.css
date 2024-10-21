@@ -1,0 +1,205 @@
+#map {
+    width: 100%;
+    height: calc(100% - 450px);
+    top: 0;
+    transition: height 0.2s;
+}
+
+.list {
+    position: absolute;
+    width: 100%;
+    height: 450px;
+    bottom: 0;
+    overflow-y: scroll;
+    transition: height 0.2s;
+}
+
+#resize-handle {
+    position: absolute;
+    bottom: 450px; /* Initial position at the bottom of the map */
+    width: 100%;
+    height: 10px; /* Adjustable based on desired thickness */
+    background: #ccc; /* Or any color you prefer */
+    cursor: ns-resize; /* Cursor to indicate resizing */
+}
+
+#myDataTable th {
+    white-space: nowrap;
+    font-size: small;
+}
+
+#myDataTable tr:hover {
+    cursor: pointer;
+}
+
+#myDataTable td {
+    white-space: nowrap;
+    font-size: small;
+}
+
+.dataTables_wrapper {
+    white-space: nowrap;
+    font-size: small;
+}
+
+.map-overlay {
+    position: absolute;
+    top: 0;
+    height: 20px;
+    margin-top: 20px;
+    color: #fff;
+    background: #000;
+    margin-right: 20px;
+    font-family: Arial, sans-serif;
+    overflow: auto;
+    border-radius: 3px;
+    padding: 5px;
+    width: 150px;
+    right: -200px;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    display: none;
+    transition: all 1s;
+    z-index: 99;
+}
+
+@keyframes slideInFromRight {
+    0% {
+        right: -200px;
+        opacity: 0;
+    }
+    100% {
+        right: 0;
+        opacity: 0.8;
+    }
+}
+
+@keyframes slideOutToRight {
+    0% {
+        right: 0;
+        opacity: 0.8;
+    }
+    100% {
+        right: -200px;
+        opacity: 0;
+        display: none;
+    }
+}
+
+#map-overlay.visible{
+    animation-name: slideInFromRight;
+    display: block;
+}
+
+#map-overlay.invisible{
+    animation-name: slideOutToRight;
+    display: block;
+}
+
+#map-overlay:hover{
+    height: 290px;
+}
+
+#ID{
+    visibility: hidden;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .slider-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: small;
+    margin: 5px;
+}
+
+.heading{
+    margin: 2px;
+    padding: 1px;
+}
+
+.mapboxgl-popup-content {
+    font: 100 12px/14px 'Source Sans Pro', 'Helvetica Neue', sans-serif;
+    padding: 0;
+    width: 180px;
+}
+
+.mapboxgl-popup-content h3 {
+    background: #000;
+    color: #fff;
+    margin: 0;
+    padding: 10px;
+    border-radius: 3px 3px 0 0;
+    margin-top: -15px;
+}
+
+.mapboxgl-popup-content div {
+    padding: 10px;
+}
+
+.mapboxgl-popup-anchor-top>.mapboxgl-popup-content {
+    margin-top: 15px;
+}

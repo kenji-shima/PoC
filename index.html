@@ -2,11 +2,13 @@
 <head>
     <meta charset="utf-8" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src="https://unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <!--script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' //-->
-    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js'></script>
+    <!--script src="https://kenji-shima.github.io/resource-files/raster-playground-mapbox-gl.js"></script//-->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css' rel='stylesheet' />
     <script src="https://unpkg.com/deck.gl@^7.0.0/dist.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <meta name='viewport' content='width=device-width, initial-scale=1' />
@@ -16,7 +18,9 @@
     <link rel='stylesheet'
         href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css'
         type='text/css' />
-    <script src="/js/constants.js"></script>
+    <script src="/js/polyline.js" type="module"></script>
+    <!--script src="/js/constants.js"></script//-->
+    <script src="https://kenji-shima.github.io/resource-files/utils.js"></script>
     <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
     <!--script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script//-->
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.4.1/mapbox-gl-draw.js"></script>
@@ -24,6 +28,9 @@
         type="text/css" />
         <script src="https://cdn.jsdelivr.net/gh/jscastro76/threebox@v.2.2.2/dist/threebox.min.js" type="text/javascript"></script>
         <link href="https://cdn.jsdelivr.net/gh/jscastro76/threebox@v.2.2.2/dist/threebox.css" rel="stylesheet" />
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <!--script src="https://kenji-shima.github.io/resource-files/raster-playground-mapbox-gl.js"></script//-->
 
 </head>
 
@@ -34,6 +41,24 @@
             <h3>Select Map Type</h3>
             <select id="mapSelector" onchange="loadMap()">
                 <option value=""></option>
+                <option value="clipping">Clipping</option>
+                <option value="windbarbs">Wind Barbs</option>
+                <option value="tileborder-test">Tile Border Test</option>
+                <option value="japan-weather">Japan Weather</option>
+                <option value="swellnet-2">Swellnet 2</option>
+                <option value="swellnet">Swellnet</option>
+                <option value="konest">Konest (Seoul)</option>
+                <option value="precipitation-raster">Precipitation Raster</option>
+                <option value="global-weather">Global Weather</option>
+                <option value="weather-watch">Weather Watch</option>
+                <option value="nhk-typhoon">Typhoon</option>
+                <option value="search-along-route">Search Along Route</option>
+                <option value="nhk">NHK</option>
+                <option value="show-route">Show Route</option>
+                <option value="anabuki">Anabuki</option>
+                <option value="raster-mts">Raster MTS</option>
+                <option value="fleet">Fleet</option>
+                <option value="geocoding6">Geocoding V6</option>
                 <option value="3d-route">3D Route</option>
                 <option value="percipitation">Percipitation</option>
                 <option value="map-matching">Map Matching</option>

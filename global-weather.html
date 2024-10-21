@@ -1,0 +1,97 @@
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v1.0.0/mapbox-gl-language.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css' rel='stylesheet' />
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <script src="https://kenji-shima.github.io/resource-files/utils.js"></script>
+  <link href="./css/mpl.css" rel="stylesheet" />
+  <script type="module" src="./js/global-weather.js"></script>
+
+</head>
+
+<body>
+  <div id="map" class="map"></div>
+  <div class="map-overlay-right">
+    <div>
+      <div class="title">Layers</div>
+    </div>
+    <div>
+      <label>
+        <input type="radio" name="measurement" value="humidity" onchange="showLayer(this.value)" checked>
+        Humidity
+      </label><br>
+      <label>
+        <input type="radio" name="measurement" value="temp" onchange="showLayer(this.value)">
+        Temperature
+      </label><br>
+      <label>
+        <input type="radio" name="measurement" value="pressure" onchange="showLayer(this.value)">
+        Pressure
+      </label>
+    </div>
+    <br>
+    <div>
+      <div class="title">Particles</div>
+    </div>
+    <div>
+      Count<br>
+      <input id="particle-count-slider" type="range" step="1" min="1" max="30000" oninput="setParticleCount(this.value)" />
+      <span id="particle-count" style="vertical-align: top;"></span>
+    </div>
+    <div>
+      Speed<br>
+      <input id="particle-speed-slider" type="range" step="0.01" min="0.01" max="1" onchange="setParticleSpeed(this.value)" />
+      <span id="particle-speed" style="vertical-align: top;"></span>
+    </div>
+    <div>
+      Color<br>
+      <input id="particle-color" type="color" oninput="setParticleColor(this.value)" />
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-scale hidden" id="humidity">
+      <div class="legend-bar-humidity">
+        <span class="label" style="left: 0%;">%</span>
+        <span class="label" style="left: 20%;">20</span>
+        <span class="label" style="left: 40%;">40</span>
+        <span class="label" style="left: 60%;">60</span>
+        <span class="label" style="left: 80%;">80</span>
+        <span class="label" style="left: 100%;">100</span>
+      </div>
+    </div>
+    <div class="legend-scale hidden" id="temp">
+      <div class="legend-bar-temp">
+        <span class="label" style="left: 0%;">℃</span>
+        <span class="label" style="left: 10%;">-50</span>
+        <span class="label" style="left: 20%;">-40</span>
+        <span class="label" style="left: 30%;">-30</span>
+        <span class="label" style="left: 40%;">-20</span>
+        <span class="label" style="left: 50%;">-10</span>
+        <span class="label" style="left: 60%;">0</span>
+        <span class="label" style="left: 70%;">10</span>
+        <span class="label" style="left: 80%;">20</span>
+        <span class="label" style="left: 90%;">30</span>
+        <span class="label" style="left: 100%;">40</span>
+      </div>
+    </div>
+    <div class="legend-scale hidden" id="pressure">
+      <div class="legend-bar-pressure">
+        <span class="label" style="left: 0%;">hPa</span>
+        <span class="label" style="left: 17%;">990</span>
+        <span class="label" style="left: 34%;">1000</span>
+        <span class="label" style="left: 50%;">1010</span>
+        <span class="label" style="left: 66%;">1020</span>
+        <span class="label" style="left: 100%;">1030</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

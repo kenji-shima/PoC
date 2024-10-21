@@ -43,7 +43,7 @@ const setStartMarker = (longitude, latitude) => {
 }
 
 function showRoutes(mapType, floor, map, startPointIcon, startPointEvent, endPointIcon, endPointEvent, callback) {
-    fetchJson("https://kenji-shima.github.io/resource-files/3d-route-data.json").then(json => {
+    fetchJson("./data/3d-route-data.json").then(json => {
         json.features.forEach(feature => {
             const p = feature.properties
             let opacity = 1

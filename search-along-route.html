@@ -1,0 +1,56 @@
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <link href="./css/mpl.css" rel="stylesheet" />
+  <script
+    src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet'
+    href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css'
+    type='text/css' />
+  <script src="https://kenji-shima.github.io/resource-files/utils.js"></script>
+  <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+  <!--script src='https://api.mapbox.com/mapbox.js/plugins/turf/v3.0.11/turf.min.js'></script//-->
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css"
+    type="text/css" />
+  <script src="https://cdn.jsdelivr.net/gh/jscastro76/threebox@v.2.2.2/dist/threebox.min.js"
+    type="text/javascript"></script>
+  <link href="https://cdn.jsdelivr.net/gh/jscastro76/threebox@v.2.2.2/dist/threebox.css" rel="stylesheet" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+  <script type="module" src="./js/search-along-route.js"></script>
+
+</head>
+
+<body>
+  <div id="map" class="map"></div>
+  <div id="menu-wrapper">
+  </div>
+  <div class="map-overlay-right">
+    <div>
+      <div class="title">操作方法</div>・左クリックでポイント設定<br>
+      ・プロファイルを選択し、「マッチング」押下<br><br>
+    </div>
+    <div>
+      プロファイル<br>
+      <select id="profile">
+        <option value="driving">driving</option>
+        <option value="walking">walking</option>
+        <option value="cycling">cycling</option>
+        <option value="driving-traffic">driving-traffic</option>
+      </select><br><br>
+      <input type="button" value="マッチング" onclick="runMatrix()" />
+      <input type="button" value="クリア" onclick="clearAll()" />
+    </div>
+  </div>
+  <div id="map-overlay-wrapper"></div>
+
+</body>
+
+</html>

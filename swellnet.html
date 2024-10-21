@@ -1,0 +1,82 @@
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v1.0.0/mapbox-gl-language.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css' rel='stylesheet' />
+  <script src="https://unpkg.com/d3@7.8.5/dist/d3.min.js"></script>
+  <meta name='viewport' content='width=device-width, initial-scale=1' />
+  <script src="https://kenji-shima.github.io/resource-files/utils.js"></script>
+  <link href="./css/mpl.css" rel="stylesheet" />
+  <script type="module" src="./js/swellnet.js"></script>
+
+</head>
+
+<body>
+  <div id="map" class="map"></div>
+  <div class="map-overlay-right">
+    <div class="title">Projection</div>
+    <div>
+      <select id="projection-selector">
+        <option value="globe">Globe</option>
+        <option value="mercator">Mercator</option>
+        <option value="albers">Albers</option>
+        <option value="equalEarth">Equal Earth</option>
+        <option value="equirectangular">Equirectangular</option>
+        <option value="naturalEarth">Natural Earth</option>
+        <option value="lambertConformalConic">Lambert Conformal Conic</option>
+        <option value="winkelTripel">Winkel Tripel</option>
+      </select>
+    </div>
+    <div>
+      <div class="title">Color Scale</div>
+    </div>
+    <div id="colorscales">
+      <select id="colorscale-selector">
+      </select>
+    </div>
+    <div>
+      <div class="title">Layer</div>
+    </div>
+    <div id="layers">
+      <select id="layer-selector">
+      </select>
+    </div>
+    <br>
+    <!--input type="checkbox" id="show-waves" onchange="showWaves()" /><label for="show-waves">Show Wave Layer</label>
+    <div id="wave-particles-options" class="">
+      <div>
+        <div class="title">Wind Particles</div>
+      </div>
+      <div>
+        Count<br>
+        <input id="particle-count-slider" type="range" step="1" min="1" max="30000"
+          oninput="setParticleCount(this.value)" />
+        <span id="particle-count" style="vertical-align: top;"></span>
+      </div>
+      <div>
+        Speed<br>
+        <input id="particle-speed-slider" type="range" step="0.01" min="0.01" max="1"
+          onchange="setParticleSpeed(this.value)" />
+        <span id="particle-speed" style="vertical-align: top;"></span>
+      </div>
+      <div>
+        Color<br>
+        <input id="particle-color" type="color" oninput="setParticleColor(this.value)" />
+      </div>
+    </div//-->
+  </div>
+
+  <div class="legend">
+    <div class="legend-scale" id="waveheight">
+      <div class="legend-bar">
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

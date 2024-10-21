@@ -26,7 +26,7 @@ function showLayer() {
         const layerTr = document.getElementById(layer)
         if(layerTr != null) layerTr.style = ''
     } 
-    const opactity = ["case", ["<", ["get", "val"], 2], 0, 0.5]
+    const opactity = 0.5
     const hour = document.getElementById('slider').value
     map.setPaintProperty(`${hour}`, 'fill-opacity', opactity)
 
@@ -50,7 +50,9 @@ const addLayer = (layer) => {
         },
         "source-layer": `${layer}`,
         "layout": {},
+        "filter": [">", ["get", "val"], 2],
         "paint": {
+            "fill-opacity-transition": { duration: 0 },
             "fill-color": [
                 "interpolate",
                 ["linear"],

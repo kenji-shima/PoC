@@ -33,6 +33,30 @@ function loadMap() {
         window.location.href = '/percipitation.html'
     }else if(selectedMap === '3d-route'){
         window.location.href = '/3d-route.html'
+    }else if(selectedMap === 'fleet'){
+        window.location.href = '/fleet.html'
+    }else if(selectedMap === 'anabuki'){
+        window.location.href = '/anabuki.html'
+    }else if(selectedMap === 'show-route'){
+        window.location.href = '/show-route.html'
+    }else if(selectedMap === 'search-along-route'){
+        window.location.href = '/search-along-route.html'
+    }else if(selectedMap === 'weather-watch'){
+        window.location.href = '/weather-watch.html'
+    }else if(selectedMap === 'global-weather'){
+        window.location.href = '/global-weather.html'
+    }else if(selectedMap === 'precipitation-raster'){
+        window.location.href = '/precipitation-raster.html'
+    }else if(selectedMap === 'konest'){
+        window.location.href = '/konest.html'
+    }else if(selectedMap == 'swellnet'){
+        window.location.href = './swellnet.html'
+    }else if(selectedMap == 'japan-weather'){
+        window.location.href = './japan-weather.html'
+    }else if(selectedMap == 'swellnet-2'){
+        window.location.href = './swellnet-2.html'
+    }else if(selectedMap == 'clipping'){
+        window.location.href = './clipping.html'
     }
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');

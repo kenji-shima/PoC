@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link href="./css/measure-square.scss" rel="stylesheet" />
+    <script
+        src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet'
+        href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css'
+        type='text/css' />
+    <script src="./js/constants.js"></script>
+    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css"
+        type="text/css" />
+</head>
+
+<body>
+    <div id='map' class="map"></div>
+    <div class="map-overlay-right">
+        <div>
+            <h5>Style</h5>
+        </div>
+        <div>
+            <input type="radio" id="map-type1" name="map-type" value="map-type1" onclick="setMapStyle()" checked><label
+                for="map-type1">Mapbox 衛星</label>
+        </div>
+        <div>
+            <input type="radio" id="map-type2" name="map-type" value="map-type2"
+                onclick="setMapStyle('mapbox://styles/kenji-shima/clbq4qj5m000c15s1fm2ayr8r')"><label
+                for="map-type2">Mapbox Street</label>
+        </div>
+        <div>
+            <input type="radio" id="map-type3" name="map-type" value="map-type3"
+                onclick="setMapStyle('mapbox://styles/kenji-shima/clx8j5mmb01wn01q16w4148e6')"><label
+                for="map-type3">Labels Only</label>
+        </div>
+        <div>&nbsp;</div>
+        <div>
+            <h5>Layers</h5>
+        </div>
+        <label>
+            <input type="checkbox" id="konest-base-polygon-max16" onclick="toggleLayer(this)" /> Base Polygon
+        </label><br/>
+        <label>
+            <input type="checkbox" id="konest-building-10-16" onclick="toggleLayer(this)"/> Buildings
+        </label><br/>
+        <label>
+            <input type="checkbox" id="konest-line-10-16" onclick="toggleLayer(this)" /> Line
+        </label><br/>
+        <label>
+            <input type="checkbox" id="konest-poi-12-16" onclick="toggleLayer(this)" /> POI
+        </label>
+    </div>
+    <script src="./js/konest.js"></script>
+</body>
+
+</html>

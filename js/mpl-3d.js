@@ -41,15 +41,17 @@ async function fetchGeo(searchText) {
 
 let map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/kenji-shima/clbx9hi7m000714odsehmkdob',
+    //style: 'mapbox://styles/kenji-shima/clbx9hi7m000714odsehmkdob',
     //style: 'mapbox://styles/kenji-shima/clhd5k7vk002701rf7vsth0o2',
     center: [lng, lat],
     zoom: 14,
     scrollZoom: true,
+    language: "ja,en"
     //pitch: 60
 });
 
 map.on('load', () => {
+    map.setConfigProperty('basemap', 'lightPreset', 'night')
     usedCoords = []
     setAltitude = cityAltitude;
     setPitch = cityPitch;
@@ -147,12 +149,8 @@ function resetPrevious(remove_menu) {
         menuwrapper.innerHTML = '';
     }
 
-    if (map.getLayer('route')) {
-        map.removeLayer('route');
-    }
-    if (map.getSource('route')) {
-        map.removeSource('route')
-    }
+    removeAllRoutes(map)
+
     if (map.getLayer('tp-line-layer')) {
         map.removeLayer('tp-line-layer');
     }
@@ -176,40 +174,11 @@ let intersectingPoints = null;
 async function getRoute(end) {
     resetPrevious(true);
     const start = [lng, lat];
-    const query = await fetch(`${directions_uri}walking/${start[0]},${start[1]};${end[0]},${end[1]}?overview=full&steps=true&geometries=polyline&access_token=${mapboxgl.accessToken}`, { method: 'GET' });
-    const json = await query.json();
+    await setRoute(map, start, end, 'red', null, 'walking')
 
-    const data = json.routes[0];
-    const route = data.geometry.coordinates;
-    const geojson = {
-        type: 'Feature',
-        properties: {},
-        geometry: polyline.toGeoJSON(json.routes[0].geometry)
-    };
-
-    if (map.getSource('route')) {
-        map.getSource('route').setData(geojson);
-    } else {
-        map.addLayer({
-            id: 'route',
-            type: 'line',
-            source: {
-                type: 'geojson',
-                data: geojson
-            },
-            layout: {
-                'line-join': 'round',
-                'line-cap': 'round'
-            },
-            paint: {
-                'line-color': 'red',
-                'line-width': 5,
-                'line-opacity': 0.75
-            }
-        });
+    for(let id in routes){
+        routeGeo = routes[id].route
     }
-
-    routeGeo = geojson.geometry;
 
     createMenu();
 }
@@ -224,7 +193,7 @@ function createMenu() {
 
 }
 
-const computeCameraPosition = (
+const computeCameraPositionBK = (
     pitch,
     bearing,
     targetPosition,
@@ -254,10 +223,56 @@ const computeCameraPosition = (
     return newCameraPosition
 }
 
+const computeCameraPosition = (
+    pitch,
+    bearing,
+    targetPosition,
+    altitude,
+    smooth = true // Set smooth transition as default
+) => {
+    var bearingInRadian = bearing / 57.29;
+    var pitchInRadian = (90 - pitch) / 57.29;
+
+    var lngDiff =
+        ((altitude / Math.tan(pitchInRadian)) *
+            Math.sin(-bearingInRadian)) /
+        70000; // ~70km/degree longitude
+    var latDiff =
+        ((altitude / Math.tan(pitchInRadian)) *
+            Math.cos(-bearingInRadian)) /
+        110000 // 110km/degree latitude
+
+    var correctedLng = targetPosition[0] + lngDiff;
+    var correctedLat = targetPosition[1] - latDiff;
+
+    const newCameraPosition = {
+        lng: correctedLng,
+        lat: correctedLat
+    };
+
+    // Check if smooth transition is enabled
+    if (smooth) {
+        map.flyTo({
+            center: [correctedLng, correctedLat],
+            pitch: pitch,
+            bearing: bearing,
+            altitude: altitude,
+            zoom: 19,
+            speed: 1, // Adjust speed as needed
+            curve: 2, // Adjust curve as needed
+            easing: t => t // Adjust easing function if needed
+        });
+    } else {
+        // Return the new camera position if smooth transition is not enabled
+        return newCameraPosition;
+    }
+}
+
+
 let popUpList = []
 
 const cityAltitude = 30;
-const cityPitch = 60;
+const cityPitch = 40;
 const cityMultiplyBy = 20;
 
 let setAltitude;
@@ -293,7 +308,8 @@ const replay = () => {
         paint: {
             "line-color": "rgba(0,0,0,0)",
             "line-width": 8,
-            "line-opacity": 0.7
+            "line-opacity": 0.7,
+            "line-emissive-strength": 10,
         }
     });
     map.setFog({}); // Set the default atmosphere style
@@ -322,15 +338,16 @@ const replay = () => {
 
         // animationPhase に基づいて、パスに沿った距離を計算します。
         const targetPosition = turf.along(transpeninsularLine, pathDistance * animationPhase).geometry.coordinates;
-        const bearing = 60 - animationPhase * 50.0;
+        //const bearing = 60 - animationPhase * 50.0;
+        const bearing = turf.bearing(turf.point(modelPreviousPosition), turf.point(targetPosition));
 
         const cameraPosition = computeCameraPosition(pitch, bearing, targetPosition, altitude);
         const camera = map.getFreeCameraOptions();
 
-        camera.position = mapboxgl.MercatorCoordinate.fromLngLat(cameraPosition, altitude);
-        camera.lookAtPoint(targetPosition);
+        //camera.position = mapboxgl.MercatorCoordinate.fromLngLat(cameraPosition, altitude);
+        //camera.lookAtPoint(targetPosition);
 
-        map.setFreeCameraOptions(camera);
+        //map.setFreeCameraOptions(camera);
 
         // Reduce the visible length of the line by using a line-gradient to cutoff the line
         // animationPhase is a value between 0 and 1 that reprents the progress of the animation

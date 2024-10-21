@@ -1,0 +1,49 @@
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
+    <!--script src="https://kenji-shima.github.io/resource-files/utils.js"></script//-->
+    <link href="./css/anabuki.css" rel="stylesheet" />
+    <script type="text/javascript" src="/js/utils.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>
+
+
+
+</head>
+
+<body>
+    <div id='map'></div>
+    <div class='map-overlay' id='map-overlay'>
+        <div id="categories">
+            <h4 class="heading">周辺情報</h4>
+            <span>徒歩</span>
+            <span style="background-color: #FF0000;">10分</span>
+            <span style="background-color: #FFA500; color: #000000;">20分</span>
+            <span style="background-color: #FFFF00; color: #000000;">30分</span>
+            <!--div class="slider-wrapper">
+                <label class="switch">
+                    <input type="checkbox" id="kindegarden" onchange="getPOI('生活')">
+                    <span class="slider round"></span>
+                </label>
+                <label for="kindegarden">幼稚園・保育園</label>
+            </div//-->
+        </div>
+    </div>
+    <div id="resize-handle"></div>
+    <div class="list">
+        &nbsp;
+        <table id="myDataTable" class="cell-border compact hover">
+        </table>
+    </div>
+    <script src="/js/anabuki.js"></script>
+</body>
+
+</html>

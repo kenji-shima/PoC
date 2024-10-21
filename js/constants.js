@@ -3585,7 +3585,7 @@ const news = {
     }
 }
 
-function getFirstDayOfMonth(){
+function getFirstDayOfMonth() {
     const now = new Date();
     return now.getFullYear() + '-' + (now.getMonth() + 1) + '-01';
 }
@@ -3601,7 +3601,8 @@ const search_uri = 'https://api.mapbox.com/search/v1/';
 
 const common_params = `language=ja&country=jp&access_token=${mapboxgl.accessToken}`;
 
-const geocoding_uri = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+//const geocoding_uri = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
+const geocoding_uri = 'https://api.mapbox.com/search/geocode/v6/';
 
 const directions_uri = 'https://api.mapbox.com/directions/v5/mapbox/';
 
@@ -3664,8 +3665,12 @@ async function fetchJson(file) {
     return await query.json();
 }
 
-async function fetchReverseGeo(coordinates) {
+/*async function fetchReverseGeo(coordinates) {
     const query = await fetch(`${geocoding_uri}${coordinates[0]},${coordinates[1]}.json?${common_params}`, { method: 'GET' });
+    return await query.json();
+}*/
+async function fetchReverseGeo(coordinates) {
+    const query = await fetch(`${geocoding_uri}reverse?longitude=${coordinates[0]}&latitude=${coordinates[1]}&access_token=${mapboxgl.accessToken}`, { method: 'GET' });
     return await query.json();
 }
 
@@ -3674,11 +3679,11 @@ async function fetchGeo(searchText) {
     return await query.json();
 }
 
-async function postJson(url, data){
+async function postJson(url, data) {
     const query = fetch(url, {
-        method : 'POST',
-        headers : {
-            'Content-Type' : 'application/json',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
     })
@@ -3809,4 +3814,57 @@ var textFile = null,
         // returns a URL you can use as a href
         return textFile;
     };
+
+
+
+function randomPointsSimplePolys() {
+    const count = 1000;
+    let randomPointsList = [];
+    let wardPolyList = [];
+
+    //let promiseList = [];
+
+    let fc = { 'type': 'FeatureCollection', 'features': [] };
+    fetchDataJson('simplePoly.geojson').then(json => {
+        //promiseList.push(json)
+        for (const ward of json.features) {
+            wardPolyList = getPolygonArray(ward);
+            wardRandomPointsList = [];
+            let i = 0;
+            let index = 0;
+            while (i < count) {
+                const polygon = L.polygon(wardPolyList[index]);
+                randomPoint = randomPointInPoly(polygon);
+                randomPointsList.push(randomPoint);
+                i++;
+                index++;
+                if (index >= wardPolyList.length) {
+                    index = 0;
+                }
+                const orig = randomPoint.geometry.coordinates;
+                randomPoint.geometry.coordinates = [orig[1], orig[0]];
+
+                fc.features.push(randomPoint);
+
+
+            }
+        }
+
+
+        //console.log(fc)
+
+        const listings = document.getElementById('map');
+        const listing = listings.appendChild(document.createElement('div'));
+        listing.className = 'item';
+
+        const link = listing.appendChild(document.createElement('a'));
+        link.href = makeTextFile(JSON.stringify(fc));
+        console.log(link.href)
+        link.className = 'title';
+        link.innerHTML = `GetFILE`;
+
+
+
+    });
+}
 

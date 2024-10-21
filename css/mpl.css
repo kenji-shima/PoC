@@ -7,7 +7,8 @@ table {
   width: 100%;
 }
 
-td, th {
+td,
+th {
   border: 1px solid black;
   text-align: left;
   padding: 8px;
@@ -101,7 +102,7 @@ a {
   animation: slide-up 1s;
 }
 
-label{
+label {
   font-size: 12px;
   color: #000000;
 }
@@ -112,21 +113,21 @@ label{
 
 @keyframes slide-up {
   from {
-      transform: translateY(100%);
+    transform: translateY(100%);
   }
 
   to {
-      transform: translateY(0%);
+    transform: translateY(0%);
   }
 }
 
 @keyframes slide-right {
   from {
-      transform: translateX(-100%);
+    transform: translateX(-100%);
   }
 
   to {
-      transform: translateX(0%);
+    transform: translateX(0%);
   }
 }
 
@@ -213,27 +214,161 @@ h1 {
   background-image: url(../images/alert.png);
 }
 
-.blinking{
-	-webkit-animation:blink .5s ease-in-out infinite alternate;
-    -moz-animation:blink .5s ease-in-out infinite alternate;
-    animation:blink .5s ease-in-out infinite alternate;
-}
-@-webkit-keyframes blink{
-    0% {opacity:0;}
-    100% {opacity:1;}
-}
-@-moz-keyframes blink{
-    0% {opacity:0;}
-    100% {opacity:1;}
-}
-@keyframes blink{
-    0% {opacity:0;}
-    100% {opacity:1;}
+.blinking {
+  -webkit-animation: blink .5s ease-in-out infinite alternate;
+  -moz-animation: blink .5s ease-in-out infinite alternate;
+  animation: blink .5s ease-in-out infinite alternate;
 }
 
-a.replay{
+@-webkit-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes blink {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+a.replay {
   color: blue;
   text-decoration: underline;
   cursor: pointer;
   font: 400 18px 'Source Sans Pro', 'Helvetica Neue', sans-serif;
+}
+
+
+.legend {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  width: 400px;
+  opacity: 1;
+}
+
+.legend-title {
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 5px;
+  color: #000000;
+}
+
+.legend-scale {
+  text-align: center;
+}
+
+.legend-bar {
+  position: relative;
+  height: 30px;
+  background: linear-gradient(to right,
+      rgba(80, 74, 154, 1),
+      rgba(84, 172, 162, 1),
+      rgba(193, 228, 148, 1),
+      rgba(252, 244, 162, 1),
+      rgba(251, 166, 91, 1),
+      rgba(216, 66, 65, 1),
+      rgba(143, 3, 58, 1));
+  border: 1px solid #999;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
+}
+
+.legend-bar-humidity {
+  position: relative;
+  height: 30px;
+  background: linear-gradient(to right,
+      rgba(255, 0, 0, 1),
+      rgba(255, 165, 0, 1),
+      rgba(255, 255, 0, 1),
+      rgba(0, 128, 0, 1),
+      rgba(0, 255, 255, 1),
+      rgba(0, 0, 255, 1));
+  border: 1px solid #999;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
+}
+
+.legend-bar-temp {
+  position: relative;
+  height: 30px;
+  background: linear-gradient(to right,
+      rgba(36, 104, 180, 1),
+      rgba(60, 157, 194, 1),
+      rgba(128, 205, 193, 1),
+      rgba(151, 218, 168, 1),
+      rgba(198, 231, 181, 1),
+      rgba(238, 247, 217, 1),
+      rgba(255, 238, 170, 1),
+      rgba(255, 191, 128, 1),
+      rgba(255, 137, 97, 1),
+      rgba(244, 76, 57, 1),
+      rgba(231, 0, 28, 1));
+  border: 1px solid #999;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
+}
+
+.legend-bar-pressure {
+  position: relative;
+  height: 30px;
+  background: linear-gradient(to right,
+      rgba(0, 34, 170, 1),
+      rgba(0, 85, 170, 1),
+      rgba(102, 170, 170, 1),
+      rgba(170, 170, 136, 1),
+      rgba(204, 85, 0, 1));
+  border: 1px solid #999;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
+}
+
+.label {
+  font-size: 12px;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.hidden {
+  display: none;
 }

@@ -1,0 +1,56 @@
+{type=Feature, bbox=null, id=193a69b3-4975-4f40-a56b-2dce4fb58b5f, geometry=Polygon{type=Polygon, bbox=null, coordinates=[
+            [Point{type=Point, bbox=null, coordinates=[
+                        139.640836,
+                        35.450189
+                    ]
+                }, Point{type=Point, bbox=null, coordinates=[
+                        139.638599,
+                        35.450156
+                    ]
+                }, Point{type=Point, bbox=null, coordinates=[
+                        139.637903,
+                        35.449156
+                    ]
+                }, Point{type=Point, bbox=null, coordinates=[
+                        139.638697,
+                        35.447017
+                    ]
+                }, Point{type=Point, bbox=null, coordinates=[
+                        139.639813,
+                        35.446133
+                    ]
+                }, Point{type=Point, bbox=null, coordinates=[
+                        139.642836,
+                        35.446449
+                    ]
+                }, Point{type=Point, bbox=null, coordinates=[
+                        139.643644,
+                        35.448156
+                    ]
+                }, Point{type=Point, bbox=null, coordinates=[
+                        139.642836,
+                        35.449502
+                    ]
+                }, Point{type=Point, bbox=null, coordinates=[
+                        139.640836,
+                        35.450189
+                    ]
+                }
+            ]
+        ]
+    }, properties={
+        "fill-opacity": "0.33",
+        "fillColor": "#bf4040",
+        "address": "神奈川県横浜市中区本町１－５－２",
+        "MBX_GEOFENCE_DWELL_TIME": 1.0,
+        "opacity": "0.33",
+        "fill": "#bf4040",
+        "mapboxId": "dXJuOm1ieHBvaS1qcG46M2NiZmNiNDFmMzgyYTExYjBmZWU4ODdlY2NlOTg1OTJiNWE1MjU0MTBkZGEwMGFlNTcyMGMwYzUwNjM5YmI5ZA",
+        "fillOpacity": "0.33",
+        "color": "#bf4040",
+        "contour": "3",
+        "metric": "time",
+        "geofenceColor": "#E92734",
+        "name": "セブンイレブン横浜県庁前店"
+    }
+}

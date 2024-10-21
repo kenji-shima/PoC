@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fetch and Download Tokyo Ward GeoJSON</title>
+</head>
+<body>
+
+<h1>Tokyo Ward GeoJSON</h1>
+
+<button id="downloadButton">Download Combined GeoJSON</button>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const wards = [
+    "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区",
+    "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区", "豊島区", "北区", "荒川区",
+    "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区"
+  ];
+
+  const combinedGeoJson = {
+    type: "FeatureCollection",
+    features: []
+  };
+
+  const downloadButton = document.getElementById("downloadButton");
+
+  downloadButton.addEventListener("click", function() {
+    const blob = new Blob([JSON.stringify(combinedGeoJson)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.style.display = "none";
+    a.href = url;
+    a.download = "combined_geojson.geojson";
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+  });
+
+  wards.forEach(ward => {
+    const url = `https://uedayou.net/loa/東京都${encodeURIComponent(ward)}.geojson`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        combinedGeoJson.features.push(...data.features);
+      })
+      .catch(error => console.error(`Error fetching ${ward}:`, error));
+  });
+});
+</script>
+
+</body>
+</html>

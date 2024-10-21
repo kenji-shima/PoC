@@ -95,17 +95,34 @@ map.on(
                 'road-label-simple' // Arrange our new layer beneath labels and above roads
                 );
 
+                map.addLayer({
+                    id: `testing`,
+                    type: "fill",
+                    source: {
+                        'type': 'vector',
+                        'url': `mapbox://kenji-shima.tokushima-movement-2023-12`
+                        //type: 'geojson',
+                        //data:'./data/2023-12-tokushima-movement.geojson'
+                    },
+                    'source-layer':'1',
+                    paint:{
+                        "fill-color" : "green",
+                        "fill-opacity" : 0.5
+                    },
+                })
+
 
     }
+    
 );
 
 map.on('mousemove', (event) => {
-    const states = map.queryRenderedFeatures(event.point, {
+    /*const states = map.queryRenderedFeatures(event.point, {
         layers: ['statedata']
     });
     document.getElementById('pd').innerHTML = states.length
         ? `<h3>${states[0].properties.name}</h3><p><strong><em>${states[0].properties.density}</strong> people per square mile</em></p>`
-        : `<p>Hover over a state!</p>`;
+        : `<p>Hover over a state!</p>`;*/
 });
 
 map.getCanvas().style.cursor = 'default';
