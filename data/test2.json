@@ -1,56 +1,192 @@
-{type=Feature, bbox=null, id=193a69b3-4975-4f40-a56b-2dce4fb58b5f, geometry=Polygon{type=Polygon, bbox=null, coordinates=[
-            [Point{type=Point, bbox=null, coordinates=[
-                        139.640836,
-                        35.450189
-                    ]
-                }, Point{type=Point, bbox=null, coordinates=[
-                        139.638599,
-                        35.450156
-                    ]
-                }, Point{type=Point, bbox=null, coordinates=[
-                        139.637903,
-                        35.449156
-                    ]
-                }, Point{type=Point, bbox=null, coordinates=[
-                        139.638697,
-                        35.447017
-                    ]
-                }, Point{type=Point, bbox=null, coordinates=[
-                        139.639813,
-                        35.446133
-                    ]
-                }, Point{type=Point, bbox=null, coordinates=[
-                        139.642836,
-                        35.446449
-                    ]
-                }, Point{type=Point, bbox=null, coordinates=[
-                        139.643644,
-                        35.448156
-                    ]
-                }, Point{type=Point, bbox=null, coordinates=[
-                        139.642836,
-                        35.449502
-                    ]
-                }, Point{type=Point, bbox=null, coordinates=[
-                        139.640836,
-                        35.450189
-                    ]
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "id": "dXJuOm1ieHBsYzpTUzdr",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    28.988629,
+                    39.902232
+                ]
+            },
+            "properties": {
+                "mapbox_id": "dXJuOm1ieHBsYzpTUzdr",
+                "feature_type": "postcode",
+                "full_address": "16980, Orhaneli, Bursa, Türkiye",
+                "name": "16980",
+                "name_preferred": "16980",
+                "coordinates": {
+                    "longitude": 28.988629,
+                    "latitude": 39.902232
+                },
+                "place_formatted": "Orhaneli, Bursa, Türkiye",
+                "bbox": [
+                    28.728149,
+                    39.730117,
+                    29.161009,
+                    40.077671
+                ],
+                "context": {
+                    "place": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpiZ2pr",
+                        "name": "Orhaneli",
+                        "wikidata_id": "Q1948420"
+                    },
+                    "region": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpBOFRr",
+                        "name": "Bursa",
+                        "wikidata_id": "Q43690",
+                        "region_code": "16",
+                        "region_code_full": "TR-16"
+                    },
+                    "country": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpJdVE",
+                        "name": "Türkiye",
+                        "wikidata_id": "Q43",
+                        "country_code": "TR",
+                        "country_code_alpha_3": "TUR"
+                    },
+                    "postcode": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpTUzdr",
+                        "name": "16980"
+                    }
                 }
-            ]
-        ]
-    }, properties={
-        "fill-opacity": "0.33",
-        "fillColor": "#bf4040",
-        "address": "神奈川県横浜市中区本町１－５－２",
-        "MBX_GEOFENCE_DWELL_TIME": 1.0,
-        "opacity": "0.33",
-        "fill": "#bf4040",
-        "mapboxId": "dXJuOm1ieHBvaS1qcG46M2NiZmNiNDFmMzgyYTExYjBmZWU4ODdlY2NlOTg1OTJiNWE1MjU0MTBkZGEwMGFlNTcyMGMwYzUwNjM5YmI5ZA",
-        "fillOpacity": "0.33",
-        "color": "#bf4040",
-        "contour": "3",
-        "metric": "time",
-        "geofenceColor": "#E92734",
-        "name": "セブンイレブン横浜県庁前店"
-    }
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "dXJuOm1ieHBsYzpiZ2pr",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    28.988628,
+                    39.902233
+                ]
+            },
+            "properties": {
+                "mapbox_id": "dXJuOm1ieHBsYzpiZ2pr",
+                "feature_type": "place",
+                "full_address": "Orhaneli, Bursa, Türkiye",
+                "name": "Orhaneli",
+                "name_preferred": "Orhaneli",
+                "coordinates": {
+                    "longitude": 28.988628,
+                    "latitude": 39.902233
+                },
+                "place_formatted": "Bursa, Türkiye",
+                "bbox": [
+                    28.729698,
+                    39.72622,
+                    29.151184,
+                    40.084548
+                ],
+                "context": {
+                    "region": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpBOFRr",
+                        "name": "Bursa",
+                        "wikidata_id": "Q43690",
+                        "region_code": "16",
+                        "region_code_full": "TR-16"
+                    },
+                    "country": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpJdVE",
+                        "name": "Türkiye",
+                        "wikidata_id": "Q43",
+                        "country_code": "TR",
+                        "country_code_alpha_3": "TUR"
+                    },
+                    "place": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpiZ2pr",
+                        "name": "Orhaneli",
+                        "wikidata_id": "Q1948420"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "dXJuOm1ieHBsYzpBOFRr",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    29.067548,
+                    40.182737
+                ]
+            },
+            "properties": {
+                "mapbox_id": "dXJuOm1ieHBsYzpBOFRr",
+                "feature_type": "region",
+                "full_address": "Bursa, Türkiye",
+                "name": "Bursa",
+                "name_preferred": "Bursa",
+                "coordinates": {
+                    "longitude": 29.067548,
+                    "latitude": 40.182737
+                },
+                "place_formatted": "Türkiye",
+                "bbox": [
+                    28.080405,
+                    39.60425,
+                    29.975333,
+                    40.779803
+                ],
+                "context": {
+                    "country": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpJdVE",
+                        "name": "Türkiye",
+                        "wikidata_id": "Q43",
+                        "country_code": "TR",
+                        "country_code_alpha_3": "TUR"
+                    },
+                    "region": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpBOFRr",
+                        "name": "Bursa",
+                        "region_code": "16",
+                        "region_code_full": "TR-16",
+                        "wikidata_id": "Q43690"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "dXJuOm1ieHBsYzpJdVE",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    35.179593,
+                    39.060481
+                ]
+            },
+            "properties": {
+                "mapbox_id": "dXJuOm1ieHBsYzpJdVE",
+                "feature_type": "country",
+                "full_address": "Türkiye",
+                "name": "Türkiye",
+                "name_preferred": "Türkiye",
+                "coordinates": {
+                    "longitude": 35.179593,
+                    "latitude": 39.060481
+                },
+                "bbox": [
+                    25.571193,
+                    35.808644,
+                    44.818128,
+                    42.171788
+                ],
+                "context": {
+                    "country": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpJdVE",
+                        "name": "Türkiye",
+                        "country_code": "TR",
+                        "country_code_alpha_3": "TUR",
+                        "wikidata_id": "Q43"
+                    }
+                }
+            }
+        }
+    ],
+    "attribution": "NOTICE: © 2025 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained."
 }

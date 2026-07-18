@@ -408,6 +408,7 @@ function getMetersDiff(start, end){
     return distance;
 }
 
+var mplFeatures = [];
 var types = [];
 function setMPLPoints(targetPosition){
     const tileset = 'mapbox.mpl-v2-0-0';
@@ -417,6 +418,14 @@ function setMPLPoints(targetPosition){
     fetch(`https://api.mapbox.com/v4/${tileset}/tilequery/${targetPosition[0]},${targetPosition[1]}.json?radius=${radius}&limit=${limit}&access_token=${mapboxgl.accessToken}`, { method: 'GET' })
     .then(response => response.json())
     .then(json =>{
+        json.features.forEach(feature => {
+            var found = false;
+            mplFeatures.forEach(f => {
+                if(f.id === feature.id) found = true;
+            });
+            if(!found) mplFeatures.push(feature);
+        });
+        console.log(mplFeatures.length)
         const source = map.getSource('mpl-points');
         const existingData = source._data;
         
@@ -546,7 +555,7 @@ function cloneModels(){
     clonableModelNames.forEach(name => {
         const type = name.substring(name.lastIndexOf('.')+1)
         const options = {
-            obj: `./data/models/${name}`,
+            obj: `https://kenji-shima.github.io/resource-files/models/${name}`,
             type: type,
             scale: 0.05,
             units: 'meters',

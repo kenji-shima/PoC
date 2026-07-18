@@ -3799,6 +3799,141 @@ function randomPointsInTokyo() {
     });
 }
 
+// Helper function to generate a random 10-letter string
+function generateRandomId() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    let result = '';
+    for (let i = 0; i < 10; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+let generatedIds = new Set();
+// Helper function to generate a unique random 10-letter string
+function generateUniqueRandomId() {
+    let id;
+    do {
+        id = generateRandomId();
+    } while (generatedIds.has(id));
+    generatedIds.add(id);
+    return id;
+}
+
+function generateRandomType() {
+    const types = 'ABCDEFGHIJ';
+    return types.charAt(Math.floor(Math.random() * types.length));
+}
+
+function randomPointsInJapan() {
+    const count = 200000;
+    let randomPointsList = [];
+    let wardPolyList = [];
+
+    //let promiseList = [];
+
+    let fc = { 'type': 'FeatureCollection', 'features': [] };
+    fetchDataJson('japanall.geojson').then(json => {
+        //promiseList.push(json)
+        for (const ward of json.features) {
+            wardPolyList = getPolygonArray(ward);
+            wardRandomPointsList = [];
+            let i = 0;
+            let index = 0;
+            while (i < count) {
+                const polygon = L.polygon(wardPolyList[index]);
+                randomPoint = randomPointInPoly(polygon);
+                randomPointsList.push(randomPoint);
+                i++;
+                index++;
+                if (index >= wardPolyList.length) {
+                    index = 0;
+                }
+                const orig = randomPoint.geometry.coordinates;
+                randomPoint.geometry.coordinates = [orig[1], orig[0]];
+
+                randomPoint.properties = randomPoint.properties || {};
+                randomPoint.properties.lv = Math.random() < 0.5 ? -1 : 1;
+                randomPoint.properties.id = generateUniqueRandomId();
+                randomPoint.properties.tp = generateRandomType();
+
+                fc.features.push(randomPoint);
+
+            }
+        }
+
+
+        //console.log(fc)
+
+        const blob = new Blob([JSON.stringify(fc)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'randomPointsInJapan.geojson';
+        a.click();
+        URL.revokeObjectURL(url);
+
+
+
+    });
+}
+
+function randomPointsInJapanBK() {
+    const count = 17;
+    let randomPointsList = [];
+    let wardPolyList = [];
+
+    //let promiseList = [];
+
+    let fc = { 'type': 'FeatureCollection', 'features': [] };
+    fetchDataJson('tokyo-by-ward.geojson').then(json => {
+        //promiseList.push(json)
+        for (const ward of json.features) {
+            wardPolyList = getPolygonArray(ward);
+            wardRandomPointsList = [];
+            let i = 0;
+            let index = 0;
+            while (i < count) {
+                const polygon = L.polygon(wardPolyList[index]);
+                randomPoint = randomPointInPoly(polygon);
+                randomPointsList.push(randomPoint);
+                i++;
+                index++;
+                if (index >= wardPolyList.length) {
+                    index = 0;
+                }
+                const orig = randomPoint.geometry.coordinates;
+                randomPoint.geometry.coordinates = [orig[1], orig[0]];
+
+                randomPoint.properties = Object.assign({}, ward.properties);
+
+                randomPoint.properties = randomPoint.properties || {};
+                randomPoint.properties.max = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
+                randomPoint.properties.id = generateUniqueRandomId();
+                randomPoint.properties.free = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
+
+                fc.features.push(randomPoint);
+
+            }
+        }
+
+
+        //console.log(fc)
+
+        const blob = new Blob([JSON.stringify(fc)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'randomPointsInJapan.geojson';
+        a.click();
+        URL.revokeObjectURL(url);
+
+
+
+    });
+}
+window.randomPointsInJapan = randomPointsInJapan;
+
 var textFile = null,
     makeTextFile = function (text) {
         var data = new Blob([text], { type: 'text/plain' });

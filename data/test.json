@@ -1,334 +1,192 @@
 {
-    "bucket": "tilestream-tilesets-production",
-    "key": "8c/_pending/aqq1tfyxaon1t1ds01b4aowlc/kenji-shima",
-    "accessKeyId": "ASIATNLVGLR2AONCKUQK",
-    "secretAccessKey": "vgqwHqnohUqNHJerQj40rw2qduROYnXDiK+1MSw5",
-    "sessionToken": "FwoGZXIvYXdzEGMaDPfGHLEgXA3k6sdSOyKcAl0m0bc5zXtGzIRzWwYTfntnobWINPMPatCIxERRi/jiKQK+21mXGhY5Wnjf/CNRkypbGfnqXDeh45R5oIfU+LA0WVPqlnuYiZkMjTbOn3590CGsq+JjxhN313FQZZetKWaZ1ER+7ODo13OHM0gSs0asCLySiBECgxKVzo6bF3r0VPO7JVjx8O2VTn5aWoN5Mx8Ocq8bJk93mWWTe44tJu6HqI5Do+euZf8YNVT5ALH8YxobTsjcVTSVZPx3+AmNkAjmx3O5oaq8X/P2bwBtZ2B6rFAR2VyP6bV5SwckffnRJpRn0sFjC7bwSD3rZXYc0QRqIkOEvHV+HqRWsYqCgqd2EY5KiHWAcdtbmfFKh4nZ6j1Vi2pGf4iLNb9mKLq+z7IGMils3Lk+wkhB/hUlFIL41FlXeX+nTZNnmbuJbSgsjYkssKdHMhMF3r8oaQ==",
-    "url": "https://tilestream-tilesets-production.s3.amazonaws.com/8c/_pending/aqq1tfyxaon1t1ds01b4aowlc/kenji-shima"
-}
-
-$ export AWS_ACCESS_KEY_ID=ASIATNLVGLR2AONCKUQK
-$ export AWS_SECRET_ACCESS_KEY=vgqwHqnohUqNHJerQj40rw2qduROYnXDiK+1MSw5
-$ export AWS_SESSION_TOKEN=FwoGZXIvYXdzEGMaDPfGHLEgXA3k6sdSOyKcAl0m0bc5zXtGzIRzWwYTfntnobWINPMPatCIxERRi/jiKQK+21mXGhY5Wnjf/CNRkypbGfnqXDeh45R5oIfU+LA0WVPqlnuYiZkMjTbOn3590CGsq+JjxhN313FQZZetKWaZ1ER+7ODo13OHM0gSs0asCLySiBECgxKVzo6bF3r0VPO7JVjx8O2VTn5aWoN5Mx8Ocq8bJk93mWWTe44tJu6HqI5Do+euZf8YNVT5ALH8YxobTsjcVTSVZPx3+AmNkAjmx3O5oaq8X/P2bwBtZ2B6rFAR2VyP6bV5SwckffnRJpRn0sFjC7bwSD3rZXYc0QRqIkOEvHV+HqRWsYqCgqd2EY5KiHWAcdtbmfFKh4nZ6j1Vi2pGf4iLNb9mKLq+z7IGMils3Lk+wkhB/hUlFIL41FlXeX+nTZNnmbuJbSgsjYkssKdHMhMF3r8oaQ==
-$ aws s3 cp /path/to/file s3: //{bucket}/{key} --region us-east-1
-
-aws s3 cp HimawariFullColourIDE00435.202405170440.tiff s3: //tilestream-tilesets-production/8c/_pending/aqq1tfyxaon1t1ds01b4aowlc/kenji-shima --region us-east-1
-
-$ curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{
-    "url": "https://tilestream-tilesets-production.s3.amazonaws.com/8c/_pending/aqq1tfyxaon1t1ds01b4aowlc/kenji-shima",
-    "tileset": "kenji-shima.weather-watch-himawari",
-    "name": "Weather Watch Himawari"
-}' 'https: //api.mapbox.com/uploads/v1/kenji-shima?access_token=sk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xvMHRyZWh0MWZuOTJ0bXhia2x1NndiZiJ9.gFUcwhuw86O5e5VuU8_z1w'
-{
-    "id": "clwfrn0em20j51mmb5d2uaf5v",
-    "name": "Weather Watch Himawari",
-    "complete": false,
-    "error": null,
-    "created": "2024-05-21T02:18:16.670Z",
-    "modified": "2024-05-21T02:18:16.670Z",
-    "tileset": "kenji-shima.weather-watch-himawari",
-    "owner": "kenji-shima",
-    "progress": 0
-}
-
-
-upload: ./HimawariFullColourIDE00435.202405170440.tiff to s3: //tilestream-tilesets-production/ed/_pending/ui94bg8xcpu1ymd2s2t5rfwlc/kenji-shima
-{
-    "id": "clwo7bsn6000608jya6h340xg",
-    "stage": "success",
-    "tilesetId": "kenji-shima.weather-watch-rainfallmerge-nc",
-    "errors": [],
-    "completed": 1716768031383,
-    "created": 1716767976642,
-    "created_nice": "Sun May 26 2024 23:59:36 GMT+0000 (Coordinated Universal Time)",
-    "published": 1716767976642,
-    "warnings": [],
-    "layer_stats": {
-        "rainfall": {
-            "minzoom": 0,
-            "maxzoom": 9,
-            "zooms": {}
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "id": "dXJuOm1ieHBsYzpTUzdr",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    28.988629,
+                    39.902232
+                ]
+            },
+            "properties": {
+                "mapbox_id": "dXJuOm1ieHBsYzpTUzdr",
+                "feature_type": "postcode",
+                "full_address": "16980, Orhaneli, Bursa, Türkiye",
+                "name": "16980",
+                "name_preferred": "16980",
+                "coordinates": {
+                    "longitude": 28.988629,
+                    "latitude": 39.902232
+                },
+                "place_formatted": "Orhaneli, Bursa, Türkiye",
+                "bbox": [
+                    28.728149,
+                    39.730117,
+                    29.161009,
+                    40.077671
+                ],
+                "context": {
+                    "place": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpiZ2pr",
+                        "name": "Orhaneli",
+                        "wikidata_id": "Q1948420"
+                    },
+                    "region": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpBOFRr",
+                        "name": "Bursa",
+                        "wikidata_id": "Q43690",
+                        "region_code": "16",
+                        "region_code_full": "TR-16"
+                    },
+                    "country": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpJdVE",
+                        "name": "Türkiye",
+                        "wikidata_id": "Q43",
+                        "country_code": "TR",
+                        "country_code_alpha_3": "TUR"
+                    },
+                    "postcode": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpTUzdr",
+                        "name": "16980"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "dXJuOm1ieHBsYzpiZ2pr",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    28.988628,
+                    39.902233
+                ]
+            },
+            "properties": {
+                "mapbox_id": "dXJuOm1ieHBsYzpiZ2pr",
+                "feature_type": "place",
+                "full_address": "Orhaneli, Bursa, Türkiye",
+                "name": "Orhaneli",
+                "name_preferred": "Orhaneli",
+                "coordinates": {
+                    "longitude": 28.988628,
+                    "latitude": 39.902233
+                },
+                "place_formatted": "Bursa, Türkiye",
+                "bbox": [
+                    28.729698,
+                    39.72622,
+                    29.151184,
+                    40.084548
+                ],
+                "context": {
+                    "region": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpBOFRr",
+                        "name": "Bursa",
+                        "wikidata_id": "Q43690",
+                        "region_code": "16",
+                        "region_code_full": "TR-16"
+                    },
+                    "country": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpJdVE",
+                        "name": "Türkiye",
+                        "wikidata_id": "Q43",
+                        "country_code": "TR",
+                        "country_code_alpha_3": "TUR"
+                    },
+                    "place": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpiZ2pr",
+                        "name": "Orhaneli",
+                        "wikidata_id": "Q1948420"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "dXJuOm1ieHBsYzpBOFRr",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    29.067548,
+                    40.182737
+                ]
+            },
+            "properties": {
+                "mapbox_id": "dXJuOm1ieHBsYzpBOFRr",
+                "feature_type": "region",
+                "full_address": "Bursa, Türkiye",
+                "name": "Bursa",
+                "name_preferred": "Bursa",
+                "coordinates": {
+                    "longitude": 29.067548,
+                    "latitude": 40.182737
+                },
+                "place_formatted": "Türkiye",
+                "bbox": [
+                    28.080405,
+                    39.60425,
+                    29.975333,
+                    40.779803
+                ],
+                "context": {
+                    "country": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpJdVE",
+                        "name": "Türkiye",
+                        "wikidata_id": "Q43",
+                        "country_code": "TR",
+                        "country_code_alpha_3": "TUR"
+                    },
+                    "region": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpBOFRr",
+                        "name": "Bursa",
+                        "region_code": "16",
+                        "region_code_full": "TR-16",
+                        "wikidata_id": "Q43690"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "dXJuOm1ieHBsYzpJdVE",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    35.179593,
+                    39.060481
+                ]
+            },
+            "properties": {
+                "mapbox_id": "dXJuOm1ieHBsYzpJdVE",
+                "feature_type": "country",
+                "full_address": "Türkiye",
+                "name": "Türkiye",
+                "name_preferred": "Türkiye",
+                "coordinates": {
+                    "longitude": 35.179593,
+                    "latitude": 39.060481
+                },
+                "bbox": [
+                    25.571193,
+                    35.812225,
+                    44.818128,
+                    42.171788
+                ],
+                "context": {
+                    "country": {
+                        "mapbox_id": "dXJuOm1ieHBsYzpJdVE",
+                        "name": "Türkiye",
+                        "country_code": "TR",
+                        "country_code_alpha_3": "TUR",
+                        "wikidata_id": "Q43"
+                    }
+                }
+            }
         }
-    },
-    "tileset_precisions": {
-        "10m": 0
-    },
-    "recipe": {
-        "layers": {
-            "rainfall": {
-                "buffer": 1,
-                "resampling": "bilinear",
-                "source_rules": {
-                    "filter": [
-                        "==",
-                        [
-                            "get",
-                            "NETCDF_VARNAME"
-                        ],
-                        "reflectivity"
-                    ],
-                    "name": [
-                        "get",
-                        "standard_name"
-                    ]
-                },
-                "tilesize": 128
-            }
-        },
-        "maxzoom": 9,
-        "minzoom": 0,
-        "sources": [
-            {
-                "uri": "mapbox://tileset-source/kenji-shima/weather-watch-rainfallmerge-nc"
-            }
-        ],
-        "type": "rasterarray",
-        "version": 1
-    }
-}%
-
-$ curl -X POST "https://api.mapbox.com/uploads/v1/kenji-shima/credentials?access_token=YOUR_MAPBOX_ACCESS_TOKEN"{
-    "bucket": "tilestream-tilesets-production",
-    "key": "38/_pending/8qxo8hhecpu1n2x0ymduk2xlc/kenji-shima",
-    "accessKeyId": "ASIATNLVGLR2HEOROYS5",
-    "secretAccessKey": "/pKQaqXmBNRO0oKLrou+Npj0RvzBzpZRalSYQzJZ",
-    "sessionToken": "FwoGZXIvYXdzEFMaDHwi+pI8nnlziby3vCKcAi/84iHqQfgEeSAEti3vUubT4vQTSdv3hipLMPmd/d2g5HlK8m+vjBlKRdipt2VVzLYSEzumdZf2fTUEQ+qOKhtkJ1YfY+ZC6zK8XkS7mUr8gZ5nYqaKqb8sBGYtH6QCfwgBHMaeyXjZZHClRjBVhd3ljGTvPjvUKNYGaTyC2JAD+C1oB3SdVnYcpitJ9An5mF5QNCN9Wij3fJbP6D2XKhfHpvBxHba5MckMO5mkKNlKTBQczE1t6cB3/lYSaKaWDv0KmfC3mNwi4OpABnoUC/PdRvld3V7VTeb6QVXRcLwdNKJOdjMT2iPiVuCfTeTr0gB3jSekd/caJ+w+Ssk7MCfAZRKCIifqZ71Y+XL7WKFAEVMuC1A8+Wvk9IU+KNWghLMGMinUVRxN9Derexebfq8M41uzc6iqbMdO7EfK2FE/eMdAKtx9B1WOQBYmgA==",
-    "url": "https://tilestream-tilesets-production.s3.amazonaws.com/38/_pending/8qxo8hhecpu1n2x0ymduk2xlc/kenji-shima"
-}
-
-$ export AWS_ACCESS_KEY_ID=ASIATNLVGLR2HEOROYS5
-$ export AWS_SECRET_ACCESS_KEY=/pKQaqXmBNRO0oKLrou+Npj0RvzBzpZRalSYQzJZ
-$ export AWS_SESSION_TOKEN=FwoGZXIvYXdzEFMaDHwi+pI8nnlziby3vCKcAi/84iHqQfgEeSAEti3vUubT4vQTSdv3hipLMPmd/d2g5HlK8m+vjBlKRdipt2VVzLYSEzumdZf2fTUEQ+qOKhtkJ1YfY+ZC6zK8XkS7mUr8gZ5nYqaKqb8sBGYtH6QCfwgBHMaeyXjZZHClRjBVhd3ljGTvPjvUKNYGaTyC2JAD+C1oB3SdVnYcpitJ9An5mF5QNCN9Wij3fJbP6D2XKhfHpvBxHba5MckMO5mkKNlKTBQczE1t6cB3/lYSaKaWDv0KmfC3mNwi4OpABnoUC/PdRvld3V7VTeb6QVXRcLwdNKJOdjMT2iPiVuCfTeTr0gB3jSekd/caJ+w+Ssk7MCfAZRKCIifqZ71Y+XL7WKFAEVMuC1A8+Wvk9IU+KNWghLMGMinUVRxN9Derexebfq8M41uzc6iqbMdO7EfK2FE/eMdAKtx9B1WOQBYmgA==
-$ aws s3 cp /path/to/file s3: //{bucket}/{key} --region us-east-1
-
-
-aws s3 cp Forest_height_2019_AUS.tif s3: //tilestream-tilesets-production/38/_pending/8qxo8hhecpu1n2x0ymduk2xlc/kenji-shima --region us-east-1
-
-$ curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{
-    "url": "https://tilestream-tilesets-production.s3.amazonaws.com/38/_pending/8qxo8hhecpu1n2x0ymduk2xlc/kenji-shima",
-    "tileset": "kenji-shima.forest-aus-2019"
-}' 'https: //api.mapbox.com/uploads/v1/kenji-shima?access_token=sk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2x4MW4zMWJvMGI1bzJqczlscHpvOW02NyJ9.LiCRHGBjZLZYoL734NWyHA'
-
-  https: //api.mapbox.com/uploads/v1/kenji-shima/clx2lkize01hn1unv5a64iafh
-
-  $ curl "https://api.mapbox.com/uploads/v1/kenji-shima/clx2lkize01hn1unv5a64iafh?access_token=sk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2x4MW4zMWJvMGI1bzJqczlscHpvOW02NyJ9.LiCRHGBjZLZYoL734NWyHA"{
-    "id": "clxqc4spt000008mh9a0ueylh",
-    "stage": "failed",
-    "tilesetId": "kenji-shima.global-waves-test2",
-    "errors": [
-        "StateMachineException"
     ],
-    "completed": null,
-    "created": 1719073762913,
-    "created_nice": "Sat Jun 22 2024 16:29:22 GMT+0000 (Coordinated Universal Time)",
-    "published": 1719073762913,
-    "warnings": [],
-    "recipe": {
-        "layers": {
-            "waves": {
-                "buffer": 1,
-                "resampling": "nearest",
-                "source_rules": {
-                    "filter": [
-                        [
-                            "all",
-                            [
-                                "==",
-                                [
-                                    "get",
-                                    "GRIB_COMMENT"
-                                ],
-                                "Primary wave direction [Degree true]"
-                            ],
-                            [
-                                "==",
-                                [
-                                    "get",
-                                    "GRIB_SHORT_NAME"
-                                ],
-                                "0-SFC"
-                            ],
-                            [
-                                "==",
-                                [
-                                    "get",
-                                    "GRIB_FORECAST_SECONDS"
-                                ],
-                                "0"
-                            ]
-                        ],
-                        [
-                            "all",
-                            [
-                                "==",
-                                [
-                                    "get",
-                                    "GRIB_COMMENT"
-                                ],
-                                "Primary wave mean period [s]"
-                            ],
-                            [
-                                "==",
-                                [
-                                    "get",
-                                    "GRIB_SHORT_NAME"
-                                ],
-                                "0-SFC"
-                            ],
-                            [
-                                "==",
-                                [
-                                    "get",
-                                    "GRIB_FORECAST_SECONDS"
-                                ],
-                                "0"
-                            ]
-                        ],
-                        [
-                            "all",
-                            [
-                                "==",
-                                [
-                                    "get",
-                                    "GRIB_COMMENT"
-                                ],
-                                "Significant height of combined wind waves and swell [m]"
-                            ],
-                            [
-                                "==",
-                                [
-                                    "get",
-                                    "GRIB_SHORT_NAME"
-                                ],
-                                "0-SFC"
-                            ],
-                            [
-                                "==",
-                                [
-                                    "get",
-                                    "GRIB_FORECAST_SECONDS"
-                                ],
-                                "0"
-                            ]
-                        ]
-                    ],
-                    "name": [
-                        "to-number",
-                        [
-                            "get",
-                            "GRIB_VALID_TIME"
-                        ]
-                    ],
-                    "order": "asc"
-                },
-                "tilesize": 512
-            }
-        },
-        "maxzoom": 7,
-        "minzoom": 0,
-        "sources": [
-            {
-                "uri": "mapbox://tileset-source/kenji-shima/gwm-20240312"
-            }
-        ],
-        "type": "rasterarray",
-        "version": 1
-    }
+    "attribution": "NOTICE: © 2025 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained."
 }
-
-  {
-    "id": "clxqchmib000o09kx5y1f59bo",
-    "stage": "failed",
-    "tilesetId": "kenji-shima.global-waves-test2",
-    "errors": [
-        "The specified tolerated failure threshold was exceeded"
-    ],
-    "completed": null,
-    "created": 1719074361395,
-    "created_nice": "Sat Jun 22 2024 16:39:21 GMT+0000 (Coordinated Universal Time)",
-    "published": 1719074361395,
-    "warnings": [],
-    "recipe": {
-        "layers": {
-            "waves": {
-                "buffer": 1,
-                "resampling": "nearest",
-                "source_rules": {
-                    "filter": [
-                        [
-                            "all",
-                            [
-                                "==",
-                                [
-                                    "get",
-                                    "GRIB_SHORT_NAME"
-                                ],
-                                "0-SFC"
-                            ],
-                            [
-                                "==",
-                                [
-                                    "get",
-                                    "GRIB_FORECAST_SECONDS"
-                                ],
-                                "0"
-                            ]
-                        ]
-                    ],
-                    "name": [
-                        "to-number",
-                        [
-                            "get",
-                            "GRIB_VALID_TIME"
-                        ]
-                    ],
-                    "order": "asc"
-                },
-                "tilesize": 512
-            }
-        },
-        "maxzoom": 7,
-        "minzoom": 0,
-        "sources": [
-            {
-                "uri": "mapbox://tileset-source/kenji-shima/global-waves"
-            }
-        ],
-        "type": "rasterarray",
-        "version": 1
-    }
-}
-
-
-  $ curl -X POST "https://api.mapbox.com/uploads/v1/kenji-shima/credentials?access_token=sk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xvMHRyZWh0MWZuOTJ0bXhia2x1NndiZiJ9.gFUcwhuw86O5e5VuU8_z1w"{
-    "bucket": "tilestream-tilesets-production",
-    "key": "7b/_pending/y89tqff7eou19ns0mf3sh2ylc/kenji-shima",
-    "accessKeyId": "ASIATNLVGLR2E3YTZ4KP",
-    "secretAccessKey": "SAMzMDVawVciVdHIIjI+gMXpmzMfO4oRDWEBJ12x",
-    "sessionToken": "FwoGZXIvYXdzEK7//////////wEaDDl6AGS8KwghgFG3RiKcAo7sAnFJNnhI3z0ywk+WWdummsj4PbsgI2vBZGQAwHlaEsAEjgFox48S7fEGDMrpk3W2U4+JELUhPESnoVw+3rtJboWl3/iDQ8oNPcYCJthMJj9EXYPyl+Za7biWZ7MCp/zqx96alyvoH4VMSjKIJkIRWL+ZV+nIVmqAe/x8W3iij5D8nIPCWSmr48WYKNCh3cZ2WXYaa1yowMeNmqLs+JQ7gqjLHCPWlZ0Ix3/GkojiQn4Y7RyeA3egBE9oYQJjL8t/kKF8ab9QKvmiPp8HJe0mGOX8/NGw2ftikIaw79VlBrt0M79vHpFBV109T92eWzn5458Ut5GxZTCzlTqbES5kIi3wXJ4NF+xBiBA/VVH32cYk0+XbZyp3obkyKMrmiLQGMimIF9rZU1Fp+JQvre0tkaJdnWck5W2R+Zqp0eg9utb1AbEQ3URyQ5/ZZA==",
-    "url": "https://tilestream-tilesets-production.s3.amazonaws.com/7b/_pending/y89tqff7eou19ns0mf3sh2ylc/kenji-shima"
-}
-
-{
-    "bucket": "tilestream-tilesets-production",
-    "key": "9d/_pending/eokzgusomlt1nt0f9gaii2ylc/kenji-shima",
-    "accessKeyId": "ASIATNLVGLR2EMPGT4VC",
-    "secretAccessKey": "MIvk0P38HspG202G4Fdx+LVyIhvumQUPcDjI6joI",
-    "sessionToken": "FwoGZXIvYXdzEK7//////////wEaDDosfaIdghx0czJJPCKcAoPIsFxPfNgO5ls46jYbqlHPATBF+2QrCcV+bxCQUWRVraJGh1TjWuVbqvQQJKfTb1DlrGqpC7v7ZENefo/pGbeWDikksyztOjaKVP6z/HBzcdyhmISw3Dh9P8BxYK8bnEOXdWd+sgEt7daqaA+lutAhptNvy7XKoHu/u0baNdBDiriOK8b2yyIEEIFp+pblfYO/+AZiLRQAcHF7DShmKrOCFTjAV4V/5FyA0rA1MAlDwJ3RViAP3/6NRoHjR/Pow5Mj1DL9pkesj/DN6GKVFwKOf8aAWyoVcf64tPTA/pOx0a3/nY4DOgriYI5WZuakNQDBi1BkImONyVAj8YsacTf4UJDXbkJeEB4hvLfw56v+tr08jh+6sZVTLPGtKJDwiLQGMiniTtriI2SKFxKPmZ7iN9lBApXUkTGxnJJwR5KAe60plkixZUERbahvyg==",
-    "url": "https://tilestream-tilesets-production.s3.amazonaws.com/9d/_pending/eokzgusomlt1nt0f9gaii2ylc/kenji-shima"
-}
-
-export AWS_ACCESS_KEY_ID="ASIATNLVGLR2EMPGT4VC"
-export AWS_SECRET_ACCESS_KEY="MIvk0P38HspG202G4Fdx+LVyIhvumQUPcDjI6joI"
-export AWS_SESSION_TOKEN="FwoGZXIvYXdzEK7//////////wEaDDosfaIdghx0czJJPCKcAoPIsFxPfNgO5ls46jYbqlHPATBF+2QrCcV+bxCQUWRVraJGh1TjWuVbqvQQJKfTb1DlrGqpC7v7ZENefo/pGbeWDikksyztOjaKVP6z/HBzcdyhmISw3Dh9P8BxYK8bnEOXdWd+sgEt7daqaA+lutAhptNvy7XKoHu/u0baNdBDiriOK8b2yyIEEIFp+pblfYO/+AZiLRQAcHF7DShmKrOCFTjAV4V/5FyA0rA1MAlDwJ3RViAP3/6NRoHjR/Pow5Mj1DL9pkesj/DN6GKVFwKOf8aAWyoVcf64tPTA/pOx0a3/nY4DOgriYI5WZuakNQDBi1BkImONyVAj8YsacTf4UJDXbkJeEB4hvLfw56v+tr08jh+6sZVTLPGtKJDwiLQGMiniTtriI2SKFxKPmZ7iN9lBApXUkTGxnJJwR5KAe60plkixZUERbahvyg=="
-aws s3 cp IDE00437.202405262350.tif s3://tilestream-tilesets-production/9d/_pending/eokzgusomlt1nt0f9gaii2ylc/kenji-shima --region us-east-1
-
-
-$ curl -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache" -d '{
-    "url": "https://tilestream-tilesets-production.s3.amazonaws.com/9d/_pending/eokzgusomlt1nt0f9gaii2ylc/kenji-shima",
-    "tileset": "kenji-shima.ww-himawari-vapour"
-}' 'https://api.mapbox.com/uploads/v1/kenji-shima?access_token=sk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xvMHRyZWh0MWZuOTJ0bXhia2x1NndiZiJ9.gFUcwhuw86O5e5VuU8_z1w'
-
-
-
-Feature{type=Feature, bbox=null, id=193a69b3-4975-4f40-a56b-2dce4fb58b5f, geometry=Polygon{type=Polygon, bbox=null, coordinates=[[Point{type=Point, bbox=null, coordinates=[139.640836, 35.450189]}, Point{type=Point, bbox=null, coordinates=[139.638599, 35.450156]}, Point{type=Point, bbox=null, coordinates=[139.637903, 35.449156]}, Point{type=Point, bbox=null, coordinates=[139.638697, 35.447017]}, Point{type=Point, bbox=null, coordinates=[139.639813, 35.446133]}, Point{type=Point, bbox=null, coordinates=[139.642836, 35.446449]}, Point{type=Point, bbox=null, coordinates=[139.643644, 35.448156]}, Point{type=Point, bbox=null, coordinates=[139.642836, 35.449502]}, Point{type=Point, bbox=null, coordinates=[139.640836, 35.450189]}]]}, properties={"fill-opacity":"0.33","fillColor":"#bf4040","address":"神奈川県横浜市中区本町１－５－２","MBX_GEOFENCE_DWELL_TIME":1.0,"opacity":"0.33","fill":"#bf4040","mapboxId":"dXJuOm1ieHBvaS1qcG46M2NiZmNiNDFmMzgyYTExYjBmZWU4ODdlY2NlOTg1OTJiNWE1MjU0MTBkZGEwMGFlNTcyMGMwYzUwNjM5YmI5ZA","fillOpacity":"0.33","color":"#bf4040","contour":"3","metric":"time","geofenceColor":"#E92734","name":"セブンイレブン横浜県庁前店"}}

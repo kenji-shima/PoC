@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js'></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+    <title>Random Points in Japan</title>
+</head>
+<body>
+    <h1>Random Points in Japan</h1>
+    <button onclick="generateFile()">Generate File</button>
+
+    <script src="./js/constants.js"></script>
+    <script>
+        function generateFile() {
+            randomPointsInJapan();
+        }
+    </script>
+</body>
+</html>
