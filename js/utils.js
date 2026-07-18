@@ -1,4 +1,4 @@
-mapboxgl.accessToken = 'pk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xhZ2NmZ3BiMGFqbzNubThpbWMxOXU3MCJ9.JlXUW8MwwX1LhhMnbWyUQw';
+mapboxgl.accessToken = 'pk.eyJ1Ijoia2Vuamktc2hpbWEiLCJhIjoiY2xpd2RwaHhzMGJoYjNlbnduYjJmMm5xNyJ9.Zi2lDBa9rXEAj6KyhLrINA';
 const search_uri = 'https://api.mapbox.com/search/v1/'
 const common_params = `language=ja&country=jp&access_token=${mapboxgl.accessToken}`
 //const geocoding_uri = 'https://api.mapbox.com/geocoding/v5/mapbox.places/';
@@ -15,6 +15,42 @@ const rurubu_uri = 'https://www.j-jti.com/appif/sight?appid=n2xNzqos7NirxGBJ&pag
 function getFirstDayOfMonth() {
     const now = new Date();
     return now.getFullYear() + '-' + (now.getMonth() + 1) + '-01';
+}
+
+const formatTime = (timestamp) => {
+    const date = new Date(timestamp * 1000);
+
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+
+    const formattedDate = `${hours}:${minutes}`;
+    return formattedDate
+}
+
+const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}/${month}/${day}`;
+}
+
+const getOneMonthBeforeAndDatesArray = (dateString) => {
+    const specifiedDate = new Date(dateString);
+
+    const dateBefore = new Date(specifiedDate);
+    dateBefore.setMonth(dateBefore.getMonth() - 1);
+
+    const datesArray = [];
+    let currentDate = new Date(dateBefore);
+    while (currentDate <= specifiedDate) {
+        datesArray.push(formatDate(currentDate));
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return {
+        before: formatDate(dateBefore),
+        datesArray: datesArray
+    };
 }
 
 function uuidv4() {
@@ -51,7 +87,7 @@ async function fetchJson(file) {
     return await query.json();
 }
 
-async function fetchRurubu(coordinates){
+async function fetchRurubu(coordinates) {
     const url = 'https://www.j-jti.com/appif/sight?appid=n2xNzqos7NirxGBJ&lgenre=1&jis=13103&pagecount=100&responsetype=json'
     //url = `${rurubu_uri}&latitude=${coordinates[0]}&longitude=${coordinates[1]}`
 
@@ -69,13 +105,30 @@ async function getFirstAddress(coordinates) {
     }
 }
 
-async function fetchCategorySearch(categoryid, coordinates){
+async function fetchCategorySearch(categoryid, coordinates) {
     const query = await fetch(`${searchbox_uri}category/${categoryid}?${common_params}&proximity=${coordinates[0]},${coordinates[1]}&limit=25`, { method: 'GET' })
     return await query.json()
 }
 
-async function fetchIsochrone(profile, coordinates, minutes, colors){
-    const query = await fetch(`${isochrone_uri}${profile}/${coordinates[0]},${coordinates[1]}?contours_minutes=${minutes}&polygons=true&contours_colors=${colors}&access_token=${mapboxgl.accessToken}`)
+async function categorySearchWithBbox(categoryid, coordinates, radiusInKm) {
+    const bbox = calculateBboxWithRadius(coordinates, radiusInKm).join(',')
+    const query = await fetch(`${searchbox_uri}category/${categoryid}?${common_params}&proximity=${coordinates[0]},${coordinates[1]}&limit=25&bbox=${bbox}`, { method: 'GET' })
+    return await query.json()
+}
+
+function calculateBboxWithRadius(centerCoordinates, radiusInKm) {
+    const centerPoint = turf.point(centerCoordinates);
+    const buffered = turf.buffer(centerPoint, radiusInKm, { units: 'kilometers' });
+    const bbox = turf.bbox(buffered);
+    return bbox;
+}
+
+async function fetchIsochrone(profile, coordinates, minutes, colors) {
+    let contourColors = ''
+    if (colors) {
+        contourColors = `contours_colors=${colors}`
+    }
+    const query = await fetch(`${isochrone_uri}${profile}/${coordinates[0]},${coordinates[1]}?contours_minutes=${minutes}&polygons=true&${contourColors}&access_token=${mapboxgl.accessToken}`)
     return await query.json()
 }
 
@@ -154,9 +207,9 @@ function setEta(json, etaObj) {
     }
     let duration = 0.0
     for (let leg of json.routes[0].legs) {
-        if(leg.duration_typical){
+        if (leg.duration_typical) {
             duration += leg.duration_typical
-        }else{
+        } else {
             duration += leg.duration
         }
     }
@@ -167,13 +220,23 @@ function setEta(json, etaObj) {
 
     etaObj.eta = `${hours}:${minutes}`
     etaObj.duration = duration
+
+    let duration_mins = Math.floor(duration / 60)
+    const seconds = duration_mins % 60
+    if (seconds > 30) duration_mins += 1
+    etaObj.duration_mins = duration_mins
+
+    let distance = json.routes[0].distance
+    distance = (distance / 1000).toFixed(1)
+    etaObj.distance_km = distance
+
 }
 
 window.removeLoading = removeLoading
 
 let routes = {}
 async function setRoute(map, start, end, color, etaObj, profile) {
-    if(!profile){
+    if (!profile) {
         profile = 'driving-traffic'
     }
     let id = `${start[0]}_${start[1]}_${end[0]}_${end[1]}`
@@ -229,6 +292,21 @@ function removeAllRoutes(map) {
             map.removeSource(id)
         }
     }
+}
+
+const getAllRoutes = (map) => {
+    const featureCollection = {
+        type: "FeatureCollection",
+        features: []
+    }
+    for (let id in routes) {
+        const source = map.getSource(id)
+        if (source) {
+            const f = source._data
+            featureCollection.features.push(f)
+        }
+    }
+    return featureCollection
 }
 
 const computeCameraPosition = (
